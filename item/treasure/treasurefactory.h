@@ -1,0 +1,4 @@
+#ifndef TREASUREFACTORY_H
+#define TREASUREFACTORY_H
+
+#endif /* TREASUREFACTORY_H */

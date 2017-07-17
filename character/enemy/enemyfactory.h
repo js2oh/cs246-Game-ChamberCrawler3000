@@ -1,0 +1,4 @@
+#ifndef ENEMYFACTORY_H
+#define ENEMYFACTORY_H
+
+#endif /* ENEMYFACTORY_H */
