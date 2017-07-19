@@ -4,27 +4,31 @@
 #include <utility>
 #include <vector>
 #include "cellobject.h"
-#include "textdisplay.h"
+#include "chamber.h"
 #include "position.h"
+#include "textdisplay.h"
 
 struct Info;
+class Chamber;
 
 class Cell {
-    TextDisplay *td;
+    char symbol;
     CellObject co;
     Position pos;
-    char symbol;
 
-    // Add other private members if necessary
-    // std::vector<Observer *> observers;
+    Chamber *c;
+    TextDisplay *td;
 
     public:
-    Cell(); // Default constructor
+    Cell();
     ~Cell();
 
-    void setCoords(int r, int c); // Tells me my row and column number.
+    Chamber *getChamber();
+
+    void setChamber(Chamber *c);
     void setCellObject(CellObject co);
     void setCellSymbol(char c);
+    void setCoords(int r, int c);
     void setTd(TextDisplay *td);
     void notify();
 

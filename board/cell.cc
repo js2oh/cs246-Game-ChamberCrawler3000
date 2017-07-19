@@ -1,6 +1,6 @@
+#include "cell.h"
 #include <iostream>
 #include <utility>
-#include "cell.h"
 #include "info.h"
 
 // Default constructor and destructor
@@ -13,6 +13,13 @@ Info Cell::getInfo() const {
     i.pos.col = pos.col;
     i.symbol = symbol;
     return i;
+}
+
+Chamber *Cell::getChamber() {
+    return c;
+}
+void Cell::setChamber(Chamber *c) {
+    this->c = c;
 }
 
 void Cell::setCellObject(CellObject co) {

@@ -4,8 +4,6 @@
 
 using namespace std;
 
-// TODO Read input from pre-configured board file
-
 const int Floor::WIDTH = 79;
 const int Floor::HEIGHT = 25;
 const int Floor::CHAMBER_COUNT = 5;
@@ -45,6 +43,14 @@ void Floor::init() {
             grid[i][j].setCoords(i, j);
             grid[i][j].setTd(td);
 
+            // Get chamber id that current cell is supposed to be in
+            // Might be case that cell is outside of 5 chambers
+            const int chamberId = Chamber::getMatchingId(i, j);
+            if (chamberId != -1) {
+                grid[i][j].setChamber(
+                    &chambers.at(Chamber::getMatchingId(i, j)));
+            }
+
             char symbol = td->at(i, j);
             if (symbol == '+' || symbol == '#' || symbol == '.') {
                 grid[i][j].setCellObject(CellObject::Empty);
@@ -56,10 +62,10 @@ void Floor::init() {
     }
 
     if (boardFile == "empty.txt") {
-        spawn();
+        randomSpawn();
     }
     else {
-        manualSpawn();
+        customSpawn();
     }
 }
 
@@ -69,9 +75,6 @@ void Floor::spawnPlayer(string race) {
     pcSpawned = true;
 
     Cell &c = chambers.at(i).spawnPlayer();
-    c.setCellObject(CellObject::Player);
-    c.setCellSymbol('@');
-    c.notify();
 
     /*
         if (race == "shade") {
@@ -92,7 +95,6 @@ void Floor::spawnPlayer(string race) {
 void Floor::spawnEnemies() {
     for (int j = 0; j < 20; ++j) {
         const int i = rand() % CHAMBER_COUNT;
-
         Cell &c = chambers.at(i).spawnEnemy();
     }
 }
@@ -122,7 +124,7 @@ void Floor::spawnStairs() {
     }
 }
 
-void Floor::spawn(string race) {
+void Floor::randomSpawn(string race) {
     spawnPlayer(race);
     spawnEnemies();
     spawnGoldPiles();
@@ -134,10 +136,10 @@ void Floor::spawn(string race) {
 }
 
 int Floor::getChamberId(Position p) {
-    return Chamber::getId(p);
+    return Chamber::getMatchingId(p);
 }
 
-void Floor::manualSpawn(string race) {
+void Floor::customSpawn(string race) {
     for (int i = 0; i < HEIGHT; ++i) {
         for (int j = 0; j < WIDTH; ++j) {
             Position p{i, j};
@@ -146,10 +148,69 @@ void Floor::manualSpawn(string race) {
                 td->at(p) != '+' && td->at(p) != '#' && td->at(p) != '.') {
                 const int id = getChamberId(p);
 
-                chambers.at(id).manualSpawn(td->at(p), p);
+                manualSpawn(td->at(p), p);
             }
         }
     }
+}
+
+// manualSpawn manually spawns object with provided symbol at position p.
+Cell &Floor::manualSpawn(char symbol, Position p) {
+#ifdef DEBUG
+    cout << "Spawned: " << symbol << " in " << Chamber::getMatchingId(p)
+         << " at " << p << endl;
+#endif
+    // EnemyFactory ef;
+    // PotionFactory pf;
+    // TreasureFactory tf;
+    Cell &c = cellAt(p);
+
+    switch (symbol) {
+        case '@': // Player
+            c.setCellObject(CellObject::Player);
+            c.setCellSymbol('@');
+
+            break;
+        case 'H':
+        case 'W':
+        case 'E':
+        case 'O':
+        case 'M':
+        case 'D':
+        case 'L':
+            c.setCellObject(CellObject::Enemy);
+            c.setCellSymbol(symbol);
+            // ef.create(symbol, p);
+            // c.getChamber()->addEnemy(ef.create(symbol, p));
+            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+            c.setCellObject(CellObject::Item);
+            c.setCellSymbol('P');
+            // pf.create(symbol, p);
+            // c.getChamber()->addPotion(pf.create(symbol, p));
+            break;
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            c.setCellObject(CellObject::Item);
+            c.setCellSymbol('G');
+            // tf.create(symbol, p);
+            // c.getChamber()->addGold(tf.create(symbol, p));
+            break;
+        case '\\':
+            c.setCellObject(CellObject::Stairs);
+            c.setCellSymbol('\\');
+            break;
+    }
+    // cout << c.getChamber()->getId() << endl;
+    c.notify();
+    return c;
 }
 
 bool Floor::vacantAt(int row, int col) const {

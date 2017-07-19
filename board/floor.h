@@ -42,8 +42,9 @@ class Floor {
     Cell &cellAt(Position p);
 
     bool vacantAt(int row, int col) const;
-    void spawn(std::string race = "shade");
-    void manualSpawn(std::string race = "shade");
+    void randomSpawn(std::string race = "shade");
+    void customSpawn(std::string race = "shade");
+    Cell &manualSpawn(char symbol, Position p);
     void init();
     friend std::ostream &operator<<(std::ostream &out, const Floor &f);
 };
