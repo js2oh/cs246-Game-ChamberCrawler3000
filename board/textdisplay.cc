@@ -11,14 +11,21 @@ using namespace std;
 
 TextDisplay::TextDisplay(int width, int height, string file)
     : width{width}, height{height}, theDisplay(height, vector<char>(width)) {
-    readBoard(file);
+    readBoard(file, 3);
 }
 
 TextDisplay::~TextDisplay() {}
 
-void TextDisplay::readBoard(string file) {
+void TextDisplay::readBoard(string file, int level) {
     fstream fin{file};
     string line;
+
+    // Skip to desired floor level
+    for (int i = 1; i < level; ++i) {
+        for (int j = 0; j < height; ++j) {
+            getline(fin, line);
+        }
+    }
 
     for (int i = 0; i < height; ++i) {
         getline(fin, line);

@@ -11,7 +11,7 @@ class TextDisplay {
     int height;
 
     std::vector<std::vector<char>> theDisplay;
-    void readBoard(std::string file);
+    void readBoard(std::string file, int level = 0);
 
     public:
     // TextDisplay();
