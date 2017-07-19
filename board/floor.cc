@@ -1,6 +1,6 @@
-#include <iostream>
 #include "floor.h"
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
@@ -34,7 +34,7 @@ void Floor::clearGrid() {
 }
 
 void Floor::init() {
-    td = new TextDisplay{WIDTH, HEIGHT, boardFile};
+    td = new TextDisplay{WIDTH, HEIGHT, level, boardFile};
 
     for (int i = 0; i < CHAMBER_COUNT; ++i) {
         chambers.emplace_back(Chamber{i, this});

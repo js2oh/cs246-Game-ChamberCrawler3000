@@ -1,17 +1,17 @@
-#include <iostream>
-#include <utility>
-#include "cell.h"
-#include "info.h"
 #include "textdisplay.h"
 #include <fstream>
+#include <iostream>
 #include <sstream>
+#include <utility>
 #include <vector>
+#include "cell.h"
+#include "info.h"
 
 using namespace std;
 
-TextDisplay::TextDisplay(int width, int height, string file)
+TextDisplay::TextDisplay(int width, int height, int level, string file)
     : width{width}, height{height}, theDisplay(height, vector<char>(width)) {
-    readBoard(file, 3);
+    readBoard(file, level);
 }
 
 TextDisplay::~TextDisplay() {}
@@ -21,7 +21,7 @@ void TextDisplay::readBoard(string file, int level) {
     string line;
 
     // Skip to desired floor level
-    for (int i = 1; i < level; ++i) {
+    for (int i = 1; i <= level; ++i) {
         for (int j = 0; j < height; ++j) {
             getline(fin, line);
         }

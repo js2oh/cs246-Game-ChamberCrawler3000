@@ -2,12 +2,12 @@
 #define FLOOR_H
 #include <iostream>
 #include <vector>
+#include "../character/player/player.h"
 #include "cell.h"
 #include "cellobject.h"
 #include "chamber.h"
 #include "position.h"
 #include "textdisplay.h"
-#include "../character/player/player.h"
 
 class Chamber;
 
