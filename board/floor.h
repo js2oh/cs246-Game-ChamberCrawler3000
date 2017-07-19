@@ -18,34 +18,37 @@ class Floor {
     const static int MAX_LEVEL;
 
     bool isHostileMerchants;
-    std::vector<Chamber> chambers;       // The actual grid.
-    std::vector<std::vector<Cell>> grid; // The actual grid.
-    TextDisplay *td;                     // The text display.
-    std::string boardFile;
+    bool alreadyInit;
     int level;
     int pcSpawnChamber;
-    bool pcSpawned;
+
     Player p;
-    void clearGrid(); // Frees the grid.
+    std::vector<Chamber> chambers;       // Chambers
+    std::vector<std::vector<Cell>> grid; // The actual grid
+    TextDisplay *td;                     // The text display
+    std::string boardFile;
+
+    void clearGrid();
     int getChamberId(Position p);
+
+    // Spawn methods private
     void spawnPlayer(std::string race);
     void spawnEnemies();
     void spawnGoldPiles();
     void spawnPotions();
     void spawnStairs();
+    Cell &manualSpawn(char symbol, Position p);
+    void randomSpawn(std::string race = "shade");
+    void customSpawn(std::string race = "shade");
 
     public:
     Floor(int level, std::string boardFile = "empty.txt");
     ~Floor();
-
+    void init();
     Cell &cellAt(int row, int col);
     Cell &cellAt(Position p);
-
     bool vacantAt(int row, int col) const;
-    void randomSpawn(std::string race = "shade");
-    void customSpawn(std::string race = "shade");
-    Cell &manualSpawn(char symbol, Position p);
-    void init();
+
     friend std::ostream &operator<<(std::ostream &out, const Floor &f);
 };
 

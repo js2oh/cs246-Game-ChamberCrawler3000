@@ -19,7 +19,7 @@ class TextDisplay {
     ~TextDisplay();
 
     void notify(Cell &c);
-    char at(int i, int j);
+    char at(int row, int col);
     char at(Position p);
 
     friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);

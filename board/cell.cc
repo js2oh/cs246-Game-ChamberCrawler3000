@@ -1,10 +1,9 @@
 #include "cell.h"
 #include <iostream>
-#include <utility>
 #include "info.h"
 
-// Default constructor and destructor
-Cell::Cell() : pos{0, 0} {}
+Cell::Cell() {}
+
 Cell::~Cell() {}
 
 Info Cell::getInfo() const {
@@ -15,6 +14,18 @@ Info Cell::getInfo() const {
     return i;
 }
 
+CellObject Cell::getCellObject() const {
+    return co;
+}
+
+void Cell::setCellObject(CellObject co) {
+    this->co = co;
+}
+
+void Cell::setCellSymbol(const char c) {
+    this->symbol = c;
+}
+
 Chamber *Cell::getChamber() {
     return c;
 }
@@ -22,31 +33,24 @@ void Cell::setChamber(Chamber *c) {
     this->c = c;
 }
 
-void Cell::setCellObject(CellObject co) {
-    this->co = co;
-}
-
 void Cell::setTd(TextDisplay *td) {
     this->td = td;
-}
-
-void Cell::setCoords(int r, int c) {
-    this->pos.row = r;
-    this->pos.col = c;
-}
-
-void Cell::notify() {
-    td->notify(*this);
 }
 
 Position Cell::getPosition() const {
     return pos;
 }
 
-CellObject Cell::getOccupied() const {
-    return co;
+void Cell::setPosition(int row, int col) {
+    this->pos.row = row;
+    this->pos.col = col;
 }
 
-void Cell::setCellSymbol(const char c) {
-    this->symbol = c;
+void Cell::setPosition(Position p) {
+    setPosition(p.row, p.col);
+}
+
+// Notify TextDisplay
+void Cell::notify() {
+    td->notify(*this);
 }

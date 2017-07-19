@@ -23,18 +23,17 @@ class Cell {
     Cell();
     ~Cell();
 
-    Chamber *getChamber();
-
-    void setChamber(Chamber *c);
+    Info getInfo() const;
+    CellObject getCellObject() const;
     void setCellObject(CellObject co);
     void setCellSymbol(char c);
-    void setCoords(int r, int c);
+    Chamber *getChamber();
+    void setChamber(Chamber *c);
     void setTd(TextDisplay *td);
-    void notify();
-
-    Info getInfo() const;
-    CellObject getOccupied() const;
     Position getPosition() const;
+    void setPosition(int row, int col);
+    void setPosition(Position p);
+    void notify();
 };
 
 #endif /* CELL_H */

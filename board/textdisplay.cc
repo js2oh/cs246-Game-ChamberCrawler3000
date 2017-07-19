@@ -16,17 +16,19 @@ TextDisplay::TextDisplay(int width, int height, int level, string file)
 
 TextDisplay::~TextDisplay() {}
 
+// Read in floor layout from given file
 void TextDisplay::readBoard(string file, int level) {
     fstream fin{file};
     string line;
 
-    // Skip to desired floor level
+    // Skip to desired floor level, since each file has layouts for 5 levels
     for (int i = 1; i <= level; ++i) {
         for (int j = 0; j < height; ++j) {
             getline(fin, line);
         }
     }
 
+    // Begin file read into grid
     for (int i = 0; i < height; ++i) {
         getline(fin, line);
         for (int j = 0; j < width; ++j) {
@@ -35,14 +37,16 @@ void TextDisplay::readBoard(string file, int level) {
     }
 }
 
-char TextDisplay::at(int i, int j) {
-    return theDisplay.at(i).at(j);
+// at gets the symbol located at the position in the grid.
+char TextDisplay::at(int row, int col) {
+    return theDisplay.at(row).at(col);
 }
 
 char TextDisplay::at(Position p) {
     return theDisplay.at(p.row).at(p.col);
 }
 
+// Update grid due to change in Cell
 void TextDisplay::notify(Cell &c) {
     // Get row, column, on/off state of subject
     Info i = c.getInfo();
