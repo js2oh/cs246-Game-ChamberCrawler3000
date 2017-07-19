@@ -21,6 +21,9 @@ class Chamber {
 
     public:
     Chamber(int i, Floor *floor);
+    static int getId(Position p);
+
+    Cell &manualSpawn(char symbol, Position p);
     Cell &genRandPos();
     Cell &spawnPlayer();
     Cell &spawnEnemy();

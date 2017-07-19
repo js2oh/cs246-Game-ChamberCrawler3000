@@ -2,6 +2,7 @@
 #define TEXTDISPLAY_H
 #include <iostream>
 #include <vector>
+#include "position.h"
 
 class Cell;
 
@@ -20,6 +21,7 @@ class TextDisplay {
 
     void notify(Cell &c);
     char at(int i, int j);
+    char at(Position p);
 
     friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
 };

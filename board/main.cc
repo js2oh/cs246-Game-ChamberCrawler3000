@@ -5,7 +5,9 @@ using namespace std;
 
 int main() {
     srand(time(NULL));
-    Floor fl{};
 
-    cout << fl << endl;
+    Floor f1{0};
+    Floor f2{0, "../cc3kfloor.txt"};
+    cout << f1 << endl;
+    cout << f2 << endl;
 }

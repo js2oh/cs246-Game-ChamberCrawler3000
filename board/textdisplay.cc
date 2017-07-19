@@ -18,27 +18,22 @@ TextDisplay::~TextDisplay() {}
 
 void TextDisplay::readBoard(string file) {
     fstream fin{file};
-    char ch;
-    int i = 0, j = 0;
+    string line;
 
-    while (fin >> noskipws >> ch) {
-        if (ch == '\n')
-            continue;
-
-        theDisplay.at(i).at(j) = ch;
-
-        if (j + 1 == width) {
-            j = 0;
-            ++i;
-        }
-        else {
-            ++j;
+    for (int i = 0; i < height; ++i) {
+        getline(fin, line);
+        for (int j = 0; j < width; ++j) {
+            theDisplay.at(i).at(j) = line[j];
         }
     }
 }
 
 char TextDisplay::at(int i, int j) {
     return theDisplay.at(i).at(j);
+}
+
+char TextDisplay::at(Position p) {
+    return theDisplay.at(p.row).at(p.col);
 }
 
 void TextDisplay::notify(Cell &c) {
