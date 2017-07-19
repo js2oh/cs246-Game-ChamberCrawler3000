@@ -3,11 +3,19 @@
 
 #include "cell.h"
 #include "position.h"
+#include "../character/enemy/enemy.h"
+#include "../item/potion/potion.h"
+#include "../item/treasure/gold.h"
 #include <vector>
 
 class Chamber {
     std::vector<std::vector<Cell>> cells;
-    int i, topLeftCol, topLeftRow, height, width;
+
+    std::vector<Enemy *> enemies;
+    std::vector<Potion *> potions;
+    std::vector<Gold *> treasures;
+
+    int id, topLeftCol, topLeftRow, height, width;
 
     public:
     Chamber(int i);

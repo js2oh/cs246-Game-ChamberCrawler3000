@@ -4,7 +4,9 @@
 #include <vector>
 #include "cell.h"
 #include "chamber.h"
+#include "position.h"
 #include "textdisplay.h"
+#include "../character/player/player.h"
 
 class Floor {
     const static int WIDTH;
@@ -16,16 +18,22 @@ class Floor {
     std::vector<std::vector<Cell>> grid; // The actual grid.
     TextDisplay *td;                     // The text display.
 
+    int pcSpawnChamber;
+    bool pcSpawned;
+    // Player p;
     void clearGrid(); // Frees the grid.
-    public:
-    Floor();
-    ~Floor();
 
-    void spawnPlayer();
+    void spawnPlayer(std::string race);
     void spawnEnemies();
     void spawnGoldPiles();
     void spawnPotions();
     void spawnStairs();
+
+    public:
+    Floor();
+    ~Floor();
+
+    void spawn(std::string race = "shade");
 
     void init();
     friend std::ostream &operator<<(std::ostream &out, const Floor &g);

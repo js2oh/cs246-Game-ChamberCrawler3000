@@ -51,7 +51,28 @@ void TextDisplay::notify(Cell &c) {
     theDisplay[pos.row][pos.col] = symbol;
 }
 
-// Print current grid in organized layout
+/*
+void TextDisplay::notify(Item *i) {
+    // Get row, column, on/off state of subject
+    Info i = i.getInfo();
+    const Position pos = i.pos;
+    const char symbol = i.symbol;
+
+    // Update display grid
+    theDisplay[pos.row][pos.col] = symbol;
+}
+
+void TextDisplay::notify(Character *c) {
+    // Get row, column, on/off state of subject
+    Info i = c.getInfo();
+    const Position pos = i.pos;
+    const char symbol = i.symbol;
+
+    // Update display grid
+    theDisplay[pos.row][pos.col] = symbol;
+}
+*/
+
 ostream &operator<<(ostream &out, const TextDisplay &td) {
     for (int i = 0; i < td.height; ++i) {
         for (int j = 0; j < td.width; ++j) {

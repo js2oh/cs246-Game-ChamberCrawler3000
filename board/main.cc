@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     srand(time(NULL));
     Floor fl{};
-    fl.spawnEnemies();
+    fl.spawn();
 
     cout << fl << endl;
 }

@@ -4,13 +4,13 @@
 
 using namespace std;
 
-Chamber::Chamber(int i) : i{i} {
+Chamber::Chamber(int id) : id{id} {
     // Use temp textdisplay for guidance
     TextDisplay td;
 
     bool irregular = false;
 
-    switch (i) {
+    switch (id) {
         // Top left
         case 0:
             topLeftCol = 3;
@@ -61,9 +61,12 @@ Chamber::Chamber(int i) : i{i} {
     }
 
     if (irregular) {
+        // cout << "WIDTH: " << width << endl;
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
-                if (td.at(i, j) != '.' || (i == 3 && (i >= 10 && j <= 61))) {
+                // cout << td.at(i, j);
+                if (td.at(i + topLeftRow, j + topLeftCol) != '.' ||
+                    (id == 1 && (i >= 4 && j < 22))) {
                     cells.at(i).at(j).setCellObject(CellObject::Wall);
                 }
             }
@@ -79,36 +82,53 @@ Cell &Chamber::genRandPos() {
     do {
         col = rand() % width;
         row = rand() % height;
+        cout << "(" << row << ", " << col << ")" << endl;
 
         found = (cells.at(row).at(col).getOccupied() == CellObject::Empty);
     } while (!found);
-
-    cout << "id: " << i << ", " << col << ", " << row << endl;
+    cout << "(" << row << ", " << col << ")" << endl;
     return cells.at(row).at(col);
 }
 
 Position Chamber::spawnPlayer() {
     Cell c = genRandPos();
+    Position p = c.getPosition();
     c.setCellObject(CellObject::Player);
-    return c.getPosition();
+
+    return p;
 }
 
 Position Chamber::spawnEnemy() {
+    EnemyFactory ef;
+
     Cell c = genRandPos();
+    Position p = c.getPosition();
+
     c.setCellObject(CellObject::Enemy);
-    return c.getPosition();
+    enemies.emplace_back{ef.create(p)};
+    return p;
 }
 
 Position Chamber::spawnPotion() {
+    PotionFactory pf;
+
     Cell c = genRandPos();
+    Position p = c.getPosition();
+
     c.setCellObject(CellObject::Item);
-    return c.getPosition();
+    potions.emplace_back{pf.spawn(p)};
+    return p;
 }
 
 Position Chamber::spawnGoldPile() {
+    TreasureFactory tf;
+
     Cell c = genRandPos();
+    Position p = c.getPosition();
+
     c.setCellObject(CellObject::Item);
-    return c.getPosition();
+    potions.emplace_back{tf.spawn(p)};
+    return p;
 }
 
 Position Chamber::spawnStairs() {

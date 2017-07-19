@@ -8,8 +8,11 @@ const int Floor::WIDTH = 79;
 const int Floor::HEIGHT = 25;
 const int Floor::CHAMBER_COUNT = 5;
 
-Floor::Floor() : isHostileMerchants{false}, grid{HEIGHT, vector<Cell>{WIDTH}} {
-    init(); // theDisplay(height, vector<char>(width))
+Floor::Floor()
+    : isHostileMerchants{false},
+      pcSpawned{false},
+      grid{HEIGHT, vector<Cell>{WIDTH}} {
+    init();
 }
 
 Floor::~Floor() {
@@ -52,55 +55,91 @@ ostream &operator<<(ostream &out, const Floor &g) {
     return out;
 }
 
-// TODO Spawn multiple objects
-void Floor::spawnPlayer() {
+void Floor::spawnPlayer(string race) {
     const int i = rand() % CHAMBER_COUNT;
-    Position p = chambers.at(i).spawnPlayer();
-    Cell &c = grid.at(p.row).at(p.col);
+    pcSpawnChamber = i;
+    pcSpawned = true;
 
+    Position p = chambers.at(i).spawnPlayer();
+
+    Cell &c = grid.at(p.row).at(p.col);
     c.setCellObject(CellObject::Player);
     c.setCellSymbol('@');
     c.notify();
+
+    if (race == "shade") {
+        player = new Shade{p};
+    }
+    else if (race == "drow") {
+        player = new Drow{p};
+    }
+    else if (race == "goblin") {
+        player = new Goblin{p};
+    }
+    else if (race == "troll") {
+        player = new Troll{p};
+    }
 }
 
 void Floor::spawnEnemies() {
-    const int i = rand() % CHAMBER_COUNT;
-    Position p = chambers.at(i).spawnEnemy();
-    cout << p.row << ", " << p.col << endl;
+    for (int j = 0; j < 20; ++j) {
+        const int i = rand() % CHAMBER_COUNT;
+        Position p = chambers.at(i).spawnEnemy();
 
-    Cell &c = grid.at(p.row).at(p.col);
+        Cell &c = grid.at(p.row).at(p.col);
 
-    c.setCellObject(CellObject::Enemy);
-    c.setCellSymbol('E');
-    c.notify();
+        c.setCellObject(CellObject::Enemy);
+        c.setCellSymbol('E');
+        c.notify();
+    }
 }
 
 void Floor::spawnPotions() {
-    const int i = rand() % CHAMBER_COUNT;
-    Position p = chambers.at(i).spawnPlayer();
-    Cell &c = grid.at(p.row).at(p.col);
+    for (int j = 0; j < 10; ++j) {
+        const int i = rand() % CHAMBER_COUNT;
+        Position p = chambers.at(i).spawnPotion();
+        Cell &c = grid.at(p.row).at(p.col);
 
-    c.setCellObject(CellObject::Item);
-    c.setCellSymbol('P');
-    c.notify();
+        c.setCellObject(CellObject::Item);
+        c.setCellSymbol('P');
+        c.notify();
+    }
 }
 
 void Floor::spawnGoldPiles() {
-    const int i = rand() % CHAMBER_COUNT;
-    Position p = chambers.at(i).spawnPlayer();
-    Cell &c = grid.at(p.row).at(p.col);
+    for (int j = 0; j < 10; ++j) {
+        const int i = rand() % CHAMBER_COUNT;
+        Position p = chambers.at(i).spawnGoldPile();
+        Cell &c = grid.at(p.row).at(p.col);
 
-    c.setCellObject(CellObject::Item);
-    c.setCellSymbol('G');
-    c.notify();
+        c.setCellObject(CellObject::Item);
+        c.setCellSymbol('G');
+        c.notify();
+    }
 }
 
 void Floor::spawnStairs() {
-    const int i = rand() % CHAMBER_COUNT;
-    Position p = chambers.at(i).spawnPlayer();
-    Cell &c = grid.at(p.row).at(p.col);
+    while (true) {
+        int i = rand() % CHAMBER_COUNT;
+        if ((pcSpawned && pcSpawnChamber == i)) {
+            continue;
+        }
+        else {
+            Position p = chambers.at(i).spawnStairs();
 
-    c.setCellObject(CellObject::Stairs);
-    c.setCellSymbol('/');
-    c.notify();
+            Cell &c = grid.at(p.row).at(p.col);
+            c.setCellObject(CellObject::Stairs);
+            c.setCellSymbol('/');
+            c.notify();
+            break;
+        }
+    }
+}
+
+void Floor::spawn(string race) {
+    spawnPlayer(race);
+    spawnEnemies();
+    spawnGoldPiles();
+    spawnPotions();
+    spawnStairs();
 }
