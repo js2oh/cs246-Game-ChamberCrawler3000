@@ -4,12 +4,7 @@
 
 using namespace std;
 
-Chamber::Chamber(int id) : id{id} {
-    // Use temp textdisplay for guidance
-    TextDisplay td;
-
-    bool irregular = false;
-
+Chamber::Chamber(int id, Floor *floor) : id{id}, floor{floor} {
     switch (id) {
         // Top left
         case 0:
@@ -49,28 +44,18 @@ Chamber::Chamber(int id) : id{id} {
             width = 12;
             break;
     }
+}
 
-    for (int i = 0; i < height; ++i) {
-        cells.emplace_back(vector<Cell>{});
-
-        for (int j = 0; j < width; ++j) {
-            cells.at(i).emplace_back(Cell{});
-            cells.at(i).at(j).setCoords(i + topLeftRow, j + topLeftCol);
-            cells.at(i).at(j).setCellObject(CellObject::Empty);
-        }
+bool Chamber::isInBounds(const int row, const int col) const {
+    if (id == 1) {
+        return !(row >= 4 + topLeftRow && col < 22 + topLeftCol);
     }
-
-    if (irregular) {
-        // cout << "WIDTH: " << width << endl;
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                // cout << td.at(i, j);
-                if (td.at(i + topLeftRow, j + topLeftCol) != '.' ||
-                    (id == 1 && (i >= 4 && j < 22))) {
-                    cells.at(i).at(j).setCellObject(CellObject::Wall);
-                }
-            }
-        }
+    else if (id == 2) {
+        return !(row < 3 + topLeftRow && col < 28 + topLeftCol);
+    }
+    else {
+        return (row >= topLeftRow && row < topLeftRow + height) &&
+               (col >= topLeftCol && col < topLeftCol + width);
     }
 }
 
@@ -79,60 +64,46 @@ Cell &Chamber::genRandPos() {
     int col = 0;
     int row = 0;
 
-    do {
-        col = rand() % width;
-        row = rand() % height;
-        cout << "(" << row << ", " << col << ")" << endl;
+    while (true) {
+        col = rand() % width + topLeftCol;
+        row = rand() % height + topLeftRow;
 
-        found = (cells.at(row).at(col).getOccupied() == CellObject::Empty);
-    } while (!found);
-    cout << "(" << row << ", " << col << ")" << endl;
-    return cells.at(row).at(col);
+        if (isInBounds(row, col) && floor->vacantAt(row, col)) {
+            break;
+        }
+    }
+    return floor->getCell(row, col);
 }
 
-Position Chamber::spawnPlayer() {
-    Cell c = genRandPos();
-    Position p = c.getPosition();
-    c.setCellObject(CellObject::Player);
-
-    return p;
+Cell &Chamber::spawnPlayer() {
+    return genRandPos();
 }
 
-Position Chamber::spawnEnemy() {
-    EnemyFactory ef;
+Cell &Chamber::spawnEnemy() {
+    Cell &c = genRandPos();
+    // EnemyFactory ef;
 
-    Cell c = genRandPos();
-    Position p = c.getPosition();
-
-    c.setCellObject(CellObject::Enemy);
-    enemies.emplace_back{ef.create(p)};
-    return p;
+    // enemies.emplace_back(ef.create(c));
+    return c;
 }
 
-Position Chamber::spawnPotion() {
-    PotionFactory pf;
+Cell &Chamber::spawnPotion() {
+    Cell &c = genRandPos();
+    // PotionFactory pf;
 
-    Cell c = genRandPos();
-    Position p = c.getPosition();
-
-    c.setCellObject(CellObject::Item);
-    potions.emplace_back{pf.spawn(p)};
-    return p;
+    // potions.emplace_back(pf.spawn(c));
+    return c;
 }
 
-Position Chamber::spawnGoldPile() {
-    TreasureFactory tf;
+Cell &Chamber::spawnGoldPile() {
+    Cell &c = genRandPos();
+    // TreasureFactory tf;
 
-    Cell c = genRandPos();
-    Position p = c.getPosition();
-
-    c.setCellObject(CellObject::Item);
-    potions.emplace_back{tf.spawn(p)};
-    return p;
+    // potions.emplace_back(tf.spawn(c));
+    return c;
 }
 
-Position Chamber::spawnStairs() {
-    Cell c = genRandPos();
-    c.setCellObject(CellObject::Stairs);
-    return c.getPosition();
+Cell &Chamber::spawnStairs() {
+    Cell &c = genRandPos();
+    return c;
 }

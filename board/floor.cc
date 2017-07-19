@@ -4,12 +4,15 @@
 
 using namespace std;
 
+// TODO Read input from pre-configured board file
+
 const int Floor::WIDTH = 79;
 const int Floor::HEIGHT = 25;
 const int Floor::CHAMBER_COUNT = 5;
 
-Floor::Floor()
-    : isHostileMerchants{false},
+Floor::Floor(string boardFile)
+    : boardFile{boardFile},
+      isHostileMerchants{false},
       pcSpawned{false},
       grid{HEIGHT, vector<Cell>{WIDTH}} {
     init();
@@ -29,11 +32,12 @@ void Floor::clearGrid() {
 }
 
 void Floor::init() {
-    td = new TextDisplay{WIDTH, HEIGHT};
+    td = new TextDisplay{WIDTH, HEIGHT, boardFile};
 
     for (int i = 0; i < CHAMBER_COUNT; ++i) {
-        chambers.emplace_back(Chamber{i});
+        chambers.emplace_back(Chamber{i, this});
     }
+
     for (int i = 0; i < HEIGHT; ++i) {
         for (int j = 0; j < WIDTH; ++j) {
             grid[i][j].setCoords(i, j);
@@ -43,10 +47,17 @@ void Floor::init() {
             if (symbol == '+' || symbol == '#' || symbol == '.') {
                 grid[i][j].setCellObject(CellObject::Empty);
             }
-            else {
+            else if (symbol == '|' || symbol == '-' || symbol == ' ') {
                 grid[i][j].setCellObject(CellObject::Wall);
             }
         }
+    }
+
+    if (boardFile == "empty.txt") {
+        spawn();
+    }
+    else {
+        // manualSpawn();
     }
 }
 
@@ -60,33 +71,32 @@ void Floor::spawnPlayer(string race) {
     pcSpawnChamber = i;
     pcSpawned = true;
 
-    Position p = chambers.at(i).spawnPlayer();
-
-    Cell &c = grid.at(p.row).at(p.col);
+    Cell &c = chambers.at(i).spawnPlayer();
     c.setCellObject(CellObject::Player);
     c.setCellSymbol('@');
     c.notify();
 
-    if (race == "shade") {
-        player = new Shade{p};
-    }
-    else if (race == "drow") {
-        player = new Drow{p};
-    }
-    else if (race == "goblin") {
-        player = new Goblin{p};
-    }
-    else if (race == "troll") {
-        player = new Troll{p};
-    }
+    /*
+        if (race == "shade") {
+            player = new Shade{c};
+        }
+        else if (race == "drow") {
+            player = new Drow{c};
+        }
+        else if (race == "goblin") {
+            player = new Goblin{c};
+        }
+        else if (race == "troll") {
+            player = new Troll{c};
+        }
+        */
 }
 
 void Floor::spawnEnemies() {
     for (int j = 0; j < 20; ++j) {
         const int i = rand() % CHAMBER_COUNT;
-        Position p = chambers.at(i).spawnEnemy();
 
-        Cell &c = grid.at(p.row).at(p.col);
+        Cell &c = chambers.at(i).spawnEnemy();
 
         c.setCellObject(CellObject::Enemy);
         c.setCellSymbol('E');
@@ -97,8 +107,7 @@ void Floor::spawnEnemies() {
 void Floor::spawnPotions() {
     for (int j = 0; j < 10; ++j) {
         const int i = rand() % CHAMBER_COUNT;
-        Position p = chambers.at(i).spawnPotion();
-        Cell &c = grid.at(p.row).at(p.col);
+        Cell &c = chambers.at(i).spawnPotion();
 
         c.setCellObject(CellObject::Item);
         c.setCellSymbol('P');
@@ -109,8 +118,7 @@ void Floor::spawnPotions() {
 void Floor::spawnGoldPiles() {
     for (int j = 0; j < 10; ++j) {
         const int i = rand() % CHAMBER_COUNT;
-        Position p = chambers.at(i).spawnGoldPile();
-        Cell &c = grid.at(p.row).at(p.col);
+        Cell &c = chambers.at(i).spawnGoldPile();
 
         c.setCellObject(CellObject::Item);
         c.setCellSymbol('G');
@@ -125,9 +133,7 @@ void Floor::spawnStairs() {
             continue;
         }
         else {
-            Position p = chambers.at(i).spawnStairs();
-
-            Cell &c = grid.at(p.row).at(p.col);
+            Cell &c = chambers.at(i).spawnStairs();
             c.setCellObject(CellObject::Stairs);
             c.setCellSymbol('/');
             c.notify();
@@ -142,4 +148,12 @@ void Floor::spawn(string race) {
     spawnGoldPiles();
     spawnPotions();
     spawnStairs();
+}
+
+bool Floor::vacantAt(int row, int col) const {
+    return grid.at(row).at(col).getOccupied() == CellObject::Empty;
+}
+
+Cell &Floor::getCell(int row, int col) {
+    return grid.at(row).at(col);
 }

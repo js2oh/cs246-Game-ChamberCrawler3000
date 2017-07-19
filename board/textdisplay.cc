@@ -9,9 +9,9 @@
 
 using namespace std;
 
-TextDisplay::TextDisplay(int width, int height)
+TextDisplay::TextDisplay(int width, int height, string file)
     : width{width}, height{height}, theDisplay(height, vector<char>(width)) {
-    readBoard("empty.txt");
+    readBoard(file);
 }
 
 TextDisplay::~TextDisplay() {}

@@ -14,7 +14,8 @@ class TextDisplay {
 
     public:
     // TextDisplay();
-    TextDisplay(int width = 79, int height = 25);
+    TextDisplay(int width = 79, int height = 25,
+                std::string file = "empty.txt");
     ~TextDisplay();
 
     void notify(Cell &c);

@@ -3,10 +3,13 @@
 #include <iostream>
 #include <vector>
 #include "cell.h"
+#include "cellobject.h"
 #include "chamber.h"
 #include "position.h"
 #include "textdisplay.h"
 #include "../character/player/player.h"
+
+class Chamber;
 
 class Floor {
     const static int WIDTH;
@@ -17,7 +20,7 @@ class Floor {
     std::vector<Chamber> chambers;       // The actual grid.
     std::vector<std::vector<Cell>> grid; // The actual grid.
     TextDisplay *td;                     // The text display.
-
+    std::string boardFile;
     int pcSpawnChamber;
     bool pcSpawned;
     // Player p;
@@ -30,11 +33,14 @@ class Floor {
     void spawnStairs();
 
     public:
-    Floor();
+    Floor(std::string boardFile = "empty.txt");
     ~Floor();
 
-    void spawn(std::string race = "shade");
+    Cell &getCell(int row, int col);
 
+    bool vacantAt(int row, int col) const;
+    void spawn(std::string race = "shade");
+    void manualSpawn(std::string race = "shade");
     void init();
     friend std::ostream &operator<<(std::ostream &out, const Floor &g);
 };
