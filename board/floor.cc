@@ -10,6 +10,11 @@ const int Floor::HEIGHT = 25;
 const int Floor::CHAMBER_COUNT = 5;
 const int Floor::MAX_LEVEL = 5;
 
+// Configurable options:
+const int Floor::MAX_ENEMIES = 20;
+const int Floor::MAX_POTIONS = 10;
+const int Floor::MAX_GOLD_PILES = 10;
+
 Floor::Floor(int level, string boardFile)
     : level{level},              // 1-5
       boardFile{boardFile},      // Default is empty.txt
@@ -44,10 +49,12 @@ void Floor::init() {
     // Initialize and load contents of board file into td
     td = new TextDisplay{WIDTH, HEIGHT, level, boardFile};
 
-    // Add 5 chambers to vector
-    for (int i = 0; i < CHAMBER_COUNT; ++i) {
-        chambers.emplace_back(Chamber{i, this});
-    }
+    // Add 5 chambers to map
+    chambers[ChamberLoc::TopLeft] = Chamber{ChamberLoc::TopLeft, this};
+    chambers[ChamberLoc::TopRight] = Chamber{ChamberLoc::TopRight, this};
+    chambers[ChamberLoc::BottomRight] = Chamber{ChamberLoc::BottomRight, this};
+    chambers[ChamberLoc::BottomLeft] = Chamber{ChamberLoc::BottomLeft, this};
+    chambers[ChamberLoc::Centre] = Chamber{ChamberLoc::Centre, this};
 
     // Set properties for each Cell in grid
     for (int i = 0; i < HEIGHT; ++i) {
@@ -57,15 +64,15 @@ void Floor::init() {
             // Each Cell has a TextDisplay observer
             grid[i][j].setTd(td);
 
-            // Get chamber id that current cell is supposed to be in
+            // Get chamber location that current cell is supposed to be in
             // Might be case that cell is outside of 5 chambers
-            const int chamberId = Chamber::getMatchingId(i, j);
-            if (chamberId != -1) {
-                grid[i][j].setChamber(
-                    &chambers.at(Chamber::getMatchingId(i, j)));
+            const ChamberLoc chamberLoc = Chamber::getMatchingLoc(i, j);
+            if (chamberLoc == ChamberLoc::Other) {
+                grid[i][j].setChamber(nullptr);
             }
             else {
-                grid[i][j].setChamber(nullptr);
+                grid[i][j].setChamber(
+                    &chambers.at(Chamber::getMatchingLoc(i, j)));
             }
 
             // Get symbol at current position in TextDisplay
@@ -93,10 +100,26 @@ void Floor::init() {
     }
 }
 
-// Get chamber id which p belongs to
-// Returns -1 if not in a chamber
-int Floor::getChamberId(Position p) {
-    return Chamber::getMatchingId(p);
+// Get chamber location that p belongs to
+ChamberLoc Floor::getChamberLoc(Position p) {
+    return Chamber::getMatchingLoc(p);
+}
+
+ChamberLoc Floor::intToChamberLoc(int i) {
+    switch (i) {
+        case 0:
+            return ChamberLoc::TopLeft;
+        case 1:
+            return ChamberLoc::TopRight;
+        case 2:
+            return ChamberLoc::BottomRight;
+        case 3:
+            return ChamberLoc::BottomLeft;
+        case 4:
+            return ChamberLoc::Centre;
+        default: // Should never happen
+            return ChamberLoc::Other;
+    }
 }
 
 // Spawn methods:
@@ -104,10 +127,12 @@ int Floor::getChamberId(Position p) {
 void Floor::spawnPlayer(string race) {
     // Randomly select chamber
     const int i = rand() % CHAMBER_COUNT;
+    const ChamberLoc randLoc = intToChamberLoc(i);
+
     // Keep track of spawn chamber so that stairs do not spawn in same chamber
     pcSpawnChamber = i;
 
-    Cell &c = chambers.at(i).spawnPlayer();
+    Cell &c = chambers.at(randLoc).spawnPlayer();
 
     /*
         if (race == "shade") {
@@ -127,25 +152,28 @@ void Floor::spawnPlayer(string race) {
 
 // Enemies
 void Floor::spawnEnemies() {
-    for (int j = 0; j < 20; ++j) {
+    for (int j = 0; j < MAX_ENEMIES; ++j) {
         const int i = rand() % CHAMBER_COUNT;
-        Cell &c = chambers.at(i).spawnEnemy();
+        const ChamberLoc randLoc = intToChamberLoc(i);
+        Cell &c = chambers.at(randLoc).spawnEnemy();
     }
 }
 
 // Potions
 void Floor::spawnPotions() {
-    for (int j = 0; j < 10; ++j) {
+    for (int j = 0; j < MAX_POTIONS; ++j) {
         const int i = rand() % CHAMBER_COUNT;
-        Cell &c = chambers.at(i).spawnPotion();
+        const ChamberLoc randLoc = intToChamberLoc(i);
+        Cell &c = chambers.at(randLoc).spawnPotion();
     }
 }
 
 // Gold
 void Floor::spawnGoldPiles() {
-    for (int j = 0; j < 10; ++j) {
+    for (int j = 0; j < MAX_GOLD_PILES; ++j) {
         const int i = rand() % CHAMBER_COUNT;
-        Cell &c = chambers.at(i).spawnGoldPile();
+        const ChamberLoc randLoc = intToChamberLoc(i);
+        Cell &c = chambers.at(randLoc).spawnGoldPile();
     }
 }
 
@@ -153,10 +181,11 @@ void Floor::spawnGoldPiles() {
 void Floor::spawnStairs() {
     while (true) {
         int i = rand() % CHAMBER_COUNT;
+        const ChamberLoc randLoc = intToChamberLoc(i);
 
         // Make sure selected chamber does not contain player
         if (pcSpawnChamber != i) {
-            Cell &c = chambers.at(i).spawnStairs();
+            Cell &c = chambers.at(randLoc).spawnStairs();
             break;
         }
     }
@@ -184,7 +213,7 @@ void Floor::customSpawn(string race) {
             // Manually spawn player, enemies, and items
             if (td->at(p) != '-' && td->at(p) != '|' && td->at(p) != ' ' &&
                 td->at(p) != '+' && td->at(p) != '#' && td->at(p) != '.') {
-                const int id = getChamberId(p);
+                const ChamberLoc id = getChamberLoc(p);
 
                 manualSpawn(td->at(p), p);
             }
@@ -195,8 +224,8 @@ void Floor::customSpawn(string race) {
 // Manually spawn object with given symbol at position p.
 Cell &Floor::manualSpawn(char symbol, Position p) {
 #ifdef DEBUG
-    cout << "Spawned: " << symbol << " in " << Chamber::getMatchingId(p)
-         << " at " << p << endl;
+// cout << "Spawned: " << symbol << " in " << Chamber::getMatchingId(p)
+//     << " at " << p << endl;
 #endif
     // EnemyFactory ef;
     // PotionFactory pf;

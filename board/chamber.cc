@@ -4,40 +4,42 @@
 
 using namespace std;
 
-Chamber::Chamber(int id, Floor *floor) : id{id}, floor{floor} {
+Chamber::Chamber() {} // Needed for using map
+
+Chamber::Chamber(ChamberLoc loc, Floor *floor) : loc{loc}, floor{floor} {
     /*
         Assign appropriate chamber dimensions
 
         Each chamber is represented as rectangular blocks, even though some may
-        have irregular shapes. Because of this simplification, chamber 1 (top
-        right) overlaps with chamber 4 (centre). These overlaps are all handled
+        have irregular shapes. Because of this simplification, the top-right
+        chamber overlaps with the centre one. These overlaps are all handled
         appropriately.
     */
 
-    switch (id) {
+    switch (loc) {
         // Top left
-        case 0:
+        case ChamberLoc::TopLeft:
             topLeftCol = 3;
             topLeftRow = 3;
             height = 4;
             width = 26;
             break;
         // Top right
-        case 1:
+        case ChamberLoc::TopRight:
             topLeftCol = 39;
             topLeftRow = 3;
             height = 10;
             width = 37;
             break;
         // Bottom right
-        case 2:
+        case ChamberLoc::BottomRight:
             topLeftCol = 37;
             topLeftRow = 16;
             height = 6;
             width = 39;
             break;
         // Bottom left
-        case 3:
+        case ChamberLoc::BottomLeft:
             topLeftCol = 4;
             topLeftRow = 15;
             height = 7;
@@ -70,11 +72,11 @@ bool Chamber::isInBounds(const int row, const int col) const {
     // Handle irregular-shaped chambers
 
     // Top right chamber, check position does not lie within the centre chamber
-    if (id == 1) {
+    if (loc == ChamberLoc::TopRight) {
         return !(row >= 4 + topLeftRow && col < 22 + topLeftCol);
     }
     // Bottom right chamber, check it does not lie outside of chamber
-    else if (id == 2) {
+    else if (loc == ChamberLoc::BottomRight) {
         return !(row < 3 + topLeftRow && col < 28 + topLeftCol);
     }
     // Rectangular-shaped chambers
@@ -102,42 +104,42 @@ Cell &Chamber::genRandPos() {
     return floor->cellAt(row, col);
 }
 
-int Chamber::getId() const {
-    return id;
+ChamberLoc Chamber::getLoc() const {
+    return loc;
 }
 
-// getMatchingId are static methods for determining which chamber (0-4) the
+// getMatchingLoc are static methods for determining which chamber the
 // provided position is supposed to be in.
-int Chamber::getMatchingId(int row, int col) {
+ChamberLoc Chamber::getMatchingLoc(const int row, const int col) {
     // Centre chamber (checked first because overlaps with rectangle covered by
-    // top right chamber 1)
+    // top right chamber)
     if (row >= 10 && row <= 12 && col >= 38 && col <= 49) {
-        return 4;
+        return ChamberLoc::Centre;
     }
     // Bottom left chamber
     else if (row >= 15 && row <= 21 && col >= 4 && col <= 24) {
-        return 3;
+        return ChamberLoc::BottomLeft;
     }
     // Bottom right chamber
     else if (row >= 16 && row <= 21 && col >= 37 && col <= 75) {
-        return 2;
+        return ChamberLoc::BottomRight;
     }
     // Top left chamber
     else if (row >= 3 && row <= 6 && col >= 3 && col <= 28) {
-        return 0;
+        return ChamberLoc::TopLeft;
     }
     // Top right chamber
     else if (row >= 3 && row <= 12 && col >= 39 && col <= 75) {
-        return 1;
+        return ChamberLoc::TopRight;
     }
     // Neither chambers
     else {
-        return -1;
+        return ChamberLoc::Other;
     }
 }
 
-int Chamber::getMatchingId(Position p) {
-    return getMatchingId(p.row, p.col);
+ChamberLoc Chamber::getMatchingLoc(Position p) {
+    return getMatchingLoc(p.row, p.col);
 }
 
 // Spawn methods:

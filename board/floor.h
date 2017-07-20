@@ -1,11 +1,13 @@
 #ifndef FLOOR_H
 #define FLOOR_H
 #include <iostream>
+#include <map>
 #include <vector>
 #include "../character/player/player.h"
 #include "cell.h"
 #include "cellobject.h"
 #include "chamber.h"
+#include "chamberloc.h"
 #include "position.h"
 #include "textdisplay.h"
 
@@ -16,6 +18,9 @@ class Floor {
     const static int HEIGHT;
     const static int CHAMBER_COUNT;
     const static int MAX_LEVEL;
+    const static int MAX_ENEMIES;
+    const static int MAX_POTIONS;
+    const static int MAX_GOLD_PILES;
 
     bool isHostileMerchants;
     bool alreadyInit;
@@ -23,13 +28,15 @@ class Floor {
     int pcSpawnChamber;
 
     Player p;
-    std::vector<Chamber> chambers;       // Chambers
-    std::vector<std::vector<Cell>> grid; // The actual grid
-    TextDisplay *td;                     // The text display
+    std::map<ChamberLoc, Chamber> chambers; // Chambers
+    std::vector<std::vector<Cell>> grid;    // The actual grid
+    TextDisplay *td;                        // The text display
     std::string boardFile;
 
     void clearGrid();
-    int getChamberId(Position p);
+    ChamberLoc getChamberLoc(Position p);
+
+    static ChamberLoc intToChamberLoc(int i);
 
     // Spawn methods private
     void spawnPlayer(std::string race);

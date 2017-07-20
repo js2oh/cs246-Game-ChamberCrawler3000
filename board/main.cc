@@ -1,5 +1,5 @@
-#include "textdisplay.h"
 #include "floor.h"
+#include "textdisplay.h"
 
 using namespace std;
 

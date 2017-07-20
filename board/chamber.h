@@ -1,11 +1,11 @@
 #ifndef CHAMBER_H
 #define CHAMBER_H
-
 #include <vector>
 #include "../character/enemy/enemy.h"
 #include "../item/potion/potion.h"
 #include "../item/treasure/gold.h"
 #include "cell.h"
+#include "chamberloc.h"
 #include "floor.h"
 #include "position.h"
 
@@ -13,22 +13,24 @@ class Cell;
 class Floor;
 
 class Chamber {
+    ChamberLoc loc;
     Floor *floor;
-    int id, topLeftCol, topLeftRow, height, width;
+    int topLeftCol, topLeftRow, height, width;
 
     std::vector<Enemy *> enemies;
     std::vector<Potion *> potions;
     std::vector<Gold *> treasures;
 
     public:
-    Chamber(int i, Floor *floor);
+    Chamber();
+    Chamber(ChamberLoc loc, Floor *floor);
     void addEnemy(Enemy *e);
     void addPotion(Potion *p);
     void addGold(Gold *g);
     Cell &genRandPos();
-    int getId() const;
-    static int getMatchingId(Position p);
-    static int getMatchingId(int row, int col);
+    ChamberLoc getLoc() const;
+    static ChamberLoc getMatchingLoc(int row, int col);
+    static ChamberLoc getMatchingLoc(Position p);
     bool isInBounds(int row, int col) const;
 
     Cell &spawnPlayer();
