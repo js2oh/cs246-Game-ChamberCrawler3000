@@ -10,7 +10,7 @@ Info Cell::getInfo() const {
     Info i{};
     i.pos.row = pos.row;
     i.pos.col = pos.col;
-    i.symbol = symbol;
+    i.co = co;
     return i;
 }
 
@@ -53,4 +53,18 @@ void Cell::setPosition(Position p) {
 // Notify TextDisplay
 void Cell::notify() {
     td->notify(*this);
+}
+
+void Cell::transfer(Cell &cell) {
+    // cell.symbol = symbol;
+    // symbol = '.';
+    cell.setCellObject(CellObject::Player);
+    this->setCellObject(CellObject::Empty);
+
+    notify();
+    cell.notify();
+}
+
+bool Cell::isEmpty() const {
+    return co == CellObject::Empty;
 }

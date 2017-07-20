@@ -1,10 +1,11 @@
 #ifndef INFO_H
 #define INFO_H
-
+#include "cellobject.h"
 #include "position.h"
+
 struct Info {
     Position pos;
-    char symbol;
+    CellObject co;
 };
 
 #endif

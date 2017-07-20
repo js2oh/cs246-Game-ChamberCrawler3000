@@ -133,6 +133,7 @@ void Floor::spawnPlayer(string race) {
     pcSpawnChamber = i;
 
     Cell &c = chambers.at(randLoc).spawnPlayer();
+    player = new Player(&c);
 
     /*
         if (race == "shade") {
@@ -237,6 +238,7 @@ Cell &Floor::manualSpawn(char symbol, Position p) {
         case '@':
             c.setCellObject(CellObject::Player);
             c.setCellSymbol('@');
+            player = new Player(&c);
             /*
                 if (race == "shade") {
                     player = new Shade{c};
@@ -315,7 +317,65 @@ bool Floor::vacantAt(const int row, const int col) const {
     return grid.at(row).at(col).getCellObject() == CellObject::Empty;
 }
 
+Position Floor::getPlayerPosition() const {
+    return player->getPosition();
+}
+
 ostream &operator<<(ostream &out, const Floor &f) {
     out << *(f.td);
+    out << "Player at " << f.getPlayerPosition();
     return out;
+}
+
+void Floor::movePlayer(string dir) {
+    Position oldPos = player->getPosition();
+    Position newPos = dirToPos(oldPos, dir);
+
+    Cell *oldCell = player->getCell();
+    cout << newPos << endl;
+
+    if (isInBounds(newPos) && cellAt(newPos).isEmpty()) {
+        Cell &newCell = cellAt(newPos);
+        oldCell->transfer(newCell);
+        player->setCell(&newCell);
+    }
+}
+
+bool Floor::isInBounds(Position p) const {
+    return p.row >= 0 && p.row < HEIGHT && p.col >= 0 && p.col < WIDTH;
+}
+
+Position Floor::dirToPos(Position pos, string dir) {
+    Position newPos{pos};
+
+    if (dir == "nw") {
+        --newPos.row;
+        --newPos.col;
+    }
+    else if (dir == "n") {
+        --newPos.row;
+    }
+    else if (dir == "ne") {
+        --newPos.row;
+        ++newPos.col;
+    }
+    else if (dir == "e") {
+        ++newPos.col;
+    }
+    else if (dir == "se") {
+        ++newPos.row;
+        ++newPos.col;
+    }
+    else if (dir == "s") {
+        ++newPos.row;
+    }
+    else if (dir == "sw") {
+        ++newPos.row;
+        --newPos.col;
+    }
+    else {
+        --newPos.col;
+    }
+
+    return newPos;
 }

@@ -34,6 +34,9 @@ class Cell {
     void setPosition(int row, int col);
     void setPosition(Position p);
     void notify();
+
+    void transfer(Cell &cell);
+    bool isEmpty() const;
 };
 
 #endif /* CELL_H */

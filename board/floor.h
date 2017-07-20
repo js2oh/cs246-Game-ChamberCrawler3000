@@ -12,6 +12,7 @@
 #include "textdisplay.h"
 
 class Chamber;
+class Player;
 
 class Floor {
     const static int WIDTH;
@@ -27,7 +28,7 @@ class Floor {
     int level;
     int pcSpawnChamber;
 
-    Player p;
+    Player *player;
     std::map<ChamberLoc, Chamber> chambers; // Chambers
     std::vector<std::vector<Cell>> grid;    // The actual grid
     TextDisplay *td;                        // The text display
@@ -57,6 +58,12 @@ class Floor {
     bool vacantAt(int row, int col) const;
 
     friend std::ostream &operator<<(std::ostream &out, const Floor &f);
+
+    void movePlayer(std::string dir);
+    Position dirToPos(Position pos, std::string dir);
+    Position getPlayerPosition() const;
+
+    bool isInBounds(Position p) const;
 };
 
 std::ostream &operator<<(std::ostream &out, const Floor &f);
