@@ -147,8 +147,7 @@ ChamberLoc Chamber::getMatchingLoc(Position p) {
 Cell &Chamber::spawnPlayer() {
     // Get randomly-selected Cell and update its symbol and information
     Cell &c = genRandPos();
-    c.setCellObject(CellObject::Player);
-    c.setCellSymbol('@');
+    c.setCellObject(CellObject::Character);
     // Notify TextDisplay so that it updates
     c.notify();
     return c;
@@ -159,9 +158,10 @@ Cell &Chamber::spawnEnemy() {
     Cell &c = genRandPos();
     // Use EnemyFactory to randomly generate type of Enemy
     // EnemyFactory ef;
-    // enemies.emplace_back(ef.create(c));
-    c.setCellObject(CellObject::Enemy);
-    c.setCellSymbol('E');
+    // Character *cp = ef.create(c);
+    // enemies.emplace_back(cp);
+    // c.setCharacter(cp);
+    c.setCellObject(CellObject::Character);
     c.notify();
     return c;
 }
@@ -169,12 +169,12 @@ Cell &Chamber::spawnEnemy() {
 // Potion
 Cell &Chamber::spawnPotion() {
     Cell &c = genRandPos();
-    // Use EnemyFactory to randomly generate type of Potion
+    // Use PotionFactory to randomly generate type of Potion
     // PotionFactory pf;
-
-    // potions.emplace_back(pf.spawn(c));
+    // Item *ip = pf.create(c);
+    // c.setItem(ip);
+    // potions.emplace_back(ip);
     c.setCellObject(CellObject::Item);
-    c.setCellSymbol('P');
     c.notify();
     return c;
 }
@@ -182,11 +182,12 @@ Cell &Chamber::spawnPotion() {
 // Gold (Treasure)
 Cell &Chamber::spawnGoldPile() {
     Cell &c = genRandPos();
-    // Use EnemyFactory to randomly generate type of Treasure
+    // Use TreasureFactory to randomly generate type of Treasure
     // TreasureFactory tf;
-    // potions.emplace_back(tf.spawn(c));
+    // Item *ip = tf.create(c);
+    // c.setItem(ip);
+    // treasures.emplace_back(tf.create(c));
     c.setCellObject(CellObject::Item);
-    c.setCellSymbol('G');
     c.notify();
 
     return c;
@@ -196,7 +197,6 @@ Cell &Chamber::spawnGoldPile() {
 Cell &Chamber::spawnStairs() {
     Cell &c = genRandPos();
     c.setCellObject(CellObject::Stairs);
-    c.setCellSymbol('\\');
     c.notify();
     return c;
 }

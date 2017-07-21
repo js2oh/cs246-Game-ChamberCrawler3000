@@ -2,15 +2,35 @@
 #include <iostream>
 #include "info.h"
 
-Cell::Cell() {}
+Cell::Cell() : symbol{'.'} {}
 
 Cell::~Cell() {}
+
+bool Cell::isEmpty() const {
+    return co == CellObject::Empty;
+}
+
+void Cell::notify() {
+    td->notify(*this);
+}
+
+// Set current Cell's object to Empty and target Cell's object to Character
+void Cell::transferCharacter(Cell &cell) {
+    setCellObject(CellObject::Empty);
+    notify();
+
+    // 'Move' character to next Cell
+    cell.setCellObject(CellObject::Character);
+    cell.notify();
+}
 
 Info Cell::getInfo() const {
     Info i{};
     i.pos.row = pos.row;
     i.pos.col = pos.col;
+    i.cellObject = co;
     i.symbol = symbol;
+
     return i;
 }
 
@@ -33,6 +53,22 @@ void Cell::setChamber(Chamber *c) {
     this->c = c;
 }
 
+Character *Cell::getCharacter() {
+    return cp;
+}
+
+void Cell::setCharacter(Character *cp) {
+    this->cp = cp;
+}
+
+Item *Cell::getItem() {
+    return ip;
+}
+
+void Cell::setItem(Item *ip) {
+    this->ip = ip;
+}
+
 void Cell::setTd(TextDisplay *td) {
     this->td = td;
 }
@@ -48,9 +84,4 @@ void Cell::setPosition(int row, int col) {
 
 void Cell::setPosition(Position p) {
     setPosition(p.row, p.col);
-}
-
-// Notify TextDisplay
-void Cell::notify() {
-    td->notify(*this);
 }

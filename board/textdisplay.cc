@@ -51,10 +51,24 @@ void TextDisplay::notify(Cell &c) {
     // Get row, column, on/off state of subject
     Info i = c.getInfo();
     const Position pos = i.pos;
+    const CellObject co = i.cellObject;
     const char symbol = i.symbol;
 
     // Update display grid
-    theDisplay[pos.row][pos.col] = symbol;
+    switch (co) {
+        case CellObject::Empty:
+            theDisplay[pos.row][pos.col] = symbol;
+            break;
+        case CellObject::Character:
+            // theDisplay[pos.row][pos.col] = c.getCharacter()->getSymbol();
+            break;
+        case CellObject::Item:
+            // theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();
+            break;
+        case CellObject::Stairs:
+            theDisplay[pos.row][pos.col] = '\\';
+            break;
+    }
 }
 
 /*
