@@ -3,6 +3,8 @@
 #include <iostream>
 #include <utility>
 #include <vector>
+#include "../character/character.h"
+#include "../item/item.h"
 #include "cellobject.h"
 #include "chamber.h"
 #include "position.h"
@@ -15,6 +17,9 @@ class Cell {
     char symbol;
     CellObject co;
     Position pos;
+
+    Character *cp;
+    Item *ip;
 
     Chamber *c;
     TextDisplay *td;
@@ -37,6 +42,10 @@ class Cell {
 
     void transfer(Cell &cell);
     bool isEmpty() const;
+    Character *getCharacter();
+    void setCharacter(Character *cp);
+    Item *getItem();
+    void setItem(Item *ip);
 };
 
 #endif /* CELL_H */

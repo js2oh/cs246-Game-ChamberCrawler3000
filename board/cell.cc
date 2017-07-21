@@ -2,7 +2,7 @@
 #include <iostream>
 #include "info.h"
 
-Cell::Cell() {}
+Cell::Cell() : symbol{'.'} {}
 
 Cell::~Cell() {}
 
@@ -61,10 +61,26 @@ void Cell::transfer(Cell &cell) {
     setCellObject(CellObject::Empty);
     notify();
 
-    cell.setCellObject(CellObject::Player);
+    cell.setCellObject(CellObject::Character);
     cell.notify();
 }
 
 bool Cell::isEmpty() const {
     return co == CellObject::Empty;
+}
+
+Character *Cell::getCharacter() {
+    return cp;
+}
+
+void Cell::setCharacter(Character *cp) {
+    this->cp = cp;
+}
+
+Item *Cell::getItem() {
+    return ip;
+}
+
+void Cell::setItem(Item *ip) {
+    this->ip = ip;
 }

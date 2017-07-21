@@ -59,8 +59,14 @@ void TextDisplay::notify(Cell &c) {
         case CellObject::Empty:
             theDisplay[pos.row][pos.col] = symbol;
             break;
-        case CellObject::Player:
-            theDisplay[pos.row][pos.col] = '@';
+        case CellObject::Character:
+            // theDisplay[pos.row][pos.col] = c.getCharacter()->getSymbol();
+            break;
+        case CellObject::Item:
+            // theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();
+            break;
+        case CellObject::Stairs:
+            theDisplay[pos.row][pos.col] = '\\';
             break;
     }
 }

@@ -1,4 +1,4 @@
 #ifndef CELLOBJECT_H
 #define CELLOBJECT_H
-enum class CellObject { Empty, Enemy, Item, Player, Stairs, Wall };
+enum class CellObject { Empty, Character, Item, Stairs, Wall };
 #endif /* CELLOBJECT_H */

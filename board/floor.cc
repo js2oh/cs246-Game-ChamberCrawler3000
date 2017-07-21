@@ -77,16 +77,22 @@ void Floor::init() {
 
             // Get symbol at current position in TextDisplay
             const char symbol = td->at(i, j);
-            grid[i][j].setCellSymbol(symbol); // Update occupied symbols later
+            // later
 
             // Accessible Cells
-            if (symbol == '+' || symbol == '#' || symbol == '.') {
+            if (symbol == '+' || symbol == '#') {
                 grid[i][j].setCellObject(CellObject::Empty);
+                grid[i][j].setCellSymbol(symbol);
             }
             // Inaccessible cells
             else if (symbol == '|' || symbol == '-' || symbol == ' ') {
                 grid[i][j].setCellObject(CellObject::Wall);
+                grid[i][j].setCellSymbol(symbol);
             }
+            else {
+                grid[i][j].setCellSymbol('.');
+            }
+
             // Other types of cells are configured in spawn methods below
         }
     }
@@ -134,7 +140,8 @@ void Floor::spawnPlayer(string race) {
     pcSpawnChamber = i;
 
     Cell &c = chambers.at(randLoc).spawnPlayer();
-    player = new Player(&c);
+    player = new Player(&c); // Change to Character once implemented
+    // c.setCharacter(player);
 
     /*
         if (race == "shade") {
@@ -157,6 +164,7 @@ void Floor::spawnEnemies() {
     for (int j = 0; j < MAX_ENEMIES; ++j) {
         const int i = rand() % CHAMBER_COUNT;
         const ChamberLoc randLoc = intToChamberLoc(i);
+        // Spawn enemies and store in vectors inside chambers
         Cell &c = chambers.at(randLoc).spawnEnemy();
     }
 }
@@ -166,6 +174,7 @@ void Floor::spawnPotions() {
     for (int j = 0; j < MAX_POTIONS; ++j) {
         const int i = rand() % CHAMBER_COUNT;
         const ChamberLoc randLoc = intToChamberLoc(i);
+        // Spawn potions and store in vectors inside chambers
         Cell &c = chambers.at(randLoc).spawnPotion();
     }
 }
@@ -175,6 +184,7 @@ void Floor::spawnGoldPiles() {
     for (int j = 0; j < MAX_GOLD_PILES; ++j) {
         const int i = rand() % CHAMBER_COUNT;
         const ChamberLoc randLoc = intToChamberLoc(i);
+        // Spawn gold piles and store in vectors inside chambers
         Cell &c = chambers.at(randLoc).spawnGoldPile();
     }
 }
@@ -215,7 +225,7 @@ void Floor::customSpawn(string race) {
             // Manually spawn player, enemies, and items
             if (td->at(p) != '-' && td->at(p) != '|' && td->at(p) != ' ' &&
                 td->at(p) != '+' && td->at(p) != '#' && td->at(p) != '.') {
-                const ChamberLoc id = getChamberLoc(p);
+                // const ChamberLoc id = getChamberLoc(p);
                 manualSpawn(td->at(p), p);
             }
         }
@@ -237,9 +247,10 @@ Cell &Floor::manualSpawn(char symbol, Position p) {
     switch (symbol) {
         // Player
         case '@':
-            c.setCellObject(CellObject::Player);
-            // c.setCellSymbol('@');
-            player = new Player(&c);
+            c.setCellObject(CellObject::Character);
+            player = new Player(&c); // Later change to Character *
+            // c.setCharacter(player);
+
             /*
                 if (race == "shade") {
                     player = new Shade{c};
@@ -263,11 +274,11 @@ Cell &Floor::manualSpawn(char symbol, Position p) {
         case 'M':
         case 'D':
         case 'L':
-            c.setCellObject(CellObject::Enemy);
-            c.setCellSymbol(symbol);
+            c.setCellObject(CellObject::Character);
             // Use factory to manually spawn the correct enemy type
-            // ef.create(symbol, p);
-            // c.getChamber()->addEnemy(ef.create(symbol, p));
+            // Character *cp = ef.create(symbol, p);
+            // c.setCharacter(cp);
+            // c.getChamber()->addEnemy(cp);
             break;
         // Potion types
         case '0':
@@ -277,9 +288,9 @@ Cell &Floor::manualSpawn(char symbol, Position p) {
         case '4':
         case '5':
             c.setCellObject(CellObject::Item);
-            c.setCellSymbol('P');
-            // pf.create(symbol, p);
-            // c.getChamber()->addPotion(pf.create(symbol, p));
+            // Item *ip = pf.create(symbol, p);
+            // c.setItem(ip);
+            // c.getChamber()->addPotion(ip);
             break;
         // Treasures
         case '6':
@@ -287,14 +298,13 @@ Cell &Floor::manualSpawn(char symbol, Position p) {
         case '8':
         case '9':
             c.setCellObject(CellObject::Item);
-            c.setCellSymbol('G');
-            // tf.create(symbol, p);
-            // c.getChamber()->addGold(tf.create(symbol, p));
+            // Item *ip = tf.create(symbol, p);
+            // c.setItem(ip);
+            // c.getChamber()->addGold(ip);
             break;
         // Stairs
         case '\\':
             c.setCellObject(CellObject::Stairs);
-            c.setCellSymbol('\\');
             break;
     }
 
@@ -334,10 +344,27 @@ void Floor::movePlayer(string dir) {
 
     Cell *oldCell = player->getCell();
 
-    if (isInBounds(newPos) && cellAt(newPos).isEmpty()) {
+    if (isInBounds(newPos)) {
         Cell &newCell = cellAt(newPos);
-        oldCell->transfer(newCell);
-        player->setCell(&newCell);
+
+        switch (newCell.getCellObject()) {
+            case CellObject::Empty:
+                oldCell->transfer(newCell);
+                player->setCell(&newCell);
+                break;
+            case CellObject::Item:
+                // if (isDragonHoard)
+                //      cannot be picked up
+                // else if (gold) {
+                //      pick up
+                //}
+                break;
+            case CellObject::Stairs:
+                // Load next level
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -347,8 +374,8 @@ bool Floor::isInBounds(Position p) const {
 
 Position Floor::dirToPos(Position pos, string dir) {
     Position newPos{pos};
-    // TODO disallow one-character directions like 'n', 'e', etc.
-    // Keep for now because easier to test input
+    // TODO In future, disallow one-character directions like 'n', 'e', etc.
+    // Keep for now because it's easier to type
 
     if (dir == "nw") {
         --newPos.row;
