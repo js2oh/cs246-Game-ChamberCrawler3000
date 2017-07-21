@@ -59,9 +59,11 @@ Chamber::Chamber(ChamberLoc loc, Floor *floor) : loc{loc}, floor{floor} {
 void Chamber::addEnemy(Enemy *e) {
     enemies.emplace_back(e);
 }
+
 void Chamber::addPotion(Potion *p) {
     potions.emplace_back(p);
 }
+
 void Chamber::addGold(Gold *g) {
     treasures.emplace_back(g);
 }

@@ -24,9 +24,14 @@ class Chamber {
     public:
     Chamber();
     Chamber(ChamberLoc loc, Floor *floor);
+
     void addEnemy(Enemy *e);
+    // Enemy *getEnemy(Position p);
     void addPotion(Potion *p);
+    // Potion *getPotion(Position p);
     void addGold(Gold *g);
+    // Gold *getGold(Position p);
+
     Cell &genRandPos();
     ChamberLoc getLoc() const;
     static ChamberLoc getMatchingLoc(int row, int col);

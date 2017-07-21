@@ -91,6 +91,7 @@ void Floor::init() {
             }
             // Standard tiles (may be occupied by characters and items)
             else {
+                grid[i][j].setCellObject(CellObject::Empty);
                 grid[i][j].setCellSymbol('.');
             }
 
@@ -108,17 +109,19 @@ void Floor::init() {
     }
 }
 
+void Floor::loadNextLevel() {
+    ++level;
+    clearGrid();
+    init();
+}
+
 // Spawn all objects in specified order
 void Floor::randomSpawn(string race) {
     spawnPlayer(race);
     spawnEnemies();
     spawnGoldPiles();
     spawnPotions();
-
-    // Spawn stairs only in first 4 levels
-    if (level != MAX_LEVEL) {
-        spawnStairs();
-    }
+    spawnStairs();
 }
 
 // Spawn according to TextDisplay (which was loaded from board file)
@@ -315,11 +318,43 @@ void Floor::movePlayer(string dir) {
                 //}
                 break;
             case CellObject::Stairs:
-                // Load next level
+                if (level == MAX_LEVEL) {
+                    // Game Ends
+                }
+                else {
+                    loadNextLevel();
+                }
                 break;
             default:
                 break;
         }
+    }
+}
+
+void Floor::attack(string dir) {
+    const Position oldPos = player->getPosition();
+    const Position newPos = dirToPos(oldPos, dir);
+    Cell *oldCell = player->getCell();
+
+    if (isInBounds(newPos)) {
+        Cell &newCell = cellAt(newPos);
+        const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
+        Character *cp = newCell.getCharacter();
+        // player->attack(cp);
+    }
+}
+
+void Floor::pickup(string dir) {
+    const Position oldPos = player->getPosition();
+    const Position newPos = dirToPos(oldPos, dir);
+
+    Cell *oldCell = player->getCell();
+
+    if (isInBounds(newPos)) {
+        Cell &newCell = cellAt(newPos);
+        const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
+        Item *ip = newCell.getItem();
+        // player->applyPotion(ip);
     }
 }
 

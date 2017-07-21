@@ -37,6 +37,7 @@ class Floor {
     std::vector<std::vector<Cell>> grid;    // The actual grid
 
     void clearGrid();
+    void loadNextLevel();
     ChamberLoc getChamberLoc(Position p) const;
     static ChamberLoc intToChamberLoc(int i);
     Position dirToPos(Position pos, std::string dir) const;
@@ -56,6 +57,8 @@ class Floor {
     ~Floor();
     void init();
     void movePlayer(std::string dir);
+    void attack(std::string dir);
+    void pickup(std::string dir);
 
     Cell &cellAt(int row, int col);
     Cell &cellAt(Position p);
