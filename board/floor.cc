@@ -76,7 +76,8 @@ void Floor::init() {
             }
 
             // Get symbol at current position in TextDisplay
-            char symbol = td->at(i, j);
+            const char symbol = td->at(i, j);
+            grid[i][j].setCellSymbol(symbol); // Update occupied symbols later
 
             // Accessible Cells
             if (symbol == '+' || symbol == '#' || symbol == '.') {
@@ -215,7 +216,6 @@ void Floor::customSpawn(string race) {
             if (td->at(p) != '-' && td->at(p) != '|' && td->at(p) != ' ' &&
                 td->at(p) != '+' && td->at(p) != '#' && td->at(p) != '.') {
                 const ChamberLoc id = getChamberLoc(p);
-
                 manualSpawn(td->at(p), p);
             }
         }
@@ -232,12 +232,13 @@ Cell &Floor::manualSpawn(char symbol, Position p) {
     // PotionFactory pf;
     // TreasureFactory tf;
     Cell &c = cellAt(p);
+    c.setCellSymbol('.');
 
     switch (symbol) {
         // Player
         case '@':
             c.setCellObject(CellObject::Player);
-            c.setCellSymbol('@');
+            // c.setCellSymbol('@');
             player = new Player(&c);
             /*
                 if (race == "shade") {
@@ -332,7 +333,6 @@ void Floor::movePlayer(string dir) {
     Position newPos = dirToPos(oldPos, dir);
 
     Cell *oldCell = player->getCell();
-    cout << newPos << endl;
 
     if (isInBounds(newPos) && cellAt(newPos).isEmpty()) {
         Cell &newCell = cellAt(newPos);
@@ -347,26 +347,28 @@ bool Floor::isInBounds(Position p) const {
 
 Position Floor::dirToPos(Position pos, string dir) {
     Position newPos{pos};
+    // TODO disallow one-character directions like 'n', 'e', etc.
+    // Keep for now because easier to test input
 
     if (dir == "nw") {
         --newPos.row;
         --newPos.col;
     }
-    else if (dir == "n") {
+    else if (dir == "n" || dir == "no") {
         --newPos.row;
     }
     else if (dir == "ne") {
         --newPos.row;
         ++newPos.col;
     }
-    else if (dir == "e") {
+    else if (dir == "e" || dir == "ea") {
         ++newPos.col;
     }
     else if (dir == "se") {
         ++newPos.row;
         ++newPos.col;
     }
-    else if (dir == "s") {
+    else if (dir == "s" || dir == "so") {
         ++newPos.row;
     }
     else if (dir == "sw") {

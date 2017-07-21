@@ -11,6 +11,8 @@ Info Cell::getInfo() const {
     i.pos.row = pos.row;
     i.pos.col = pos.col;
     i.co = co;
+    i.symbol = symbol;
+
     return i;
 }
 
@@ -56,12 +58,10 @@ void Cell::notify() {
 }
 
 void Cell::transfer(Cell &cell) {
-    // cell.symbol = symbol;
-    // symbol = '.';
-    cell.setCellObject(CellObject::Player);
-    this->setCellObject(CellObject::Empty);
-
+    setCellObject(CellObject::Empty);
     notify();
+
+    cell.setCellObject(CellObject::Player);
     cell.notify();
 }
 

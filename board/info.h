@@ -6,6 +6,7 @@
 struct Info {
     Position pos;
     CellObject co;
+    char symbol;
 };
 
 #endif

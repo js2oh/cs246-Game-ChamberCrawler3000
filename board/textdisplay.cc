@@ -52,11 +52,12 @@ void TextDisplay::notify(Cell &c) {
     Info i = c.getInfo();
     const Position pos = i.pos;
     const CellObject co = i.co;
+    const char symbol = i.symbol;
 
     // Update display grid
     switch (co) {
         case CellObject::Empty:
-            theDisplay[pos.row][pos.col] = '.';
+            theDisplay[pos.row][pos.col] = symbol;
             break;
         case CellObject::Player:
             theDisplay[pos.row][pos.col] = '@';
