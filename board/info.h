@@ -5,7 +5,7 @@
 
 struct Info {
     Position pos;
-    CellObject co;
+    CellObject cellObject;
     char symbol;
 };
 

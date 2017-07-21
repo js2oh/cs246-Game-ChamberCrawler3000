@@ -16,10 +16,10 @@ const int Floor::MAX_POTIONS = 10;
 const int Floor::MAX_GOLD_PILES = 10;
 
 Floor::Floor(int level, string boardFile)
-    : level{level},              // 1-5
-      boardFile{boardFile},      // Default is empty.txt
-      isHostileMerchants{false}, // Controls hostility of all merchants
+    : isHostileMerchants{false}, // Controls hostility of all merchants
       alreadyInit{false},        // Controls whether to clear grid upon init
+      level{level},              // 1-5
+      boardFile{boardFile},      // Default is empty.txt
       grid{HEIGHT, vector<Cell>{WIDTH}} {
     // Initialize grid Cells and spawn objects
     init();
@@ -89,6 +89,7 @@ void Floor::init() {
                 grid[i][j].setCellObject(CellObject::Wall);
                 grid[i][j].setCellSymbol(symbol);
             }
+            // Standard tiles (may be occupied by characters and items)
             else {
                 grid[i][j].setCellSymbol('.');
             }
@@ -104,102 +105,6 @@ void Floor::init() {
     // Spawn all objects according to specified board file and level
     else {
         customSpawn();
-    }
-}
-
-// Get chamber location that p belongs to
-ChamberLoc Floor::getChamberLoc(Position p) {
-    return Chamber::getMatchingLoc(p);
-}
-
-ChamberLoc Floor::intToChamberLoc(int i) {
-    switch (i) {
-        case 0:
-            return ChamberLoc::TopLeft;
-        case 1:
-            return ChamberLoc::TopRight;
-        case 2:
-            return ChamberLoc::BottomRight;
-        case 3:
-            return ChamberLoc::BottomLeft;
-        case 4:
-            return ChamberLoc::Centre;
-        default: // Should never happen
-            return ChamberLoc::Other;
-    }
-}
-
-// Spawn methods:
-// Spawn player according to chosen race (shade by default)
-void Floor::spawnPlayer(string race) {
-    // Randomly select chamber
-    const int i = rand() % CHAMBER_COUNT;
-    const ChamberLoc randLoc = intToChamberLoc(i);
-
-    // Keep track of spawn chamber so that stairs do not spawn in same chamber
-    pcSpawnChamber = i;
-
-    Cell &c = chambers.at(randLoc).spawnPlayer();
-    player = new Player(&c); // Change to Character once implemented
-    // c.setCharacter(player);
-
-    /*
-        if (race == "shade") {
-            player = new Shade{c};
-        }
-        else if (race == "drow") {
-            player = new Drow{c};
-        }
-        else if (race == "goblin") {
-            player = new Goblin{c};
-        }
-        else if (race == "troll") {
-            player = new Troll{c};
-        }
-    */
-}
-
-// Enemies
-void Floor::spawnEnemies() {
-    for (int j = 0; j < MAX_ENEMIES; ++j) {
-        const int i = rand() % CHAMBER_COUNT;
-        const ChamberLoc randLoc = intToChamberLoc(i);
-        // Spawn enemies and store in vectors inside chambers
-        Cell &c = chambers.at(randLoc).spawnEnemy();
-    }
-}
-
-// Potions
-void Floor::spawnPotions() {
-    for (int j = 0; j < MAX_POTIONS; ++j) {
-        const int i = rand() % CHAMBER_COUNT;
-        const ChamberLoc randLoc = intToChamberLoc(i);
-        // Spawn potions and store in vectors inside chambers
-        Cell &c = chambers.at(randLoc).spawnPotion();
-    }
-}
-
-// Gold
-void Floor::spawnGoldPiles() {
-    for (int j = 0; j < MAX_GOLD_PILES; ++j) {
-        const int i = rand() % CHAMBER_COUNT;
-        const ChamberLoc randLoc = intToChamberLoc(i);
-        // Spawn gold piles and store in vectors inside chambers
-        Cell &c = chambers.at(randLoc).spawnGoldPile();
-    }
-}
-
-// Stairs
-void Floor::spawnStairs() {
-    while (true) {
-        int i = rand() % CHAMBER_COUNT;
-        const ChamberLoc randLoc = intToChamberLoc(i);
-
-        // Make sure selected chamber does not contain player
-        if (pcSpawnChamber != i) {
-            Cell &c = chambers.at(randLoc).spawnStairs();
-            break;
-        }
     }
 }
 
@@ -233,7 +138,7 @@ void Floor::customSpawn(string race) {
 }
 
 // Manually spawn object with given symbol at position p.
-Cell &Floor::manualSpawn(char symbol, Position p) {
+void Floor::manualSpawn(char symbol, Position p) {
 #ifdef DEBUG
 // cout << "Spawned: " << symbol << " in " << Chamber::getMatchingId(p)
 //     << " at " << p << endl;
@@ -311,36 +216,86 @@ Cell &Floor::manualSpawn(char symbol, Position p) {
     // Notify TextDisplay of changes
     // Display should show 'P' for potions and 'G' for gold
     c.notify();
-    return c;
+    // return c;
 }
 
-// Get Cell at given position
-Cell &Floor::cellAt(int row, int col) {
-    return grid.at(row).at(col);
+// Spawn methods:
+// Spawn player according to chosen race (shade by default)
+void Floor::spawnPlayer(string race) {
+    // Randomly select chamber
+    const int i = rand() % CHAMBER_COUNT;
+    const ChamberLoc randLoc = intToChamberLoc(i);
+
+    // Keep track of spawn chamber so that stairs do not spawn in same chamber
+    pcSpawnChamber = randLoc;
+
+    Cell &c = chambers.at(randLoc).spawnPlayer();
+    player = new Player(&c); // Change to Character once implemented
+    // c.setCharacter(player);
+
+    /*
+        if (race == "shade") {
+            player = new Shade{c};
+        }
+        else if (race == "drow") {
+            player = new Drow{c};
+        }
+        else if (race == "goblin") {
+            player = new Goblin{c};
+        }
+        else if (race == "troll") {
+            player = new Troll{c};
+        }
+    */
 }
 
-Cell &Floor::cellAt(Position p) {
-    return cellAt(p.row, p.col);
+// Enemies
+void Floor::spawnEnemies() {
+    for (int j = 0; j < MAX_ENEMIES; ++j) {
+        const int i = rand() % CHAMBER_COUNT;
+        const ChamberLoc randLoc = intToChamberLoc(i);
+        // Spawn enemies and store in vectors inside chambers
+        Cell &c = chambers.at(randLoc).spawnEnemy();
+    }
 }
 
-// Determine vacancy of grid at given position
-bool Floor::vacantAt(const int row, const int col) const {
-    return grid.at(row).at(col).getCellObject() == CellObject::Empty;
+// Potions
+void Floor::spawnPotions() {
+    for (int j = 0; j < MAX_POTIONS; ++j) {
+        const int i = rand() % CHAMBER_COUNT;
+        const ChamberLoc randLoc = intToChamberLoc(i);
+        // Spawn potions and store in vectors inside chambers
+        Cell &c = chambers.at(randLoc).spawnPotion();
+    }
 }
 
-Position Floor::getPlayerPosition() const {
-    return player->getPosition();
+// Gold
+void Floor::spawnGoldPiles() {
+    for (int j = 0; j < MAX_GOLD_PILES; ++j) {
+        const int i = rand() % CHAMBER_COUNT;
+        const ChamberLoc randLoc = intToChamberLoc(i);
+        // Spawn gold piles and store in vectors inside chambers
+        Cell &c = chambers.at(randLoc).spawnGoldPile();
+    }
 }
 
-ostream &operator<<(ostream &out, const Floor &f) {
-    out << *(f.td);
-    out << "Player at " << f.getPlayerPosition();
-    return out;
+// Stairs
+void Floor::spawnStairs() {
+    while (true) {
+        int i = rand() % CHAMBER_COUNT;
+        const ChamberLoc randLoc = intToChamberLoc(i);
+
+        // Make sure selected chamber does not contain player
+        if (pcSpawnChamber != randLoc) {
+            Cell &c = chambers.at(randLoc).spawnStairs();
+            break;
+        }
+    }
 }
 
 void Floor::movePlayer(string dir) {
-    Position oldPos = player->getPosition();
-    Position newPos = dirToPos(oldPos, dir);
+    const Position oldPos = player->getPosition();
+    const Position newPos = dirToPos(oldPos, dir);
 
     Cell *oldCell = player->getCell();
 
@@ -349,7 +304,7 @@ void Floor::movePlayer(string dir) {
 
         switch (newCell.getCellObject()) {
             case CellObject::Empty:
-                oldCell->transfer(newCell);
+                oldCell->transferCharacter(newCell);
                 player->setCell(&newCell);
                 break;
             case CellObject::Item:
@@ -368,11 +323,46 @@ void Floor::movePlayer(string dir) {
     }
 }
 
+// Get Cell at given position
+Cell &Floor::cellAt(int row, int col) {
+    return grid.at(row).at(col);
+}
+
+Cell &Floor::cellAt(Position p) {
+    return cellAt(p.row, p.col);
+}
+
+// Get chamber location that p belongs to
+ChamberLoc Floor::getChamberLoc(Position p) const {
+    return Chamber::getMatchingLoc(p);
+}
+
+Position Floor::getPlayerPosition() const {
+    return player->getPosition();
+}
+
+ChamberLoc Floor::intToChamberLoc(int i) {
+    switch (i) {
+        case 0:
+            return ChamberLoc::TopLeft;
+        case 1:
+            return ChamberLoc::TopRight;
+        case 2:
+            return ChamberLoc::BottomRight;
+        case 3:
+            return ChamberLoc::BottomLeft;
+        case 4:
+            return ChamberLoc::Centre;
+        default: // Should never happen
+            return ChamberLoc::Other;
+    }
+}
+
 bool Floor::isInBounds(Position p) const {
     return p.row >= 0 && p.row < HEIGHT && p.col >= 0 && p.col < WIDTH;
 }
 
-Position Floor::dirToPos(Position pos, string dir) {
+Position Floor::dirToPos(Position pos, string dir) const {
     Position newPos{pos};
     // TODO In future, disallow one-character directions like 'n', 'e', etc.
     // Keep for now because it's easier to type
@@ -407,4 +397,15 @@ Position Floor::dirToPos(Position pos, string dir) {
     }
 
     return newPos;
+}
+
+// Determine vacancy of grid at given position
+bool Floor::vacantAt(const int row, const int col) const {
+    return grid.at(row).at(col).getCellObject() == CellObject::Empty;
+}
+
+ostream &operator<<(ostream &out, const Floor &f) {
+    out << *(f.td);
+    out << "Player at " << f.getPlayerPosition();
+    return out;
 }

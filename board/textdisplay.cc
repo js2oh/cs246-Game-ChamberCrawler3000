@@ -51,7 +51,7 @@ void TextDisplay::notify(Cell &c) {
     // Get row, column, on/off state of subject
     Info i = c.getInfo();
     const Position pos = i.pos;
-    const CellObject co = i.co;
+    const CellObject co = i.cellObject;
     const char symbol = i.symbol;
 
     // Update display grid

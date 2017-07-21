@@ -15,6 +15,7 @@ class Chamber;
 class Player;
 
 class Floor {
+    // Constants
     const static int WIDTH;
     const static int HEIGHT;
     const static int CHAMBER_COUNT;
@@ -23,47 +24,45 @@ class Floor {
     const static int MAX_POTIONS;
     const static int MAX_GOLD_PILES;
 
+    // Fields
     bool isHostileMerchants;
     bool alreadyInit;
     int level;
-    int pcSpawnChamber;
+    std::string boardFile;
+    ChamberLoc pcSpawnChamber;
 
     Player *player;
+    TextDisplay *td;                        // The text display
     std::map<ChamberLoc, Chamber> chambers; // Chambers
     std::vector<std::vector<Cell>> grid;    // The actual grid
-    TextDisplay *td;                        // The text display
-    std::string boardFile;
 
     void clearGrid();
-    ChamberLoc getChamberLoc(Position p);
-
+    ChamberLoc getChamberLoc(Position p) const;
     static ChamberLoc intToChamberLoc(int i);
+    Position dirToPos(Position pos, std::string dir) const;
 
-    // Spawn methods private
+    // Private spawn methods
     void spawnPlayer(std::string race);
     void spawnEnemies();
     void spawnGoldPiles();
     void spawnPotions();
     void spawnStairs();
-    Cell &manualSpawn(char symbol, Position p);
     void randomSpawn(std::string race = "shade");
     void customSpawn(std::string race = "shade");
+    void manualSpawn(char symbol, Position p);
 
     public:
     Floor(int level, std::string boardFile = "empty.txt");
     ~Floor();
     void init();
+    void movePlayer(std::string dir);
+
     Cell &cellAt(int row, int col);
     Cell &cellAt(Position p);
-    bool vacantAt(int row, int col) const;
-
-    friend std::ostream &operator<<(std::ostream &out, const Floor &f);
-
-    void movePlayer(std::string dir);
-    Position dirToPos(Position pos, std::string dir);
     Position getPlayerPosition() const;
-
     bool isInBounds(Position p) const;
+    bool vacantAt(int row, int col) const;
+    friend std::ostream &operator<<(std::ostream &out, const Floor &f);
 };
 
 std::ostream &operator<<(std::ostream &out, const Floor &f);
