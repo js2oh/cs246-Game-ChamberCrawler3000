@@ -8,9 +8,10 @@ using namespace std;
 int main() {
     srand(time(NULL));
 
-    Floor f1{0};
-    Floor f2{0, "cc3kfloor.txt"};
-    // cout << f1 << endl;
+    Floor f1{1};
+    Floor f2{1, "cc3kfloor.txt"}; // Default level 1
+    // f1 only shows stairs until Character + Item symbols added
+    cout << f1 << endl;
     cout << f2 << endl;
 
     string input;

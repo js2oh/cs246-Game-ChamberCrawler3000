@@ -1,5 +1,6 @@
 #include "floor.h"
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 
 using namespace std;
@@ -15,11 +16,14 @@ const int Floor::MAX_ENEMIES = 20;
 const int Floor::MAX_POTIONS = 10;
 const int Floor::MAX_GOLD_PILES = 10;
 
+Floor::Floor(string boardFile) : Floor{1, boardFile} {}
+
 Floor::Floor(int level, string boardFile)
     : isHostileMerchants{false}, // Controls hostility of all merchants
       alreadyInit{false},        // Controls whether to clear grid upon init
       level{level},              // 1-5
       boardFile{boardFile},      // Default is empty.txt
+      action{"Player character has spawned."},
       grid{HEIGHT, vector<Cell>{WIDTH}} {
     // Initialize grid Cells and spawn objects
     init();
@@ -441,6 +445,25 @@ bool Floor::vacantAt(const int row, const int col) const {
 
 ostream &operator<<(ostream &out, const Floor &f) {
     out << *(f.td);
-    out << "Player at " << f.getPlayerPosition();
+    string raceGold;
+
+    raceGold += "Race: ";
+    raceGold += "MyRace"; // f.player->getRace()
+    raceGold += " Gold: ";
+    raceGold += "0"; // f.player->getGold()
+
+    out << left << setw(f.WIDTH - 8) << raceGold << "Level: " << f.level
+        << endl;
+
+    // TEMPORARY
+    out << "HP: " << 0 << endl;
+    out << "Atk: " << 0 << endl;
+    out << "Def: " << 0 << endl;
+
+    // out << "HP: " << f.player->getHp() << endl;
+    // out << "Atk: " << f.player->getAtk() << endl;
+    // out << "Def: " << f.player->getAtk() << endl;
+
+    out << "Action: " << f.action;
     return out;
 }

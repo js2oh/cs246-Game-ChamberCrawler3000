@@ -29,6 +29,7 @@ class Floor {
     bool alreadyInit;
     int level;
     std::string boardFile;
+    std::string action;
     ChamberLoc pcSpawnChamber;
 
     Player *player;
@@ -54,6 +55,7 @@ class Floor {
 
     public:
     Floor(int level, std::string boardFile = "empty.txt");
+    Floor(std::string boardFile = "empty.txt");
     ~Floor();
     void init();
     void movePlayer(std::string dir);
