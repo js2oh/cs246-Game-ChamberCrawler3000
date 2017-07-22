@@ -70,8 +70,11 @@ void Cell::setItem(Item *ip) {
 }
 
 void Cell::useItem() {
-	delete ip;
-	ip = nullptr;
+    delete ip;
+    ip = nullptr;
+
+    co = CellObject::Empty;
+    notify();
 }
 
 void Cell::setTd(TextDisplay *td) {
