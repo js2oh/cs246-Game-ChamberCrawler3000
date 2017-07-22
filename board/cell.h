@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 #include "../character/character.h"
-#include "../item/item.h"
+//#include "../item/item.h"
 #include "cellobject.h"
 #include "chamber.h"
 #include "position.h"
@@ -12,7 +12,7 @@
 
 struct Info;
 class Chamber;
-
+class Item;
 class Cell {
     char symbol;
     CellObject co;
@@ -46,6 +46,7 @@ class Cell {
     Position getPosition() const;
     void setPosition(int row, int col);
     void setPosition(Position p);
+	void useItem();
 };
 
 #endif /* CELL_H */

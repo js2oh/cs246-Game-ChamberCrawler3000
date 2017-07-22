@@ -69,6 +69,11 @@ void Cell::setItem(Item *ip) {
     this->ip = ip;
 }
 
+void Cell::useItem() {
+	delete ip;
+	ip = nullptr;
+}
+
 void Cell::setTd(TextDisplay *td) {
     this->td = td;
 }
