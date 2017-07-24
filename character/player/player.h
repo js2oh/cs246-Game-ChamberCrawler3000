@@ -11,8 +11,7 @@ class Player : public Character {
     const static char SYMBOL;
 
     public:
-    // Player (){};
-	Player();
+    Player ();
     Player(Cell *cell);
     virtual ~Player(){};
 };

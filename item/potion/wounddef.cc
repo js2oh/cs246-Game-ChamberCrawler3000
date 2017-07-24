@@ -28,3 +28,7 @@ int WoundDef::getDef(){
 shared_ptr<Player> WoundDef::getPlayer(){
     return PlayerDecorator::getPlayer();
 }
+int WoundDef::getTempAmt() {
+	//if player is drow return 10 * 1.5
+	return 10;
+}

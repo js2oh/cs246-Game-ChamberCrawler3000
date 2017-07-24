@@ -28,3 +28,8 @@ int BoostAtk::getDef(){
 shared_ptr<Player> BoostAtk::getPlayer(){
     return PlayerDecorator::getPlayer();
 }
+
+int BoostAtk::getTempAmt() {
+	//if player is drow return 10 * 1.5
+	return 10;
+}

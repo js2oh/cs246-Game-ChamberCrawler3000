@@ -1,12 +1,14 @@
 #ifndef WOUNDATK_H
 #define WOUNDATK_H
-#include "player.h"
-#include "playerDecorator.h"
+#include "../../character/player/player.h"
+#include "potion.h"
+#include "../playerdecorator.h"
 #include <memory>
 
 using namespace std;
 
 class WoundAtk: public PlayerDecorator, public Potion {
+	int getTempAmt();
 public:
     WoundAtk(shared_ptr<Player> p);
     int getMaxHP() override;

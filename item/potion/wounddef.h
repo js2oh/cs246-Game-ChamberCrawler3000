@@ -1,12 +1,14 @@
 #ifndef WOUNDDEF_H
 #define WOUNDDEF_H
-#include "player.h"
-#include "playerDecorator.h"
+#include "../../character/player/player.h"
+#include "potion.h"
+#include "../playerdecorator.h"
 #include <memory>
 
 using namespace std;
 
 class WoundDef: public PlayerDecorator, public Potion {
+	int getTempAmt();
 public:
     WoundDef(shared_ptr<Player> p);
     int getMaxHP() override;

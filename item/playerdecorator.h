@@ -6,7 +6,7 @@
 using namespace std;
 
 class PlayerDecorator: public Player {
-	shared_ptr<Player> player;
+	shared_ptr<Player> player (nullptr);
 	protected:
 		virtual int getMaxHP();
 		virtual int getCurHP();
@@ -14,7 +14,8 @@ class PlayerDecorator: public Player {
 		virtual int getDef();
 		virtual shared_ptr<Player> getPlayer();
 	public:
-		PlayerDecorator(shared_ptr<Player> p);
+		//PlayerDecorator(shared_ptr<Player> p);
+		PlayerDecorator(Player *p);
 };
 
 #endif

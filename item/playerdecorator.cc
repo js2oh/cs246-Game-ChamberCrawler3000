@@ -4,7 +4,10 @@
 
 using namespace std;
 
-PlayerDecorator::PlayerDecorator(shared_ptr<Player> p): player{p} {}
+//PlayerDecorator::PlayerDecorator(shared_ptr<Player> p): player{p} {}
+PlayerDecorator::PlayerDecorator(Player *p) {
+	player = make_shared <Player> {p};
+}
 
 int PlayerDecorator::getMaxHP() {return player->getMaxHP();}
 
