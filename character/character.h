@@ -11,7 +11,20 @@ class Character {
     // Character(Cell *cell);
     Character(Cell *cell, char symbol);
     virtual ~Character() = 0;
-
+	
+	//needs constant maxHP working first
+	int getMaxHP() {
+		return hp; 
+	}
+	int getCurHP() {
+		return hp; 
+	}
+	int getAtk() {
+		return atk; 
+	}
+	int getDef() {
+		return def; 
+	}
     protected:
     const char symbol;
     Cell *cell;

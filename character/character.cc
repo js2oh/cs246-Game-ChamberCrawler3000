@@ -24,3 +24,4 @@ Cell *Character::getCell() const {
 Position Character::getPosition() const {
     return cell->getPosition();
 }
+

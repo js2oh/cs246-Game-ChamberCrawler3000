@@ -12,6 +12,7 @@ class Player : public Character {
 
     public:
     // Player (){};
+	Player();
     Player(Cell *cell);
     virtual ~Player(){};
 };

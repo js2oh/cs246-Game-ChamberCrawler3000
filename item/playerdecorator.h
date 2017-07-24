@@ -1,6 +1,6 @@
 #ifndef _PLAYERDECORATOR_H_
 #define _PLAYERDECORATOR_H_
-#include "player.h"
+#include "../character/player/player.h"
 #include <memory>
 
 using namespace std;
