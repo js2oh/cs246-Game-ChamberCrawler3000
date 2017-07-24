@@ -2,6 +2,8 @@
 #include <iostream>
 #include "info.h"
 
+using namespace std;
+
 Cell::Cell() : symbol{'.'} {}
 
 Cell::Cell(Position pos, char symbol) : pos{pos}, symbol{symbol} {}
@@ -22,8 +24,10 @@ void Cell::transferCharacter(Cell &cell) {
     notify();
 
     // 'Move' character to next Cell
-    cell.setCellObject(CellObject::Character);
-    cell.setCharacter(getCharacter());
+    // cell.setCellObject(CellObject::Character);
+    // cell.setCharacter(getCharacter());
+    // getCharacter()->setCell(&cell);
+
     setCharacter(nullptr);
     cell.notify();
 }
@@ -53,15 +57,24 @@ void Cell::setCellSymbol(const char c) {
 Chamber *Cell::getChamber() {
     return c;
 }
+
 void Cell::setChamber(Chamber *c) {
     this->c = c;
 }
 
-Character *Cell::getCharacter() {
+ChamberLoc Cell::getChamberLoc() {
+    Chamber *c = getChamber();
+    if (c) {
+        return c->getLoc();
+    }
+    return ChamberLoc::Other;
+}
+
+shared_ptr<Character> Cell::getCharacter() {
     return cp;
 }
 
-void Cell::setCharacter(Character *cp) {
+void Cell::setCharacter(shared_ptr<Character> cp) {
     this->cp = cp;
 }
 

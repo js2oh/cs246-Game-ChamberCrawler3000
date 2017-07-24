@@ -9,6 +9,7 @@ class Character {
     Cell *getCell() const;
     Position getPosition() const;
     // Character(Cell *cell);
+	Character(char symbol);
     Character(Cell *cell, char symbol);
     virtual ~Character() = 0;
 	

@@ -2,8 +2,10 @@
 #define FLOOR_H
 #include <iostream>
 #include <map>
+#include <memory>
 #include <vector>
 #include "../character/player/player.h"
+#include "../character/player/shade.h"
 #include "cell.h"
 #include "cellobject.h"
 #include "chamber.h"
@@ -13,6 +15,7 @@
 
 class Chamber;
 class Player;
+class Shade;
 
 class Floor {
     // Constants
@@ -32,16 +35,18 @@ class Floor {
     std::string action;
     ChamberLoc pcSpawnChamber;
 
-    Player *player;
+    std::shared_ptr<Player> player;
     TextDisplay *td;                        // The text display
     std::map<ChamberLoc, Chamber> chambers; // Chambers
     std::vector<std::vector<Cell>> grid;    // The actual grid
 
+    bool moveAvailable(Position pos) const;
     void clearGrid();
     void loadNextLevel();
     ChamberLoc getChamberLoc(Position p) const;
     static ChamberLoc intToChamberLoc(int i);
     Position dirToPos(Position pos, std::string dir) const;
+    std::string intToDir(int i) const;
 
     // Private spawn methods
     void spawnPlayer(std::string race);
@@ -59,13 +64,16 @@ class Floor {
     ~Floor();
     void init();
     void movePlayer(std::string dir);
+    void moveEnemies();
     void attack(std::string dir);
     void pickup(std::string dir);
 
     Cell &cellAt(int row, int col);
     Cell &cellAt(Position p);
     Position getPlayerPosition() const;
+    bool isInBounds(int row, int col) const;
     bool isInBounds(Position p) const;
+
     bool vacantAt(int row, int col) const;
     friend std::ostream &operator<<(std::ostream &out, const Floor &f);
 };

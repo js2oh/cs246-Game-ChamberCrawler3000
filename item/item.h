@@ -12,7 +12,6 @@ class Item {
     Item();
 	Item(ItemType it);
     virtual ~Item() = 0;
-    // Item (ItemType it, Position pos);
 
     char type;
     // Position pos;

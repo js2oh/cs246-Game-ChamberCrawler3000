@@ -5,6 +5,7 @@ using namespace std;
 
 // Character::Character(Cell *cell) : cell{cell} {}
 
+Character::Character(char symbol) :symbol{symbol}{};
 Character::Character(Cell *cell, char symbol) : cell{cell}, symbol{symbol} {}
 
 Character::~Character() {}

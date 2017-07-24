@@ -28,3 +28,8 @@ int BoostDef::getDef(){
 shared_ptr<Player> BoostDef::getPlayer(){
     return PlayerDecorator::getPlayer();
 }
+
+int BoostDef::getTempAmt() {
+	//if player is drow return 10 * 1.5
+	return 10;
+}
