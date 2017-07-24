@@ -1,5 +1,7 @@
 #include "player.h"
 
-Player::Player(Cell *cell) : Character{cell, '@'} {
+const char Player::SYMBOL = '@';
+
+Player::Player(Cell *cell) : Character{cell, SYMBOL} {
     hp = 10;
 }

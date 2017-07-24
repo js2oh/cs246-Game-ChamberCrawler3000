@@ -3,10 +3,13 @@
 #include <string>
 
 #include "../character.h"
+
 class Cell;
 struct Position;
 
 class Player : public Character {
+    const static char SYMBOL;
+
     public:
     // Player (){};
     Player(Cell *cell);
