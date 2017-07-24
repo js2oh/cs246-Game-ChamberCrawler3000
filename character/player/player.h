@@ -1,25 +1,20 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
-#include "../../board/cell.h"
 
+#include "../character.h"
 class Cell;
 struct Position;
 
-class Player {
-    Cell *cell;
+class Player : public Character {
 
-    // const int maxHp;
-    int hp;
-    int atk;
-    int def;
-
-    public:
+	public:
+	//Player (){};
     Player(Cell *cell);
-    void setCell(Cell *cell);
-    Cell *getCell() const;
+	virtual ~Player(){};
+	protected:
+	Cell *cell;
 
-    Position getPosition() const;
 };
 
 #endif /* PLAYER_H */

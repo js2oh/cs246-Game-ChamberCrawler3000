@@ -3,13 +3,13 @@
 #include <iostream>
 #include <utility>
 #include <vector>
-#include "../character/character.h"
+//#include "../character/character.h"
 //#include "../item/item.h"
 #include "cellobject.h"
 #include "chamber.h"
 #include "position.h"
 #include "textdisplay.h"
-
+class Character;
 struct Info;
 class Chamber;
 class Item;

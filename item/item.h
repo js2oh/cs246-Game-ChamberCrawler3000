@@ -10,9 +10,10 @@ class Cell;
 class Item {
     public:
     Item();
+	Item(ItemType it);
     virtual ~Item() = 0;
     // Item (ItemType it, Position pos);
-    Item(ItemType it);
+
     char type;
     // Position pos;
     void use();
