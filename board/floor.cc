@@ -314,7 +314,7 @@ void Floor::movePlayer(string dir) {
         switch (newCell.getCellObject()) {
             case CellObject::Empty:
                 oldCell->transferCharacter(newCell);
-                player->setCell(&newCell);
+                // player->setCell(&newCell);
                 break;
             case CellObject::Item:
                 // if (isDragonHoard)
@@ -333,6 +333,93 @@ void Floor::movePlayer(string dir) {
                 break;
             default:
                 break;
+        }
+    }
+}
+
+string Floor::intToDir(const int i) const {
+    switch (i) {
+        case 0:
+            return "no";
+        case 1:
+            return "ne";
+        case 2:
+            return "ea";
+        case 3:
+            return "se";
+        case 4:
+            return "so";
+        case 5:
+            return "sw";
+        case 6:
+            return "we";
+        case 7:
+            return "nw";
+        default:
+            throw invalid_argument("Invalid integer.");
+    }
+}
+
+bool Floor::moveAvailable(const Position pos) const {
+    const int row = pos.row;
+    const int col = pos.col;
+
+    if (!isInBounds(row, col)) {
+        return false;
+    }
+
+    return
+        // North
+        (isInBounds(row - 1, col) && grid[row - 1][col].isEmpty()) ||
+        // North-east
+        (isInBounds(row - 1, col + 1) && grid[row - 1][col + 1].isEmpty()) ||
+        // East
+        (isInBounds(row, col + 1) && grid[row][col + 1].isEmpty()) ||
+        // South-east
+        (isInBounds(row + 1, col + 1) && grid[row + 1][col + 1].isEmpty()) ||
+        // South
+        (isInBounds(row + 1, col) && grid[row + 1][col].isEmpty()) ||
+        // South-west
+        (isInBounds(row + 1, col - 1) && grid[row + 1][col - 1].isEmpty()) ||
+        // West
+        (isInBounds(row, col - 1) && grid[row][col - 1].isEmpty()) ||
+        // North-west
+        (isInBounds(row - 1, col - 1) && grid[row - 1][col - 1].isEmpty());
+}
+
+void Floor::moveEnemies() {
+    const int ADJACENT_CELLS = 8;
+
+    for (int i = 0; i < HEIGHT; ++i) {
+        for (int j = 0; j < WIDTH; ++j) {
+            Cell &oldCell = grid[i][j];
+            const Position cellPos = oldCell.getPosition();
+
+            // Check player in radius!
+            if (oldCell.getCellObject() == CellObject::Other &&
+                cellPos != player->getPosition() && moveAvailable(cellPos)) {
+                ChamberLoc cLoc = oldCell.getChamberLoc();
+
+                // Find new position to move to
+                while (true) {
+                    int i = rand() % ADJACENT_CELLS;
+                    const Position newPos = dirToPos(cellPos, intToDir(i));
+
+                    cout << newPos << endl;
+
+                    if (isInBounds(newPos)) {
+                        Cell &newCell = cellAt(newPos);
+
+                        if (newCell.getCellObject() == CellObject::Empty &&
+                            newCell.getChamberLoc() == cLoc) {
+                            // Character *enemy = oldCell.getCharacter();
+
+                            oldCell.transferCharacter(newCell);
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -400,7 +487,11 @@ ChamberLoc Floor::intToChamberLoc(int i) {
 }
 
 bool Floor::isInBounds(Position p) const {
-    return p.row >= 0 && p.row < HEIGHT && p.col >= 0 && p.col < WIDTH;
+    return isInBounds(p.row, p.col);
+}
+
+bool Floor::isInBounds(const int row, const int col) const {
+    return row >= 0 && row < HEIGHT && col >= 0 && col < WIDTH;
 }
 
 Position Floor::dirToPos(Position pos, string dir) const {

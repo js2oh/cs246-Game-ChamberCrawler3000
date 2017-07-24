@@ -24,8 +24,10 @@ void Cell::transferCharacter(Cell &cell) {
     notify();
 
     // 'Move' character to next Cell
-    cell.setCellObject(CellObject::Character);
-    cell.setCharacter(getCharacter());
+    // cell.setCellObject(CellObject::Character);
+    // cell.setCharacter(getCharacter());
+    // getCharacter()->setCell(&cell);
+
     setCharacter(nullptr);
     cell.notify();
 }
@@ -55,6 +57,7 @@ void Cell::setCellSymbol(const char c) {
 Chamber *Cell::getChamber() {
     return c;
 }
+
 void Cell::setChamber(Chamber *c) {
     this->c = c;
 }

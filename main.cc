@@ -20,6 +20,7 @@ int main() {
     string input;
     while (getline(cin, input)) {
         f2.movePlayer(input);
+        f2.moveEnemies();
         cout << f2 << endl;
     }
 }

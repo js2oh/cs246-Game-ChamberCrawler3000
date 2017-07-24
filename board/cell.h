@@ -8,8 +8,10 @@
 //#include "../item/item.h"
 #include "cellobject.h"
 #include "chamber.h"
+#include "chamberloc.h"
 #include "position.h"
 #include "textdisplay.h"
+
 class Character;
 struct Info;
 class Chamber;
@@ -40,6 +42,7 @@ class Cell {
     void setCellObject(CellObject co);
     void setCellSymbol(char c);
     Chamber *getChamber();
+    ChamberLoc getChamberLoc();
     void setChamber(Chamber *c);
     std::shared_ptr<Character> getCharacter();
     void setCharacter(std::shared_ptr<Character> cp);
