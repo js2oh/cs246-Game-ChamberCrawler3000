@@ -62,6 +62,14 @@ void Cell::setChamber(Chamber *c) {
     this->c = c;
 }
 
+ChamberLoc Cell::getChamberLoc() {
+    Chamber *c = getChamber();
+    if (c) {
+        return c->getLoc();
+    }
+    return ChamberLoc::Other;
+}
+
 shared_ptr<Character> Cell::getCharacter() {
     return cp;
 }
