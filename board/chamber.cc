@@ -181,6 +181,9 @@ Cell &Chamber::spawnPotion() {
     return c;
 }
 
+
+
+
 // Gold (Treasure)
 Cell &Chamber::spawnGoldPile() {
     Cell &c = genRandPos();

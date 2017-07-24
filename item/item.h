@@ -5,7 +5,7 @@
 #include <string>
 #include "../board/position.h"
 
-//#include "../board/cell.h"
+
 class Cell;
 
 
@@ -13,15 +13,16 @@ class Cell;
 class Item {
 	public:
 	
-	~Item() = 0;
-	Item (ItemType tpe, Position pos);
+	virtual ~Item() = 0;
+	//Item (ItemType it, Position pos);
+	Item (ItemType it);
 	char type;
-	Position pos;
+	//Position pos;
 	void use();
-	
+	Cell *parentCell;
 	
 	private:
-	Cell *parentCell;
+	
 	virtual void applyEffects() = 0;
 };
 

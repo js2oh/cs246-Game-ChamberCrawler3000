@@ -70,6 +70,7 @@ void Cell::setItem(Item *ip) {
 }
 
 void Cell::useItem() {
+	ip->use();
     delete ip;
     ip = nullptr;
 
