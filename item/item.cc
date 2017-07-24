@@ -1,13 +1,10 @@
 #include "item.h"
 
-Item::Item (ItemType it):
-	type(it) {}
-
-
+Item::Item() {}
+Item::~Item() {}
+Item::Item(ItemType it) : type(it) {}
 
 void Item::use() {
-	applyEffects();
-	//parentCell->useItem();
-
+    applyEffects();
+    // parentCell->useItem();
 }
-

@@ -3,11 +3,11 @@
 
 using namespace std;
 
-//unique_ptr <Item> *createItem(ItemType it) {
-Item *createItem(ItemType it) {
-	switch (it) {
-		case RH:
-			return new Restore();
-			//return unique_ptr <Item> (new Restore());
-	}
+// unique_ptr <Item> *createItem(ItemType it) {
+Item *ItemFactory::createItem(ItemType it) {
+    switch (it) {
+        case RH:
+            return new Restore();
+            // return unique_ptr <Item> (new Restore());
+    }
 }
