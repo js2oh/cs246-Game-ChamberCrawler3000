@@ -2,8 +2,10 @@
 #define FLOOR_H
 #include <iostream>
 #include <map>
+#include <memory>
 #include <vector>
 #include "../character/player/player.h"
+#include "../character/player/shade.h"
 #include "cell.h"
 #include "cellobject.h"
 #include "chamber.h"
@@ -13,6 +15,7 @@
 
 class Chamber;
 class Player;
+class Shade;
 
 class Floor {
     // Constants
@@ -32,7 +35,7 @@ class Floor {
     std::string action;
     ChamberLoc pcSpawnChamber;
 
-    Player *player;
+    std::shared_ptr<Player> player;
     TextDisplay *td;                        // The text display
     std::map<ChamberLoc, Chamber> chambers; // Chambers
     std::vector<std::vector<Cell>> grid;    // The actual grid

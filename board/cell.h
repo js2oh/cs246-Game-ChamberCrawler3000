@@ -1,6 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 #include <iostream>
+#include <memory>
 #include <utility>
 #include <vector>
 //#include "../character/character.h"
@@ -19,7 +20,7 @@ class Cell {
     CellObject co;
     Position pos;
 
-    Character *cp;
+    std::shared_ptr<Character> cp;
     Item *ip;
 
     Chamber *c;
@@ -40,8 +41,8 @@ class Cell {
     void setCellSymbol(char c);
     Chamber *getChamber();
     void setChamber(Chamber *c);
-    Character *getCharacter();
-    void setCharacter(Character *cp);
+    std::shared_ptr<Character> getCharacter();
+    void setCharacter(std::shared_ptr<Character> cp);
     Item *getItem();
     void setItem(Item *ip);
     void setTd(TextDisplay *td);

@@ -2,6 +2,8 @@
 #include <iostream>
 #include "info.h"
 
+using namespace std;
+
 Cell::Cell() : symbol{'.'} {}
 
 Cell::Cell(Position pos, char symbol) : pos{pos}, symbol{symbol} {}
@@ -57,11 +59,11 @@ void Cell::setChamber(Chamber *c) {
     this->c = c;
 }
 
-Character *Cell::getCharacter() {
+shared_ptr<Character> Cell::getCharacter() {
     return cp;
 }
 
-void Cell::setCharacter(Character *cp) {
+void Cell::setCharacter(shared_ptr<Character> cp) {
     this->cp = cp;
 }
 

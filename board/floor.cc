@@ -161,7 +161,7 @@ void Floor::manualSpawn(char symbol, Position p) {
         // Player
         case '@':
             c.setCellObject(CellObject::Character);
-            player = new Player(&c); // Later change to Character *
+            player = make_shared<Shade>(&c); // Later change to Character *
             c.setCharacter(player);
 
             /*
@@ -238,7 +238,7 @@ void Floor::spawnPlayer(string race) {
     pcSpawnChamber = randLoc;
 
     Cell &c = chambers.at(randLoc).spawnPlayer();
-    player = new Player(&c); // Change to Character once implemented
+    player = make_shared<Shade>(&c); // Change to Character once implemented
     c.setCharacter(player);
     c.notify();
 
@@ -345,7 +345,7 @@ void Floor::attack(string dir) {
     if (isInBounds(newPos)) {
         Cell &newCell = cellAt(newPos);
         const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
-        Character *cp = newCell.getCharacter();
+        shared_ptr<Character> cp = newCell.getCharacter();
         // player->attack(cp);
     }
 }
