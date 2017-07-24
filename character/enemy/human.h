@@ -7,8 +7,7 @@ class Human : public Enemy {
     const static char SYMBOL;
 
     public:
-    virtual void attack() = 0;
-    virtual void move() = 0;
+    void attackOn(Player &p) override;
 };
 
 #endif /* HUMAN_H */

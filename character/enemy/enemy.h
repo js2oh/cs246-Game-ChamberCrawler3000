@@ -1,10 +1,10 @@
 #ifndef ENEMY_H
 #define ENEMY_H
+#include "../player/player.h"
 
 class Enemy {
     public:
-    virtual void attack() = 0;
-    virtual void move() = 0;
+    virtual void attackOn(Player &p) = 0;
 };
 
 #endif /* ENEMY_H */
