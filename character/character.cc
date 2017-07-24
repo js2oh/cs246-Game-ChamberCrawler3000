@@ -1,14 +1,17 @@
 #include "character.h"
 #include "../board/cell.h"
-Character::Character(Cell *cell) {
-	
-}
+
 using namespace std;
-char Character::getSymbol() {
-	return symbol;
+
+// Character::Character(Cell *cell) : cell{cell} {}
+
+Character::Character(Cell *cell, char symbol) : cell{cell}, symbol{symbol} {}
+
+Character::~Character() {}
+
+char Character::getSymbol() const {
+    return symbol;
 }
-
-
 
 void Character::setCell(Cell *cell) {
     this->cell = cell;

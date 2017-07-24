@@ -151,7 +151,7 @@ Cell &Chamber::spawnPlayer() {
     Cell &c = genRandPos();
     c.setCellObject(CellObject::Character);
     // Notify TextDisplay so that it updates
-    c.notify();
+    // c.notify();
     return c;
 }
 
@@ -163,7 +163,7 @@ Cell &Chamber::spawnEnemy() {
     // Character *cp = ef.create(c);
     // enemies.emplace_back(cp);
     // c.setCharacter(cp);
-    c.setCellObject(CellObject::Character);
+    c.setCellObject(CellObject::Other); // TODO: Change later!
     c.notify();
     return c;
 }
@@ -180,9 +180,6 @@ Cell &Chamber::spawnPotion() {
     c.notify();
     return c;
 }
-
-
-
 
 // Gold (Treasure)
 Cell &Chamber::spawnGoldPile() {

@@ -13,6 +13,7 @@ class Character;
 struct Info;
 class Chamber;
 class Item;
+
 class Cell {
     char symbol;
     CellObject co;
@@ -26,6 +27,7 @@ class Cell {
 
     public:
     Cell();
+    Cell(Position pos, char symbol = '.');
     ~Cell();
 
     bool isEmpty() const;
@@ -46,7 +48,7 @@ class Cell {
     Position getPosition() const;
     void setPosition(int row, int col);
     void setPosition(Position p);
-	void useItem();
+    void useItem();
 };
 
 #endif /* CELL_H */

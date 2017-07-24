@@ -4,6 +4,8 @@
 
 Cell::Cell() : symbol{'.'} {}
 
+Cell::Cell(Position pos, char symbol) : pos{pos}, symbol{symbol} {}
+
 Cell::~Cell() {}
 
 bool Cell::isEmpty() const {
@@ -21,6 +23,8 @@ void Cell::transferCharacter(Cell &cell) {
 
     // 'Move' character to next Cell
     cell.setCellObject(CellObject::Character);
+    cell.setCharacter(getCharacter());
+    setCharacter(nullptr);
     cell.notify();
 }
 
@@ -70,7 +74,7 @@ void Cell::setItem(Item *ip) {
 }
 
 void Cell::useItem() {
-	ip->use();
+    ip->use();
     delete ip;
     ip = nullptr;
 

@@ -60,7 +60,7 @@ void TextDisplay::notify(Cell &c) {
             theDisplay[pos.row][pos.col] = symbol;
             break;
         case CellObject::Character:
-            // theDisplay[pos.row][pos.col] = c.getCharacter()->getSymbol();
+            theDisplay[pos.row][pos.col] = c.getCharacter()->getSymbol();
             break;
         case CellObject::Item:
             // theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();

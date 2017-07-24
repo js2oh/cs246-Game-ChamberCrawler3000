@@ -1,5 +1,5 @@
 #include "player.h"
 
-Player::Player(Cell *cell) : Character{cell} {
-	hp = 10;
+Player::Player(Cell *cell) : Character{cell, '@'} {
+    hp = 10;
 }

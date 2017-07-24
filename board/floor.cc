@@ -48,6 +48,7 @@ void Floor::init() {
     if (alreadyInit) {
         clearGrid();
     }
+
     alreadyInit = true;
 
     // Initialize and load contents of board file into td
@@ -161,7 +162,7 @@ void Floor::manualSpawn(char symbol, Position p) {
         case '@':
             c.setCellObject(CellObject::Character);
             player = new Player(&c); // Later change to Character *
-            // c.setCharacter(player);
+            c.setCharacter(player);
 
             /*
                 if (race == "shade") {
@@ -186,7 +187,7 @@ void Floor::manualSpawn(char symbol, Position p) {
         case 'M':
         case 'D':
         case 'L':
-            c.setCellObject(CellObject::Character);
+            c.setCellObject(CellObject::Other);
             // Use factory to manually spawn the correct enemy type
             // Character *cp = ef.create(symbol, p);
             // c.setCharacter(cp);
@@ -238,7 +239,8 @@ void Floor::spawnPlayer(string race) {
 
     Cell &c = chambers.at(randLoc).spawnPlayer();
     player = new Player(&c); // Change to Character once implemented
-    // c.setCharacter(player);
+    c.setCharacter(player);
+    c.notify();
 
     /*
         if (race == "shade") {

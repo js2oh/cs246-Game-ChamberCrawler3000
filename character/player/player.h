@@ -7,14 +7,10 @@ class Cell;
 struct Position;
 
 class Player : public Character {
-
-	public:
-	//Player (){};
+    public:
+    // Player (){};
     Player(Cell *cell);
-	virtual ~Player(){};
-	protected:
-	Cell *cell;
-
+    virtual ~Player(){};
 };
 
 #endif /* PLAYER_H */

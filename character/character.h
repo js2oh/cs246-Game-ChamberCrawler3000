@@ -3,17 +3,18 @@
 #include "../board/position.h"
 class Cell;
 class Character {
-
-	public:
-	char getSymbol();
+    public:
+    char getSymbol() const;
     void setCell(Cell *cell);
     Cell *getCell() const;
     Position getPosition() const;
-	Character(Cell *cell);
-	
-	protected:
-	char symbol;
-	Cell *cell;
+    // Character(Cell *cell);
+    Character(Cell *cell, char symbol);
+    virtual ~Character() = 0;
+
+    protected:
+    const char symbol;
+    Cell *cell;
 
     // const int maxHp;
     int hp;
