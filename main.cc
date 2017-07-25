@@ -76,7 +76,7 @@ int main() {
             }
         }
         if (!stopEnemies) {
-            // f2.moveEnemies();
+            f2.moveEnemies();
         }
         // f2.moveEnemies();
         if (f2.isGameOver()) {
