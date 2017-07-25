@@ -6,21 +6,86 @@
 
 using namespace std;
 
+string gameStart();
+
 int main() {
     PotionFactory potionfactory;
     srand(time(NULL));
 
+    string race;
+    race = gameStart();
+
     Floor f1{1};
     Floor f2{1, "cc3kfloor.txt"}; // Default level 1
     // f1 only shows stairs until Character + Item symbols added
-    f2.cellAt(3, 4).setItem(potionfactory.randomCreate(&f2.cellAt(3, 4)));
+
+    // debug stuff
+    // f2.cellAt(3, 4).setItem(potionfactory.createItem(RH));
     cout << f1 << endl;
+
     cout << f2 << endl;
 
     string input;
     while (getline(cin, input)) {
-        f2.movePlayer(input);
-        // f2.moveEnemies();
+        if (input == "f") {
+            // stop time for enemies
+            cout << "Time stopped" << endl;
+        }
+        else if (input == "r") {
+            gameStart();
+            cout << "Restarted" << endl;
+        }
+        else if (input == "q") {
+            cout << "You quit." << endl;
+            return 0;
+        }
+        else {
+            string direction;
+            if (input == "nw" || input == "n" || input == "no" ||
+                input == "ne" || input == "e" || input == "ea" ||
+                input == "se" || input == "s" || input == "so" ||
+                input == "sw" || input == "w") {
+                f2.movePlayer(input);
+            }
+        }
+
+        f2.moveEnemies();
         cout << f2 << endl;
     }
+}
+
+// restarts game and returns race chosen in string format
+string gameStart() {
+    cout << "Choose your class: " << endl;
+    cout << "s - Shade: " << endl;
+    cout << "d - Drow: " << endl;
+    cout << "v - Vampire: " << endl;
+    cout << "g - Goblin: " << endl;
+    cout << "t - Troll: " << endl;
+    string input;
+    getline(cin, input);
+    string race = input;
+
+    if (input == "s") {
+        cout << "Shade chosen";
+    }
+    else if (input == "d") {
+        cout << "Drow chosen";
+    }
+    else if (input == "v") {
+        cout << "Vampire chosen";
+    }
+    else if (input == "g") {
+        cout << "Goblin chosen";
+    }
+    else if (input == "t") {
+        cout << "Troll chosen";
+    }
+    else {
+        cout << "Invalid race, you get to be a Shade";
+        race = "s";
+    }
+    cout << endl;
+
+    return race;
 }

@@ -167,17 +167,20 @@ void Floor::manualSpawn(char symbol, Position p) {
             c.setCharacter(player);
 
             /*
-                if (race == "shade") {
+                if (race == "s") {
                     player = new Shade{c};
                 }
-                else if (race == "drow") {
+                else if (race == "d") {
                     player = new Drow{c};
                 }
-                else if (race == "goblin") {
+                else if (race == "g") {
                     player = new Goblin{c};
                 }
-                else if (race == "troll") {
+                else if (race == "t") {
                     player = new Troll{c};
+                }
+                else if (race == "v") {
+                    player = new Vampire{c};
                 }
             */
             break;
