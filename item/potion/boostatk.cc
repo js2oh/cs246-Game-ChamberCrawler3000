@@ -34,4 +34,4 @@ int BoostAtk::getTempAmt() {
     return 10;
 }
 
-void BoostAtk::applyEffects() {}
+// void BoostAtk::applyEffects() {}

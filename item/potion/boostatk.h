@@ -19,6 +19,6 @@ class BoostAtk : public PlayerDecorator, public Potion {
     int getAtk() override;
     int getDef() override;
     shared_ptr<Player> getPlayer() override;
-    void applyEffects() override;
+    // void applyEffects() override;
 };
 #endif /* BOOSTATK_H */

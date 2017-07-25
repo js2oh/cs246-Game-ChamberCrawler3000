@@ -436,7 +436,10 @@ void Floor::attack(string dir) {
         Cell &newCell = cellAt(newPos);
         const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
         shared_ptr<Character> cp = newCell.getCharacter();
-        // player->attack(cp);
+
+        if (newCell.getCellObject() == CellObject::Character) {
+            // player->attack(cp);
+        }
     }
 }
 
