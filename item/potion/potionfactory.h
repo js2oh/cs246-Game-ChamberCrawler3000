@@ -11,9 +11,12 @@ class Player;
 class Item;
 
 class PotionFactory : public ItemFactory {
+    const static int POTION_TYPES;
+    ItemType genRandType();
+
     public:
-    std::shared_ptr<Item> create(char symbol, Cell *c);
-    std::shared_ptr<Item> createItem(ItemType it, Cell *c) override;
+    std::shared_ptr<Item> manualCreate(char symbol, Cell *c);
+    std::shared_ptr<Item> randomCreate(Cell *c);
 };
 
 #endif /* POTIONFACTORY_H */

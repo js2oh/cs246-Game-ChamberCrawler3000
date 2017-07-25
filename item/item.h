@@ -1,11 +1,13 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <memory>
 #include <string>
 #include "../board/position.h"
 #include "itemtype.h"
 
 class Cell;
+class Player;
 
 class Item {
     public:
@@ -21,10 +23,10 @@ class Item {
 
     char type;
     // Position pos;
-    void use();
+    void use(std::shared_ptr<Player> p);
 
     private:
-    virtual void applyEffects() = 0;
+    virtual void applyEffects(std::shared_ptr<Player> p) = 0;
 
     protected:
     Cell *cell;

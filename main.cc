@@ -13,7 +13,7 @@ int main() {
     Floor f1{1};
     Floor f2{1, "cc3kfloor.txt"}; // Default level 1
     // f1 only shows stairs until Character + Item symbols added
-    f2.cellAt(3, 4).setItem(potionfactory.createItem(RH, &f2.cellAt(3, 4)));
+    f2.cellAt(3, 4).setItem(potionfactory.randomCreate(&f2.cellAt(3, 4)));
     cout << f1 << endl;
     cout << f2 << endl;
 

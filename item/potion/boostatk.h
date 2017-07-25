@@ -11,8 +11,8 @@ class BoostAtk : public PlayerDecorator, public Potion {
     int getTempAmt();
 
     public:
-    BoostAtk(shared_ptr<Player> p);
-    // BoostAtk(shared_ptr<Player> p);
+    BoostAtk(int amt, shared_ptr<Player> p);
+    BoostAtk(int amt);
 
     int getMaxHP() override;
     int getCurHP() override;

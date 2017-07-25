@@ -1,11 +1,13 @@
 #include "item.h"
 
+using namespace std;
+
 Item::Item() {}
 Item::~Item() {}
 Item::Item(ItemType it) : type(it) {}
 
-void Item::use() {
-    applyEffects();
+void Item::use(shared_ptr<Player> p) {
+    applyEffects(p);
 }
 
 char Item::getSymbol() const {

@@ -6,6 +6,8 @@ using namespace std;
 
 PlayerDecorator::PlayerDecorator(shared_ptr<Player> p) : player{p} {}
 
+PlayerDecorator::PlayerDecorator() {}
+
 int PlayerDecorator::getMaxHP() {
     return player->getMaxHP();
 }

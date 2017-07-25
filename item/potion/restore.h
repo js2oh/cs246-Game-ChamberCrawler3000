@@ -4,8 +4,6 @@
 #include "potion.h"
 
 class Restore : public Potion {
-    int amt;
-
     public:
     Restore(int amt);
     void applyEffects(std::shared_ptr<Player> p);

@@ -1,16 +1,18 @@
 #ifndef BOOSTDEF_H
 #define BOOSTDEF_H
-#include "../../character/player/player.h"
-#include "potion.h"
-#include "../playerdecorator.h"
 #include <memory>
+#include "../../character/player/player.h"
+#include "../playerdecorator.h"
+#include "potion.h"
 
 using namespace std;
 
-class BoostDef: public PlayerDecorator, public Potion {
-	int getTempAmt();
-public:
-    BoostDef(shared_ptr<Player> p);
+class BoostDef : public PlayerDecorator, public Potion {
+    int getTempAmt();
+
+    public:
+    BoostDef(int amt);
+    BoostDef(int amt, shared_ptr<Player> p);
     int getMaxHP() override;
     int getCurHP() override;
     int getAtk() override;

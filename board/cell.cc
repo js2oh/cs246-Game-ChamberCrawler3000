@@ -88,7 +88,7 @@ void Cell::setItem(shared_ptr<Item> ip) {
 }
 
 void Cell::useItem() {
-    ip->use();
+    // ip->use();
     // delete ip;
     ip = nullptr;
 

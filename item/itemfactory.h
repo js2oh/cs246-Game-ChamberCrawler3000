@@ -9,7 +9,7 @@ class Item;
 class ItemFactory {
     public:
     // ItemFactory();
-    virtual std::shared_ptr<Item> createItem(ItemType it, Cell *cell) = 0;
+    // virtual std::shared_ptr<Item> createItem(ItemType it, Cell *cell) = 0;
 };
 
 #endif /* ITEMFACTORY_H */

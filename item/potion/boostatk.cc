@@ -3,7 +3,10 @@
 
 using namespace std;
 
-BoostAtk::BoostAtk(shared_ptr<Player> p) : PlayerDecorator(p), Potion{} {}
+BoostAtk::BoostAtk(int amt) : Potion{amt} {}
+
+BoostAtk::BoostAtk(int amt, shared_ptr<Player> p)
+    : Potion{amt}, PlayerDecorator(p) {}
 
 int BoostAtk::getMaxHP() {
     int new_mhp = PlayerDecorator::getMaxHP();

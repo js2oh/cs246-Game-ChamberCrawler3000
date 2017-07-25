@@ -196,6 +196,7 @@ void Floor::manualSpawn(char symbol, Position p) {
             // c.getChamber()->addEnemy(cp);
             break;
         // Potion types
+
         case '0':
         case '1':
         case '2':
@@ -203,7 +204,7 @@ void Floor::manualSpawn(char symbol, Position p) {
         case '4':
         case '5':
             c.setCellObject(CellObject::Item);
-            ip = pf.create(symbol, &c);
+            ip = pf.manualCreate(symbol, &c);
             c.setItem(ip);
             break;
         // Treasures

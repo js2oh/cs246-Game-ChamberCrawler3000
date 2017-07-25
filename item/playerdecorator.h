@@ -17,7 +17,7 @@ class PlayerDecorator : public Player {
 
     public:
     PlayerDecorator(shared_ptr<Player> p);
-    // PlayerDecorator(Player *p);
+    PlayerDecorator();
 };
 
 #endif

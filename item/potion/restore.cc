@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Restore::Restore(int amt) : amt{amt} {}
+Restore::Restore(int amt) : Potion{amt} {}
 
 void Restore::applyEffects(shared_ptr<Player> p) {
     // p->increaseHp(amt);
