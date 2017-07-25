@@ -20,12 +20,15 @@ class WoundAtk : public PlayerDecorator, public Potion {
     public:
     WoundAtk(int amt, shared_ptr<Player> p);
     WoundAtk(int amt);
+    void applyEffects(shared_ptr<Player> p) override;
+
     int getMHP() override;
     int getCHP() override;
     int getAtk() override;
     int getDef() override;
     string getRace() override;
     void setCHP(int value) override;
+    void setPlayer(shared_ptr<Player> p);
     shared_ptr<Player> getPlayer() override;
     void attackOn(Enemy &e);
     void defendFrom(Human *hEnemy);

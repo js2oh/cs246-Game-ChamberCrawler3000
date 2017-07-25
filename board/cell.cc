@@ -10,6 +10,10 @@ Cell::Cell(Position pos, char symbol) : pos{pos}, symbol{symbol} {}
 
 Cell::~Cell() {}
 
+bool Cell::isTile() const {
+    return symbol == '.';
+}
+
 bool Cell::isEmpty() const {
     return co == CellObject::Empty;
 }
@@ -27,10 +31,16 @@ void Cell::transferCharacter(Cell &cell) {
     cell.setCellObject(CellObject::Character);
     cell.setCharacter(getCharacter());
     getCharacter()->setCell(&cell);
-    // cout << getCharacter()->getSymbol() << endl;
 
     setCharacter(nullptr);
     cell.notify();
+}
+
+void Cell::deleteCell() {
+    setCellObject(CellObject::Empty);
+    setCharacter(nullptr);
+    setItem(nullptr);
+    notify();
 }
 
 Info Cell::getInfo() const {

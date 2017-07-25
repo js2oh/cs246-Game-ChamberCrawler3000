@@ -1,5 +1,6 @@
 #include "chamber.h"
 #include <iostream>
+#include "../character/enemy/enemyfactory.h"
 #include "../item/potion/potionfactory.h"
 #include "cellobject.h"
 
@@ -160,11 +161,11 @@ Cell &Chamber::spawnPlayer() {
 Cell &Chamber::spawnEnemy() {
     Cell &c = genRandPos();
     // Use EnemyFactory to randomly generate type of Enemy
-    // EnemyFactory ef;
-    // Character *cp = ef.create(c);
-    // enemies.emplace_back(cp);
-    // c.setCharacter(cp);
-    c.setCellObject(CellObject::Other); // TODO: Change later!
+    EnemyFactory ef;
+    shared_ptr<Character> cp = ef.randomCreate(&c);
+    c.setCharacter(cp);
+
+    c.setCellObject(CellObject::Character);
     c.notify();
     return c;
 }

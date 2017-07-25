@@ -19,16 +19,17 @@ int main() {
     string race;
     race = gameStart();
 
-    // Floor f1{1};
+    Floor f1{1};
     Floor f2{1, "cc3kfloor.txt"}; // Default level 1
+
+    f1.init(race);
     f2.init(race);
 
     // f1 only shows stairs until Character + Item symbols added
 
     // debug stuff
     // f2.cellAt(3, 4).setItem(potionfactory.createItem(RH));
-    // cout << f1 << endl;
-
+    cout << f1 << endl;
     cout << f2 << endl;
 
     string input;
@@ -65,6 +66,7 @@ int main() {
             else if (word1 == "u") {
                 if (isDirection(word2)) {
                     cout << "Picking up " << word2 << endl;
+                    f2.usePotion(word2);
                 }
             }
             else {
@@ -75,7 +77,7 @@ int main() {
             }
         }
         if (!stopEnemies) {
-            // f2.moveEnemies();
+            f2.moveEnemies();
         }
         // f2.moveEnemies();
         if (f2.isGameOver()) {

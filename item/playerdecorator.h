@@ -7,9 +7,9 @@
 using namespace std;
 
 class PlayerDecorator : public Player {
-    shared_ptr<Player> player;
-
+    
     protected:
+    shared_ptr<Player> player;
     virtual int getMHP();
     virtual int getCHP();
     virtual int getAtk();

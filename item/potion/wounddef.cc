@@ -10,6 +10,11 @@ WoundDef::WoundDef(int amt, shared_ptr<Player> p)
 
 WoundDef::WoundDef(int amt) : Potion{amt} {}
 
+void WoundDef::applyEffects(shared_ptr<Player> p) {
+    setPlayer(p);
+    // p.reset(this);
+}
+
 int WoundDef::getAtk() {
     int new_atk = PlayerDecorator::getAtk();
     return new_atk;
@@ -39,6 +44,10 @@ string WoundDef::getRace() {
 
 void WoundDef::setCHP(int value) {
     PlayerDecorator::setCHP(value);
+}
+
+void WoundDef::setPlayer(shared_ptr<Player> p) {
+    player = p;
 }
 
 shared_ptr<Player> WoundDef::getPlayer() {

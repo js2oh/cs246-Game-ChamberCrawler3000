@@ -10,6 +10,8 @@ BoostDef::BoostDef(int amt, shared_ptr<Player> p)
 
 BoostDef::BoostDef(int amt) : Potion{amt} {}
 
+void BoostDef::applyEffects(shared_ptr<Player> p) {}
+
 int BoostDef::getAtk() {
     int new_atk = PlayerDecorator::getAtk();
     return new_atk;
@@ -36,6 +38,10 @@ string BoostDef::getRace() {
 
 void BoostDef::setCHP(int value) {
     PlayerDecorator::setCHP(value);
+}
+
+void BoostDef::setPlayer(shared_ptr<Player> p) {
+    player = p;
 }
 
 shared_ptr<Player> BoostDef::getPlayer() {
