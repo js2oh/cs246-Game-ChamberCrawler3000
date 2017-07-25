@@ -2,7 +2,9 @@
 #include <memory>
 using namespace std;
 
-Potion::Potion(int amt) : amt{amt} {}
+const char Potion::SYMBOL = 'P';
+
+Potion::Potion(int amt) : Item{SYMBOL}, amt{amt} {}
 
 void Potion::setAmt(int value) {
     amt = value;

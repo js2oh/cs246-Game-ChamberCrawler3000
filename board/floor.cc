@@ -28,7 +28,7 @@ Floor::Floor(int level, string boardFile)
       action{"Player character has spawned."},
       grid{HEIGHT, vector<Cell>{WIDTH}} {
     // Initialize grid Cells and spawn objects
-    init();
+    // init();
 }
 
 Floor::~Floor() {
@@ -164,26 +164,24 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
         // Player
         case '@':
             c.setCellObject(CellObject::Character);
-            player = make_shared<Shade>(&c);
-            c.setCharacter(player);
 
-            /*
-                if (race == "s") {
-                    player = new Shade{c};
-                }
-                else if (race == "d") {
-                    player = new Drow{c};
-                }
-                else if (race == "g") {
-                    player = new Goblin{c};
-                }
-                else if (race == "t") {
-                    player = new Troll{c};
-                }
-                else if (race == "v") {
-                    player = new Vampire{c};
-                }
-            */
+            if (race == "s") {
+                player = make_shared<Shade>(&c);
+            }
+            else if (race == "d") {
+                player = make_shared<Drow>(&c);
+            }
+            else if (race == "g") {
+                player = make_shared<Goblin>(&c);
+            }
+            else if (race == "t") {
+                player = make_shared<Troll>(&c);
+            }
+            else if (race == "v") {
+                // player = make_shared<Vampire>(&c);
+            }
+
+            c.setCharacter(player);
             break;
         // Enemy types
         case 'H':
@@ -569,7 +567,7 @@ ostream &operator<<(ostream &out, const Floor &f) {
     string raceGold;
 
     raceGold += "Race: ";
-    raceGold +=  f.player->getRace();
+    raceGold += f.player->getRace();
     raceGold += " Gold: ";
     raceGold += "0"; // f.player->getGold()
 
@@ -577,9 +575,9 @@ ostream &operator<<(ostream &out, const Floor &f) {
         << endl;
 
     // TEMPORARY
-    //out << "HP: " << 0 << endl;
-    //out << "Atk: " << 0 << endl;
-    //out << "Def: " << 0 << endl;
+    // out << "HP: " << 0 << endl;
+    // out << "Atk: " << 0 << endl;
+    // out << "Def: " << 0 << endl;
 
     out << "HP: " << f.player->getCurHP() << endl;
     out << "Atk: " << f.player->getAtk() << endl;

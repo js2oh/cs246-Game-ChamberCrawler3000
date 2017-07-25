@@ -4,6 +4,7 @@
 
 class Potion : public Item {
     int amt;
+    const static char SYMBOL;
 
     public:
     Potion(int amt);

@@ -4,8 +4,12 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include "../character/player/drow.h"
+#include "../character/player/goblin.h"
 #include "../character/player/player.h"
 #include "../character/player/shade.h"
+#include "../character/player/troll.h"
+#include "../character/player/vampire.h"
 #include "cell.h"
 #include "cellobject.h"
 #include "chamber.h"
