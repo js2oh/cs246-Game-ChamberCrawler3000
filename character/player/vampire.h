@@ -1,5 +1,5 @@
-#ifndef SHADE_H
-#define SHADE_H
+#ifndef VAMPIRE_H
+#define VAMPIRE_H
 #include <string>
 #include "../character.h"
 #include "player.h"
@@ -15,7 +15,7 @@ class Merchant;
 class Dragon;
 class Halfling;
 
-class Shade : public Player {
+class Vampire : public Player {
     public:
     int getMHP();
     int getCHP();
@@ -23,7 +23,7 @@ class Shade : public Player {
     void setCHP(int value);
     int getAtk();
     string getString();
-    Shade(Cell *c);
+    Vampire(Cell *c);
     void attackOn(Enemy &e);
     void defendFrom(Human *hEnemy);
     void defendFrom(Dwarf *wEnemy);

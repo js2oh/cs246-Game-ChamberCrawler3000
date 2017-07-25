@@ -2,6 +2,7 @@
 #define CHARACTER_H
 #include "../board/position.h"
 class Cell;
+
 class Character {
     public:
     char getSymbol() const;
@@ -9,23 +10,24 @@ class Character {
     Cell *getCell() const;
     Position getPosition() const;
     // Character(Cell *cell);
-	Character(char symbol);
+    Character(char symbol);
     Character(Cell *cell, char symbol);
     virtual ~Character() = 0;
-	
-	//needs constant maxHP working first
-	int getMaxHP() {
-		return hp; 
-	}
-	int getCurHP() {
-		return hp; 
-	}
-	int getAtk() {
-		return atk; 
-	}
-	int getDef() {
-		return def; 
-	}
+
+    // needs constant maxHP working first
+    int getMaxHP() {
+        return hp;
+    }
+    int getCurHP() {
+        return hp;
+    }
+    int getAtk() {
+        return atk;
+    }
+    int getDef() {
+        return def;
+    }
+
     protected:
     const char symbol;
     Cell *cell;
