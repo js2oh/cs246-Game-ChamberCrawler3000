@@ -5,15 +5,7 @@
 
 using namespace std;
 
-WoundDef::WoundDef(int amt, shared_ptr<Player> p)
-    : Potion{amt}, PlayerDecorator(p) {}
-
-WoundDef::WoundDef(int amt) : Potion{amt} {}
-
-void WoundDef::applyEffects(shared_ptr<Player> p) {
-    setPlayer(p);
-    // p.reset(this);
-}
+WoundDef::WoundDef(int amt, shared_ptr<Player> p) : PlayerDecorator(amt, p) {}
 
 int WoundDef::getAtk() {
     int new_atk = PlayerDecorator::getAtk();
@@ -21,7 +13,7 @@ int WoundDef::getAtk() {
 }
 
 int WoundDef::getDef() {
-    int new_def = PlayerDecorator::getDef() - Potion::getAmt();
+    int new_def = PlayerDecorator::getDef() - PlayerDecorator::getAmt();
     if (new_def < 0) {
         new_def = 0;
     }

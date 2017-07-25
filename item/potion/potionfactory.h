@@ -4,6 +4,13 @@
 #include <string>
 #include "../item.h"
 #include "../itemfactory.h"
+#include "boostatk.h"
+#include "boostdef.h"
+#include "poison.h"
+#include "restore.h"
+#include "temp.h"
+#include "woundatk.h"
+#include "wounddef.h"
 
 class Cell;
 class Potion;
@@ -15,8 +22,8 @@ class PotionFactory : public ItemFactory {
     ItemType genRandType();
 
     public:
-    std::shared_ptr<Item> manualCreate(char symbol, Cell *c);
-    std::shared_ptr<Item> randomCreate(Cell *c);
+    std::shared_ptr<Potion> manualCreate(char symbol, Cell *c);
+    std::shared_ptr<Potion> randomCreate(Cell *c);
 };
 
 #endif /* POTIONFACTORY_H */

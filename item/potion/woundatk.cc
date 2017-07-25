@@ -5,15 +5,11 @@
 
 using namespace std;
 
-WoundAtk::WoundAtk(int amt) : Potion{amt} {}
-
 WoundAtk::WoundAtk(int amt, shared_ptr<Player> p)
-    : Potion{amt}, PlayerDecorator(p) {}
-
-void WoundAtk::applyEffects(shared_ptr<Player> p) {}
+    : PlayerDecorator(amt, p) {}
 
 int WoundAtk::getAtk() {
-    int new_atk = PlayerDecorator::getAtk() - Potion::getAmt();
+    int new_atk = PlayerDecorator::getAtk() - PlayerDecorator::getAmt();
     if (new_atk < 0) {
         new_atk = 0;
     }

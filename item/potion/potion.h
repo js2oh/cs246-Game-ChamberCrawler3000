@@ -11,6 +11,7 @@ class Potion : public Item {
     void setAmt(int value);
     int getAmt();
     virtual void applyEffects(std::shared_ptr<Player> p) = 0;
+    virtual std::shared_ptr<Player> makePlayer(std::shared_ptr<Player> p);
 };
 
 #endif

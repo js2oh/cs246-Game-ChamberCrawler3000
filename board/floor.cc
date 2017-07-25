@@ -209,7 +209,7 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
         case '5':
             c.setCellObject(CellObject::Item);
             // ip = pf.manualCreate(symbol, &c);
-            c.setItem(pf.manualCreate(symbol, &c));
+            c.setPotion(pf.manualCreate(symbol, &c));
             break;
         // Treasures
         case '6':
@@ -321,6 +321,7 @@ void Floor::movePlayer(string dir) {
 
         switch (newCell.getCellObject()) {
             case CellObject::Empty:
+                cout << "Empty!" << endl;
                 oldCell->transferCharacter(newCell);
                 break;
             case CellObject::Item:
@@ -331,7 +332,7 @@ void Floor::movePlayer(string dir) {
                 //}
 
                 // oldCell->transferCharacter(newCell);
-
+                cout << "Item!" << endl;
                 break;
             case CellObject::Stairs:
                 if (level == MAX_LEVEL) {
@@ -342,6 +343,7 @@ void Floor::movePlayer(string dir) {
                 }
                 break;
             default:
+                cout << "Other!" << endl;
                 break;
         }
     }
@@ -446,7 +448,7 @@ void Floor::attack(string dir) {
         shared_ptr<Character> cp = newCell.getCharacter();
 
         if (newCell.getCellObject() == CellObject::Character) {
-            // player->attack(cp);
+            // player->attackOn(*cp);
         }
     }
 }
@@ -459,10 +461,14 @@ void Floor::usePotion(string dir) {
 
     if (isInBounds(newPos)) {
         Cell &newCell = cellAt(newPos);
+
         if (newCell.getCellObject() == CellObject::Item) {
-            shared_ptr<Item> ip = newCell.getItem();
-            ip->applyEffects(player);
-            // player = pointer_cast<shared_ptr<Player>>(ip); // ???
+            shared_ptr<Potion> pp = newCell.getPotion();
+            player = pp->makePlayer(player);
+
+            pp->applyEffects(player);
+            oldCell->setCharacter(player);
+
             newCell.deleteCell();
         }
     }
@@ -587,7 +593,7 @@ ostream &operator<<(ostream &out, const Floor &f) {
     // out << "Atk: " << 0 << endl;
     // out << "Def: " << 0 << endl;
 
-    out << "HP: " << f.player->getCurHP() << endl;
+    out << "HP: " << f.player->getCHP() << endl;
     out << "Atk: " << f.player->getAtk() << endl;
     out << "Def: " << f.player->getDef() << endl;
 

@@ -16,11 +16,9 @@
 
 using namespace std;
 
-class BoostDef : public PlayerDecorator, public Potion {
+class BoostDef : public PlayerDecorator {
     public:
     BoostDef(int amt, shared_ptr<Player> p);
-    BoostDef(int amt);
-    void applyEffects(shared_ptr<Player> p) override;
 
     int getMHP() override;
     int getCHP() override;

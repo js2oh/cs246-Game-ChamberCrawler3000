@@ -1,17 +1,12 @@
 #include "potionfactory.h"
-#include "boostatk.h"
-#include "boostdef.h"
-#include "poison.h"
-#include "restore.h"
-#include "woundatk.h"
-#include "wounddef.h"
-
+#include "temp.h"
 using namespace std;
 
 const int PotionFactory::POTION_TYPES = 9;
+class Temp;
 
-std::shared_ptr<Item> PotionFactory::manualCreate(char symbol, Cell *cell) {
-    shared_ptr<Item> ip;
+shared_ptr<Potion> PotionFactory::manualCreate(char symbol, Cell *cell) {
+    shared_ptr<Potion> ip;
 
     switch (symbol) {
         // RH (Perm)
@@ -20,11 +15,11 @@ std::shared_ptr<Item> PotionFactory::manualCreate(char symbol, Cell *cell) {
             break;
         // BA
         case '1':
-            ip = make_shared<BoostAtk>(5);
+            ip = make_shared<Temp>(ItemType::BA, 5);
             break;
         // BD
         case '2':
-            ip = make_shared<BoostDef>(5);
+            ip = make_shared<Temp>(ItemType::BD, 5);
             break;
         // PH (Perm)
         case '3':
@@ -32,11 +27,11 @@ std::shared_ptr<Item> PotionFactory::manualCreate(char symbol, Cell *cell) {
             break;
         // WA
         case '4':
-            ip = make_shared<WoundAtk>(5);
+            ip = make_shared<Temp>(ItemType::WA, 5);
             break;
         // WD
         case '5':
-            ip = make_shared<WoundDef>(5);
+            ip = make_shared<Temp>(ItemType::WD, 5);
             break;
     }
 
@@ -62,8 +57,8 @@ ItemType PotionFactory::genRandType() {
     }
 }
 
-shared_ptr<Item> PotionFactory::randomCreate(Cell *cell) {
-    shared_ptr<Item> ip;
+shared_ptr<Potion> PotionFactory::randomCreate(Cell *cell) {
+    shared_ptr<Potion> ip;
     ItemType it = genRandType();
 
     switch (it) {
@@ -71,25 +66,18 @@ shared_ptr<Item> PotionFactory::randomCreate(Cell *cell) {
         case ItemType::RH:
             ip = make_shared<Restore>(10);
             break;
-        // BA
-        case ItemType::BA:
-            ip = make_shared<BoostAtk>(5);
-            break;
-        // BD
-        case ItemType::BD:
-            ip = make_shared<BoostDef>(5);
-            break;
-        // PH (Perm)
         case ItemType::PH:
             ip = make_shared<Poison>(10);
             break;
+        // BA
+        case ItemType::BA:
+        // BD
+        case ItemType::BD:
         // WA
         case ItemType::WA:
-            ip = make_shared<WoundAtk>(5);
-            break;
         // WD
         case ItemType::WD:
-            ip = make_shared<WoundDef>(5);
+            ip = make_shared<Temp>(it, 5);
             break;
     }
     return ip;

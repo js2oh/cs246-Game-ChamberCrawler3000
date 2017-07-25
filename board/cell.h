@@ -16,6 +16,7 @@ class Character;
 struct Info;
 class Chamber;
 class Item;
+class Potion;
 
 class Cell {
     char symbol;
@@ -23,6 +24,7 @@ class Cell {
     Position pos;
 
     std::shared_ptr<Character> cp;
+    std::shared_ptr<Potion> pp;
     std::shared_ptr<Item> ip;
 
     Chamber *c;
@@ -48,6 +50,10 @@ class Cell {
     void setChamber(Chamber *c);
     std::shared_ptr<Character> getCharacter();
     void setCharacter(std::shared_ptr<Character> cp);
+
+    std::shared_ptr<Potion> getPotion();
+    void setPotion(std::shared_ptr<Potion> pp);
+
     std::shared_ptr<Item> getItem();
     void setItem(std::shared_ptr<Item> ip);
     void setTd(TextDisplay *td);
