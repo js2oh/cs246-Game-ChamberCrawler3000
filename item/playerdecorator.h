@@ -14,7 +14,7 @@ class PlayerDecorator : public Player {
     virtual int getCHP();
     virtual int getAtk();
     virtual int getDef();
-    virtual string getString();
+    virtual string getRace();
     virtual void setCHP(int value);
     virtual shared_ptr<Player> getPlayer();
 

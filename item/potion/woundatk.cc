@@ -33,8 +33,8 @@ int WoundAtk::getCHP() {
     return new_chp;
 }
 
-string WoundAtk::getString() {
-    return PlayerDecorator::getString();
+string WoundAtk::getRace() {
+    return PlayerDecorator::getRace();
 }
 
 void WoundAtk::setCHP(int value) {
@@ -82,7 +82,7 @@ void WoundAtk::defendFrom(Elf *eEnemy) {
 void WoundAtk::defendFrom(Orc *oEnemy) {
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (oEnemy->getAtk()));
-    if (this->getString() == "Goblin") {
+    if (this->getRace() == "Goblin") {
         damage *= 1.5;
     }
     int remainingHP = this->getCHP() - damage;

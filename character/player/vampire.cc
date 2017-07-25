@@ -29,15 +29,12 @@ void Vampire::setCHP(int value) {
 int Vampire::getAtk() {
     return Player::getAtk();
 }
-string Vampire::getString() {
-    return Player::getString();
-}
-Vampire::Vampire(Cell *c) : Player{c} {
+
+Vampire::Vampire(Cell *c) : Player{c, "Vampire"} {
     Player::setMHP(50);
     Player::setCHP(50);
     Player::setAtk(25);
     Player::setDef(25);
-    Player::setString("Vampire");
     Player::setGold(0);
 }
 

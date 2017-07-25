@@ -29,15 +29,12 @@ void Troll::setCHP(int value) {
 int Troll::getAtk() {
     return Player::getAtk();
 }
-string Troll::getString() {
-    return Player::getString();
-}
-Troll::Troll(Cell *c) : Player{c} {
+
+Troll::Troll(Cell *c) : Player{c, "Troll"} {
     Player::setMHP(120);
     Player::setCHP(120);
     Player::setAtk(25);
     Player::setDef(15);
-    Player::setString("Troll");
     Player::setGold(0);
 }
 

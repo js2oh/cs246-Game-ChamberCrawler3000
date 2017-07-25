@@ -29,15 +29,12 @@ void Drow::setCHP(int value) {
 int Drow::getAtk() {
     return Player::getAtk();
 }
-string Drow::getString() {
-    return Player::getString();
-}
-Drow::Drow(Cell *c) : Player{c} {
+
+Drow::Drow(Cell *c) : Player{c, "Drow"} {
     Player::setMHP(150);
     Player::setCHP(150);
     Player::setAtk(25);
     Player::setDef(15);
-    Player::setString("Drow");
     Player::setGold(0);
 }
 

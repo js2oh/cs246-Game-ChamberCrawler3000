@@ -98,7 +98,7 @@ void Elf::defendFrom(Goblin *gPlayer) {
     this->setCHP(remainingHP);
 }
 void Elf::defendFrom(BoostAtk *baPlayer) {
-    string baseType = baPlayer->getString();
+    string baseType = baPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (baPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;
@@ -124,7 +124,7 @@ void Elf::defendFrom(BoostAtk *baPlayer) {
     this->setCHP(remainingHP);
 }
 void Elf::defendFrom(BoostDef *bdPlayer) {
-    string baseType = bdPlayer->getString();
+    string baseType = bdPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (bdPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;
@@ -150,7 +150,7 @@ void Elf::defendFrom(BoostDef *bdPlayer) {
     this->setCHP(remainingHP);
 }
 void Elf::defendFrom(WoundAtk *waPlayer) {
-    string baseType = waPlayer->getString();
+    string baseType = waPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (waPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;
@@ -176,7 +176,7 @@ void Elf::defendFrom(WoundAtk *waPlayer) {
     this->setCHP(remainingHP);
 }
 void Elf::defendFrom(WoundDef *wdPlayer) {
-    string baseType = wdPlayer->getString();
+    string baseType = wdPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (wdPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;
@@ -206,7 +206,7 @@ void Elf::attackOn(Player &p) {
     if (rand() % 2 == 0) {
         p.defendFrom(this);
     }
-    if (p.getString() != "Drow" && p.getCHP() != 0) {
+    if (p.getRace() != "Drow" && p.getCHP() != 0) {
         srand(time(NULL));
         if (rand() % 2 == 0) {
             p.defendFrom(this);

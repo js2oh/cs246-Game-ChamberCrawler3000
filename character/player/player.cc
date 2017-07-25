@@ -6,7 +6,7 @@ using namespace std;
 
 const char Player::SYMBOL = '@';
 
-Player::Player(Cell *c) : Character{c, SYMBOL} {}
+Player::Player(Cell *c, string race) : Character{c, SYMBOL}, race{race} {}
 Player::Player() : Character{SYMBOL} {}
 
 int Player::getMHP() {
@@ -21,8 +21,8 @@ int Player::getAtk() {
 int Player::getDef() {
     return def;
 }
-string Player::getString() {
-    return type;
+string Player::getRace() {
+    return race;
 }
 void Player::setCHP(int value) {
     curHP = value;
@@ -39,8 +39,8 @@ void Player::setAtk(int value) {
 void Player::setDef(int value) {
     def = value;
 }
-void Player::setString(string value) {
-    type = value;
+void Player::setRace(string value) {
+    race = value;
 }
 void Player::setGold(int value) {
     gold = value;

@@ -33,8 +33,8 @@ int WoundDef::getCHP() {
     return new_chp;
 }
 
-string WoundDef::getString() {
-    return PlayerDecorator::getString();
+string WoundDef::getRace() {
+    return PlayerDecorator::getRace();
 }
 
 void WoundDef::setCHP(int value) {
@@ -82,7 +82,7 @@ void WoundDef::defendFrom(Elf *eEnemy) {
 void WoundDef::defendFrom(Orc *oEnemy) {
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (oEnemy->getAtk()));
-    if (this->getString() == "Goblin") {
+    if (this->getRace() == "Goblin") {
         damage *= 1.5;
     }
     int remainingHP = this->getCHP() - damage;

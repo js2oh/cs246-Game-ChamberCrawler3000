@@ -115,7 +115,7 @@ void Halfling::defendFrom(Goblin *gPlayer) {
 void Halfling::defendFrom(BoostAtk *baPlayer) {
     srand(time(NULL));
     if (rand() % 2 == 0) {
-        string baseType = baPlayer->getString();
+        string baseType = baPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (baPlayer->getAtk()));
         int remainingHP = this->getCHP() - damage;
@@ -144,7 +144,7 @@ void Halfling::defendFrom(BoostAtk *baPlayer) {
 void Halfling::defendFrom(BoostDef *bdPlayer) {
     srand(time(NULL));
     if (rand() % 2 == 0) {
-        string baseType = bdPlayer->getString();
+        string baseType = bdPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (bdPlayer->getAtk()));
         int remainingHP = this->getCHP() - damage;
@@ -173,7 +173,7 @@ void Halfling::defendFrom(BoostDef *bdPlayer) {
 void Halfling::defendFrom(WoundAtk *waPlayer) {
     srand(time(NULL));
     if (rand() % 2 == 0) {
-        string baseType = waPlayer->getString();
+        string baseType = waPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (waPlayer->getAtk()));
         int remainingHP = this->getCHP() - damage;
@@ -202,7 +202,7 @@ void Halfling::defendFrom(WoundAtk *waPlayer) {
 void Halfling::defendFrom(WoundDef *wdPlayer) {
     srand(time(NULL));
     if (rand() % 2 == 0) {
-        string baseType = wdPlayer->getString();
+        string baseType = wdPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (wdPlayer->getAtk()));
         int remainingHP = this->getCHP() - damage;

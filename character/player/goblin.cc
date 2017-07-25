@@ -29,16 +29,12 @@ void Goblin::setCHP(int value) {
 int Goblin::getAtk() {
     return Player::getAtk();
 }
-string Goblin::getString() {
-    return Player::getString();
-}
 
-Goblin::Goblin(Cell *c) : Player{c} {
+Goblin::Goblin(Cell *c) : Player{c, "Goblin"} {
     Player::setMHP(110);
     Player::setCHP(110);
     Player::setAtk(15);
     Player::setDef(20);
-    Player::setString("Goblin");
     Player::setGold(0);
 }
 

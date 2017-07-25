@@ -1,6 +1,6 @@
+#include "shade.h"
 #include <math.h>
 #include <string>
-#include "shade.h"
 #include "../enemy/dragon.h"
 #include "../enemy/dwarf.h"
 #include "../enemy/elf.h"
@@ -10,7 +10,6 @@
 #include "../enemy/merchant.h"
 #include "../enemy/orc.h"
 #include "player.h"
-
 
 using namespace std;
 
@@ -29,16 +28,12 @@ void Shade::setCHP(int value) {
 int Shade::getAtk() {
     return Player::getAtk();
 }
-string Shade::getString() {
-    return Player::getString();
-}
 
-Shade::Shade(Cell *c) : Player{c} {
+Shade::Shade(Cell *c) : Player{c, "Shade"} {
     Player::setMHP(125);
     Player::setCHP(125);
     Player::setAtk(25);
     Player::setDef(25);
-    Player::setString("Shade");
     Player::setGold(0);
 }
 

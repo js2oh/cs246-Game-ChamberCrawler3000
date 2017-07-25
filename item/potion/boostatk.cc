@@ -30,8 +30,8 @@ int BoostAtk::getCHP() {
     return new_chp;
 }
 
-string BoostAtk::getString() {
-    return PlayerDecorator::getString();
+string BoostAtk::getRace() {
+    return PlayerDecorator::getRace();
 }
 
 void BoostAtk::setCHP(int value) {
@@ -79,7 +79,7 @@ void BoostAtk::defendFrom(Elf *eEnemy) {
 void BoostAtk::defendFrom(Orc *oEnemy) {
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (oEnemy->getAtk()));
-    if (this->getString() == "Goblin") {
+    if (this->getRace() == "Goblin") {
         damage *= 1.5;
     }
     int remainingHP = this->getCHP() - damage;

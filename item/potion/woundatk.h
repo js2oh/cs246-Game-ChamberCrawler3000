@@ -24,7 +24,7 @@ class WoundAtk : public PlayerDecorator, public Potion {
     int getCHP() override;
     int getAtk() override;
     int getDef() override;
-    string getString() override;
+    string getRace() override;
     void setCHP(int value) override;
     shared_ptr<Player> getPlayer() override;
     void attackOn(Enemy &e);

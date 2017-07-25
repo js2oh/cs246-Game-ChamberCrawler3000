@@ -98,7 +98,7 @@ void Dwarf::defendFrom(Goblin *gPlayer) {
     this->setCHP(remainingHP);
 }
 void Dwarf::defendFrom(BoostAtk *baPlayer) {
-    string baseType = baPlayer->getString();
+    string baseType = baPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (baPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;
@@ -122,7 +122,7 @@ void Dwarf::defendFrom(BoostAtk *baPlayer) {
     this->setCHP(remainingHP);
 }
 void Dwarf::defendFrom(BoostDef *bdPlayer) {
-    string baseType = bdPlayer->getString();
+    string baseType = bdPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (bdPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;
@@ -146,7 +146,7 @@ void Dwarf::defendFrom(BoostDef *bdPlayer) {
     this->setCHP(remainingHP);
 }
 void Dwarf::defendFrom(WoundAtk *waPlayer) {
-    string baseType = waPlayer->getString();
+    string baseType = waPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (waPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;
@@ -170,7 +170,7 @@ void Dwarf::defendFrom(WoundAtk *waPlayer) {
     this->setCHP(remainingHP);
 }
 void Dwarf::defendFrom(WoundDef *wdPlayer) {
-    string baseType = wdPlayer->getString();
+    string baseType = wdPlayer->getRace();
     int damage =
         ceil((100 / (100 + (double)(this->getDef()))) * (wdPlayer->getAtk()));
     int remainingHP = this->getCHP() - damage;

@@ -23,8 +23,8 @@ int PlayerDecorator::getDef() {
     return player->getDef();
 }
 
-string PlayerDecorator::getString() {
-    return player->getString();
+string PlayerDecorator::getRace() {
+    return player->getRace();
 }
 
 void PlayerDecorator::setCHP(int value) {
