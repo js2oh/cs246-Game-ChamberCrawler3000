@@ -23,7 +23,7 @@ class Cell {
     Position pos;
 
     std::shared_ptr<Character> cp;
-    Item *ip;
+    std::shared_ptr<Item> ip;
 
     Chamber *c;
     TextDisplay *td;
@@ -46,8 +46,8 @@ class Cell {
     void setChamber(Chamber *c);
     std::shared_ptr<Character> getCharacter();
     void setCharacter(std::shared_ptr<Character> cp);
-    Item *getItem();
-    void setItem(Item *ip);
+    std::shared_ptr<Item> getItem();
+    void setItem(std::shared_ptr<Item> ip);
     void setTd(TextDisplay *td);
     Position getPosition() const;
     void setPosition(int row, int col);

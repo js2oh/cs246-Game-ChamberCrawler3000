@@ -79,17 +79,17 @@ void Cell::setCharacter(shared_ptr<Character> cp) {
     this->cp = cp;
 }
 
-Item *Cell::getItem() {
+shared_ptr<Item> Cell::getItem() {
     return ip;
 }
 
-void Cell::setItem(Item *ip) {
+void Cell::setItem(shared_ptr<Item> ip) {
     this->ip = ip;
 }
 
 void Cell::useItem() {
     ip->use();
-    delete ip;
+    // delete ip;
     ip = nullptr;
 
     co = CellObject::Empty;

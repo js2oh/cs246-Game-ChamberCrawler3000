@@ -157,7 +157,8 @@ void Floor::manualSpawn(char symbol, Position p) {
     // TreasureFactory tf;
     Cell &c = cellAt(p);
     c.setCellSymbol('.');
-    Item *ip;
+    shared_ptr<Item> ip;
+
     switch (symbol) {
         // Player
         case '@':
@@ -202,7 +203,7 @@ void Floor::manualSpawn(char symbol, Position p) {
         case '4':
         case '5':
             c.setCellObject(CellObject::Item);
-            ip = pf.create(symbol, player, &c);
+            ip = pf.create(symbol, &c);
             c.setItem(ip);
             break;
         // Treasures
@@ -314,7 +315,6 @@ void Floor::movePlayer(string dir) {
         switch (newCell.getCellObject()) {
             case CellObject::Empty:
                 oldCell->transferCharacter(newCell);
-                // player->setCell(&newCell);
                 break;
             case CellObject::Item:
                 // if (isDragonHoard)
@@ -449,7 +449,7 @@ void Floor::pickup(string dir) {
     if (isInBounds(newPos)) {
         Cell &newCell = cellAt(newPos);
         const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
-        Item *ip = newCell.getItem();
+        shared_ptr<Item> ip = newCell.getItem();
         // player->applyPotion(ip);
     }
 }

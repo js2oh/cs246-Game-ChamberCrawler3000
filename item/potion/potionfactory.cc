@@ -1,31 +1,18 @@
 #include "potionfactory.h"
 #include "boostatk.h"
+#include "restore.h"
 using namespace std;
 
-Item *PotionFactory::create(char symbol, shared_ptr<Player> p, Cell *c) {
-    Item *potion;
-    switch (symbol) {
-        case '0':
-            break;
-        case '1':
-            potion = new BoostAtk(p);
-            return potion;
-        case '2':
-            break;
+std::shared_ptr<Item> PotionFactory::create(char symbol, Cell *cell) {
+    return createItem(ItemType::RH, cell);
+}
 
-        case '3':
-            break;
-        case '4':
-            break;
-        case '5':
-            break;
-        case '6':
-            break;
-        case '7':
-            break;
-        case '8':
-            break;
-        case '9':
-            break;
+shared_ptr<Item> PotionFactory::createItem(ItemType it, Cell *cell) {
+    shared_ptr<Item> ip;
+    switch (it) {
+        case RH:
+            // return new Restore();
+            ip = make_shared<Restore>();
+            return ip;
     }
 }

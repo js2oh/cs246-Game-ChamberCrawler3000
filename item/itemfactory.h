@@ -1,6 +1,7 @@
 #ifndef ITEMFACTORY_H
 #define ITEMFACTORY_H
 #include <memory>
+#include "../board/cell.h"
 #include "item.h"
 
 class Item;
@@ -8,8 +9,7 @@ class Item;
 class ItemFactory {
     public:
     // ItemFactory();
-    // std::unique_ptr <Item> createItem(ItemType it);
-    Item *createItem(ItemType it);
+    virtual std::shared_ptr<Item> createItem(ItemType it, Cell *cell) = 0;
 };
 
 #endif /* ITEMFACTORY_H */
