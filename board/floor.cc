@@ -117,7 +117,7 @@ void Floor::init() {
 
 void Floor::loadNextLevel() {
     ++level;
-    clearGrid();
+    alreadyInit = false;
     init();
 }
 

@@ -49,7 +49,7 @@ int main() {
             }
         }
 
-        f2.moveEnemies();
+        // f2.moveEnemies();
         cout << f2 << endl;
     }
 }
