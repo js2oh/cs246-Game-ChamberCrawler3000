@@ -1,12 +1,17 @@
 #ifndef RESTORE_H
 #define RESTORE_H
+#include <memory>
 #include "../item.h"
 #include "potion.h"
 
-class Restore : public Potion {
+using namespace std;
+
+class Player;
+
+class Restore: public potion{
     public:
-    Restore(int amt);
-    void applyEffects(std::shared_ptr<Player> p);
+        Restore();
+        void applyEffect(shared_ptr<Player> p);
 };
 
-#endif /* RESTORE_H */
+#endif
