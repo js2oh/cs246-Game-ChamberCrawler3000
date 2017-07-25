@@ -50,8 +50,13 @@ int main() {
         }
 
         // f2.moveEnemies();
+        if (f2.isGameOver()) {
+            break;
+        }
         cout << f2 << endl;
     }
+
+    f2.printEndGame();
 }
 
 // restarts game and returns race chosen in string format

@@ -28,8 +28,9 @@ class Floor {
     const static int MAX_GOLD_PILES;
 
     // Fields
-    bool isHostileMerchants;
     bool alreadyInit;
+    bool isHostileMerchants;
+    bool gameOver;
     int level;
     std::string boardFile;
     std::string action;
@@ -68,12 +69,14 @@ class Floor {
     void attack(std::string dir);
     void pickup(std::string dir);
 
+    void printEndGame() const;
+
     Cell &cellAt(int row, int col);
     Cell &cellAt(Position p);
     Position getPlayerPosition() const;
     bool isInBounds(int row, int col) const;
     bool isInBounds(Position p) const;
-
+    bool isGameOver() const;
     bool vacantAt(int row, int col) const;
     friend std::ostream &operator<<(std::ostream &out, const Floor &f);
 };

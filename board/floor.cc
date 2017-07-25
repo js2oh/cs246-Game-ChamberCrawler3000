@@ -20,10 +20,11 @@ const int Floor::MAX_GOLD_PILES = 10;
 Floor::Floor(string boardFile) : Floor{1, boardFile} {}
 
 Floor::Floor(int level, string boardFile)
-    : isHostileMerchants{false}, // Controls hostility of all merchants
-      alreadyInit{false},        // Controls whether to clear grid upon init
-      level{level},              // 1-5
-      boardFile{boardFile},      // Default is empty.txt
+    : alreadyInit{false},        // Controls whether to clear grid upon init
+      isHostileMerchants{false}, // Controls hostility of all merchants
+      gameOver{false},
+      level{level},         // 1-5
+      boardFile{boardFile}, // Default is empty.txt
       action{"Player character has spawned."},
       grid{HEIGHT, vector<Cell>{WIDTH}} {
     // Initialize grid Cells and spawn objects
@@ -332,7 +333,7 @@ void Floor::movePlayer(string dir) {
                 break;
             case CellObject::Stairs:
                 if (level == MAX_LEVEL) {
-                    // Game Ends
+                    gameOver = true;
                 }
                 else {
                     loadNextLevel();
@@ -504,6 +505,10 @@ bool Floor::isInBounds(const int row, const int col) const {
     return row >= 0 && row < HEIGHT && col >= 0 && col < WIDTH;
 }
 
+bool Floor::isGameOver() const {
+    return gameOver;
+}
+
 Position Floor::dirToPos(Position pos, string dir) const {
     Position newPos{pos};
     // TODO In future, disallow one-character directions like 'n', 'e', etc.
@@ -539,6 +544,19 @@ Position Floor::dirToPos(Position pos, string dir) const {
     }
 
     return newPos;
+}
+
+void Floor::printEndGame() const {
+    for (int i = 0; i < HEIGHT; ++i) {
+        cout << endl;
+    }
+
+    for (int i = 0; i < WIDTH; ++i) {
+        cout << "=";
+    }
+    cout << endl << "Game Over!" << endl << endl;
+
+    cout << "Your final score: " << endl;
 }
 
 // Determine vacancy of grid at given position

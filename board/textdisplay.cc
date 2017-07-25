@@ -22,7 +22,7 @@ void TextDisplay::readBoard(string file, int level) {
     string line;
 
     // Skip to desired floor level, since each file has layouts for 5 levels
-    for (int i = 1; i <= level; ++i) {
+    for (int i = 1; i < level; ++i) {
         for (int j = 0; j < height; ++j) {
             getline(fin, line);
         }
