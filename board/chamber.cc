@@ -1,5 +1,6 @@
 #include "chamber.h"
 #include <iostream>
+#include "../item/potion/potionfactory.h"
 #include "cellobject.h"
 
 using namespace std;
@@ -171,13 +172,17 @@ Cell &Chamber::spawnEnemy() {
 // Potion
 Cell &Chamber::spawnPotion() {
     Cell &c = genRandPos();
+
+    while (!c.isEmpty()) {
+        c = genRandPos();
+    }
+
     // Use PotionFactory to randomly generate type of Potion
-    // PotionFactory pf;
-    // Item *ip = pf.create(c);
-    // c.setItem(ip);
-    // potions.emplace_back(ip);
+    PotionFactory pf;
+    c.setItem(pf.randomCreate(&c));
     c.setCellObject(CellObject::Item);
     c.notify();
+
     return c;
 }
 

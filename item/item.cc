@@ -3,6 +3,7 @@
 using namespace std;
 
 Item::Item() {}
+Item::Item(char symbol) : symbol{symbol} {}
 Item::~Item() {}
 Item::Item(ItemType it) : type(it) {}
 

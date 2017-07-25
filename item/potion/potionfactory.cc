@@ -92,4 +92,5 @@ shared_ptr<Item> PotionFactory::randomCreate(Cell *cell) {
             ip = make_shared<WoundDef>(5);
             break;
     }
+    return ip;
 }

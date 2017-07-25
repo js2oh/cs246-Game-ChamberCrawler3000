@@ -63,7 +63,11 @@ void TextDisplay::notify(Cell &c) {
             theDisplay[pos.row][pos.col] = c.getCharacter()->getSymbol();
             break;
         case CellObject::Item:
-            // theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();
+            // Gold/Treasure not implemented yet, hence this check
+            if (c.getItem()) {
+                theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();
+            }
+
             break;
         case CellObject::Stairs:
             theDisplay[pos.row][pos.col] = '\\';
