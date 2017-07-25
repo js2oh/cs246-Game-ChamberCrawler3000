@@ -13,8 +13,10 @@
 - Tidy up code
 
 ---
+
 - Updated UML
 - Final report
+
 ---
 
 ## [Google Doc](https://docs.google.com/document/d/1ZTk2KxBdezCUb6FBLZwJUnFQ101aAitGOY27L82lNO0/edit?usp=sharing)
