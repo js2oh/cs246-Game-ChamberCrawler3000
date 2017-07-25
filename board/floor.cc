@@ -405,25 +405,24 @@ void Floor::moveEnemies() {
             Cell &oldCell = grid[i][j];
             const Position cellPos = oldCell.getPosition();
 
-            // Check player in radius!
             if (oldCell.getCellObject() == CellObject::Character &&
-                cellPos != player->getPosition() && moveAvailable(cellPos)) {
+                cellPos != player->getPosition() && moveAvailable(cellPos) &&
+                oldCell.getCharacter()->getMoves() == enemyMoves) {
+                oldCell.getCharacter()->increaseMoves();
                 ChamberLoc cLoc = oldCell.getChamberLoc();
+                // oldCell.getCharacter().getMoves;
 
                 // Find new position to move to
                 while (true) {
                     int i = rand() % ADJACENT_CELLS;
                     const Position newPos = dirToPos(cellPos, intToDir(i));
 
-                    cout << newPos << endl;
-
                     if (isInBounds(newPos)) {
                         Cell &newCell = cellAt(newPos);
 
                         if (newCell.getCellObject() == CellObject::Empty &&
-                            newCell.getChamberLoc() == cLoc) {
-                            // Character *enemy = oldCell.getCharacter();
-
+                            newCell.getChamberLoc() == cLoc &&
+                            newCell.isTile()) {
                             oldCell.transferCharacter(newCell);
                             break;
                         }
@@ -432,6 +431,8 @@ void Floor::moveEnemies() {
             }
         }
     }
+
+    ++enemyMoves;
 }
 
 void Floor::attack(string dir) {

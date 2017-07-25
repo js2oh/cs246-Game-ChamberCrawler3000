@@ -33,6 +33,7 @@ class Cell {
     Cell(Position pos, char symbol = '.');
     ~Cell();
 
+    bool isTile() const;
     bool isEmpty() const;
     void notify();
     void transferCharacter(Cell &cell);

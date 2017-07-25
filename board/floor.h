@@ -36,6 +36,8 @@ class Floor {
     bool isHostileMerchants;
     bool gameOver;
     int level;
+    int enemyMoves = 0;
+
     std::string boardFile;
     std::string action;
     ChamberLoc pcSpawnChamber;
