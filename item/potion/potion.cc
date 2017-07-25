@@ -1,10 +1,15 @@
 #include "potion.h"
+#include <memory>
+using namespace std;
 
-void Potion::setPermAmt(int value){
-    permAmt = value;
+Potion::Potion(int amt) : amt{amt} {}
+
+void Potion::setAmt(int value) {
+    amt = value;
 }
-void Potion::setTempAmt(int value){
-    tempAmt = value;
+
+int Potion::getAmt() {
+    return amt;
 }
-int Potion::getPermAmt(){return permAmt;}
-int Potion::getTempAmt(){return tempAmt;}
+
+void Potion::applyEffects(shared_ptr<Player> p) {}

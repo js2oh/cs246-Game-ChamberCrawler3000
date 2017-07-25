@@ -1,7 +1,7 @@
 #ifndef GOBLIN_H
 #define GOBLIN_H
 #include <string>
-#include "../chracter.h"
+#include "../character.h"
 #include "player.h"
 
 using namespace std;
@@ -15,7 +15,7 @@ class Merchant;
 class Dragon;
 class Halfling;
 
-class Goblin: public Player{
+class Goblin : public Player {
     public:
     int getMHP();
     int getCHP();
@@ -23,7 +23,7 @@ class Goblin: public Player{
     void setCHP(int value);
     int getAtk();
     string getString();
-    Goblin();
+    Goblin(Cell *c);
     void attackOn(Enemy &e);
     void defendFrom(Human *hEnemy);
     void defendFrom(Dwarf *wEnemy);

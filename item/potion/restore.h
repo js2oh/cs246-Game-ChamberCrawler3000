@@ -1,6 +1,7 @@
 #ifndef RESTORE_H
 #define RESTORE_H
 #include <memory>
+#include "../../character/player/player.h"
 #include "../item.h"
 #include "potion.h"
 
@@ -8,10 +9,10 @@ using namespace std;
 
 class Player;
 
-class Restore: public potion{
+class Restore : public Potion {
     public:
-        Restore();
-        void applyEffect(shared_ptr<Player> p);
+    Restore(int amt);
+    void applyEffects(shared_ptr<Player> p) override;
 };
 
 #endif

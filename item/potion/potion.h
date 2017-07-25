@@ -1,15 +1,15 @@
-#ifndef GOBLIN_H
-#define GOBLIN_H
+#ifndef POTION_H
+#define POTION_H
 #include "../item.h"
 
-class Potion: public Item {
-    int permAmt;
-    int tempAmt;
+class Potion : public Item {
+    int amt;
+
     public:
-    void setPermAmt(int value);
-    void setTempAmt(int value);
-    int getPermAmt();
-    int getTempAmt();
+    Potion(int amt);
+    void setAmt(int value);
+    int getAmt();
+    virtual void applyEffects(std::shared_ptr<Player> p);
 };
 
 #endif

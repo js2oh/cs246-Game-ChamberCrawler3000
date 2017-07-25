@@ -1,13 +1,15 @@
-#include <memory>
 #include "restore.h"
+#include <memory>
 
 using namespace std;
 
-void Restore::applyEffect(shared_ptr<Player> p){
-    if (p->getCHP() + Potion::getPermAmt() >= p->getMHP()){
+Restore::Restore(int amt) : Potion{amt} {}
+
+void Restore::applyEffects(shared_ptr<Player> p) {
+    if (p->getCHP() + Potion::getAmt() >= p->getMHP()) {
         p->setCHP(p->getMHP());
     }
     else {
-        p->setCHP(p->getCHP() + Potion::getPermAmt());
+        p->setCHP(p->getCHP() + Potion::getAmt());
     }
 }

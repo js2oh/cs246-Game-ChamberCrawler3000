@@ -1,13 +1,15 @@
-#include <memory>
 #include "poison.h"
+#include <memory>
 
 using namespace std;
 
-void Poison::applyEffect(shared_ptr<Player> p){
-    if (p->getCHP() - Potion::getPermAmt() <= 0){
+Poison::Poison(int amt) : Potion{amt} {}
+
+void Poison::applyEffects(shared_ptr<Player> p) {
+    if (p->getCHP() - Potion::getAmt() <= 0) {
         p->setCHP(0);
     }
-    else{
-        p->setCHP(p->getCHP() - Potion::getPermAmt());
+    else {
+        p->setCHP(p->getCHP() - Potion::getAmt());
     }
 }

@@ -1,6 +1,7 @@
 #ifndef ORC_H
 #define ORC_H
-#include "../chracter.h"
+#include "../character.h"
+#include "../player/goblin.h"
 #include "enemy.h"
 
 class Player;
@@ -14,14 +15,16 @@ class BoostDef;
 class WoundAtk;
 class WoundDef;
 
-class Orc: public Enemy {
+class Orc : public Enemy {
+    const static char SYMBOL;
+
     public:
     int getMHP() override;
     int getCHP() override;
     int getAtk() override;
     int getDef() override;
     void setCHP(int value) override;
-    Orc();
+    Orc(Cell *c);
     void defendFrom(Shade *sPlayer) override;
     void defendFrom(Drow *dPlayer) override;
     void defendFrom(Vampire *vPlayer) override;

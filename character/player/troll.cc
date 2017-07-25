@@ -1,19 +1,18 @@
-#include <string>
-#include <math.h>
 #include "troll.h"
-#include "../chracter.h"
-#include "player.h"
-#include "../enemy/enemy.h"
-#include "../enemy/human.h"
+#include <math.h>
+#include <string>
+#include "../character.h"
+#include "../enemy/dragon.h"
 #include "../enemy/dwarf.h"
 #include "../enemy/elf.h"
-#include "../enemy/orc.h"
-#include "../enemy/merchant.h"
-#include "../enemy/dragon.h"
+#include "../enemy/enemy.h"
 #include "../enemy/halfling.h"
+#include "../enemy/human.h"
+#include "../enemy/merchant.h"
+#include "../enemy/orc.h"
+#include "player.h"
 
 using namespace std;
-
 
 int Troll::getMHP() {
     return Player::getMHP();
@@ -30,10 +29,10 @@ void Troll::setCHP(int value) {
 int Troll::getAtk() {
     return Player::getAtk();
 }
-string Troll::getString(){
+string Troll::getString() {
     return Player::getString();
 }
-Troll::Troll(){
+Troll::Troll(Cell *c) : Player{c} {
     Player::setMHP(120);
     Player::setCHP(120);
     Player::setAtk(25);
@@ -42,12 +41,13 @@ Troll::Troll(){
     Player::setGold(0);
 }
 
-void Troll::attackOn(Enemy &e){
+void Troll::attackOn(Enemy &e) {
     e.defendFrom(this);
 }
 
-void Troll::defendFrom(Human *hEnemy){
-    int damage = ceil((100 / (100 + (double)(this->getDef()))) * (hEnemy->getAtk()));
+void Troll::defendFrom(Human *hEnemy) {
+    int damage =
+        ceil((100 / (100 + (double)(this->getDef()))) * (hEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
         remainingHP = 0;
@@ -55,8 +55,9 @@ void Troll::defendFrom(Human *hEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Dwarf *wEnemy){
-    int damage = ceil((100 / (100 + (double)(this->getDef()))) * (wEnemy->getAtk()));
+void Troll::defendFrom(Dwarf *wEnemy) {
+    int damage =
+        ceil((100 / (100 + (double)(this->getDef()))) * (wEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
         remainingHP = 0;
@@ -64,8 +65,9 @@ void Troll::defendFrom(Dwarf *wEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Elf *eEnemy){
-    int damage = ceil((100 / (100 + (double)(this->getDef()))) * (eEnemy->getAtk()));
+void Troll::defendFrom(Elf *eEnemy) {
+    int damage =
+        ceil((100 / (100 + (double)(this->getDef()))) * (eEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
         remainingHP = 0;
@@ -73,8 +75,9 @@ void Troll::defendFrom(Elf *eEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Orc *oEnemy){
-    int damage = ceil((100 / (100 + (double)(this->getDef()))) * (oEnemy->getAtk()));
+void Troll::defendFrom(Orc *oEnemy) {
+    int damage =
+        ceil((100 / (100 + (double)(this->getDef()))) * (oEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
         remainingHP = 0;
@@ -82,8 +85,9 @@ void Troll::defendFrom(Orc *oEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Merchant *mEnemy){
-    int damage = ceil((100 / (100 + (double)(this->getDef()))) * (mEnemy->getAtk()));
+void Troll::defendFrom(Merchant *mEnemy) {
+    int damage =
+        ceil((100 / (100 + (double)(this->getDef()))) * (mEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
         remainingHP = 0;
@@ -91,8 +95,9 @@ void Troll::defendFrom(Merchant *mEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Dragon *dEnemy){
-    int damage = ceil((100 / (100 + (double)(this->getDef()))) * (dEnemy->getAtk()));
+void Troll::defendFrom(Dragon *dEnemy) {
+    int damage =
+        ceil((100 / (100 + (double)(this->getDef()))) * (dEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
         remainingHP = 0;
@@ -100,8 +105,9 @@ void Troll::defendFrom(Dragon *dEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Halfling *lEnemy){
-    int damage = ceil((100 / (100 + (double)(this->getDef()))) * (lEnemy->getAtk()));
+void Troll::defendFrom(Halfling *lEnemy) {
+    int damage =
+        ceil((100 / (100 + (double)(this->getDef()))) * (lEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
         remainingHP = 0;
