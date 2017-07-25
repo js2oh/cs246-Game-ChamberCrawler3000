@@ -24,10 +24,10 @@ class Item {
     char type;
     // Position pos;
     void use(std::shared_ptr<Player> p);
-
-    private:
     virtual void applyEffects(std::shared_ptr<Player> p) = 0;
 
+    private:
+    
     protected:
     Cell *cell;
     char symbol;

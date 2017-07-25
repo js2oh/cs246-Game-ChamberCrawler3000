@@ -13,5 +13,3 @@ void Potion::setAmt(int value) {
 int Potion::getAmt() {
     return amt;
 }
-
-void Potion::applyEffects(shared_ptr<Player> p) {}

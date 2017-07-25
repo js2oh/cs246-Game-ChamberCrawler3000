@@ -10,6 +10,8 @@ WoundAtk::WoundAtk(int amt) : Potion{amt} {}
 WoundAtk::WoundAtk(int amt, shared_ptr<Player> p)
     : Potion{amt}, PlayerDecorator(p) {}
 
+void WoundAtk::applyEffects(shared_ptr<Player> p) {}
+
 int WoundAtk::getAtk() {
     int new_atk = PlayerDecorator::getAtk() - Potion::getAmt();
     if (new_atk < 0) {
@@ -39,6 +41,10 @@ string WoundAtk::getRace() {
 
 void WoundAtk::setCHP(int value) {
     PlayerDecorator::setCHP(value);
+}
+
+void WoundAtk::setPlayer(shared_ptr<Player> p) {
+    player = p;
 }
 
 shared_ptr<Player> WoundAtk::getPlayer() {

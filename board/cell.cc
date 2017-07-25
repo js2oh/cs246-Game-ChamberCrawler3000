@@ -36,6 +36,13 @@ void Cell::transferCharacter(Cell &cell) {
     cell.notify();
 }
 
+void Cell::deleteCell() {
+    setCellObject(CellObject::Empty);
+    setCharacter(nullptr);
+    setItem(nullptr);
+    notify();
+}
+
 Info Cell::getInfo() const {
     Info i{};
     i.pos.row = pos.row;

@@ -451,7 +451,7 @@ void Floor::attack(string dir) {
     }
 }
 
-void Floor::pickup(string dir) {
+void Floor::usePotion(string dir) {
     const Position oldPos = player->getPosition();
     const Position newPos = dirToPos(oldPos, dir);
 
@@ -459,9 +459,12 @@ void Floor::pickup(string dir) {
 
     if (isInBounds(newPos)) {
         Cell &newCell = cellAt(newPos);
-        const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
-        shared_ptr<Item> ip = newCell.getItem();
-        // player->applyPotion(ip);
+        if (newCell.getCellObject() == CellObject::Item) {
+            shared_ptr<Item> ip = newCell.getItem();
+            ip->applyEffects(player);
+            // player = pointer_cast<shared_ptr<Player>>(ip); // ???
+            newCell.deleteCell();
+        }
     }
 }
 

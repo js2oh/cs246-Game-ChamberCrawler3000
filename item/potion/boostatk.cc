@@ -10,6 +10,11 @@ BoostAtk::BoostAtk(int amt, shared_ptr<Player> p)
 
 BoostAtk::BoostAtk(int amt) : Potion{amt} {}
 
+void BoostAtk::applyEffects(shared_ptr<Player> p) {
+    setPlayer(p);
+    // p = *this;
+}
+
 int BoostAtk::getAtk() {
     int new_atk = PlayerDecorator::getAtk() + Potion::getAmt();
     return new_atk;
@@ -40,6 +45,10 @@ void BoostAtk::setCHP(int value) {
 
 shared_ptr<Player> BoostAtk::getPlayer() {
     return PlayerDecorator::getPlayer();
+}
+
+void BoostAtk::setPlayer(shared_ptr<Player> p) {
+    player = p;
 }
 
 void BoostAtk::attackOn(Enemy &e) {

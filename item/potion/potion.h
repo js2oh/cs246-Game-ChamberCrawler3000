@@ -10,7 +10,7 @@ class Potion : public Item {
     Potion(int amt);
     void setAmt(int value);
     int getAmt();
-    virtual void applyEffects(std::shared_ptr<Player> p);
+    virtual void applyEffects(std::shared_ptr<Player> p) = 0;
 };
 
 #endif

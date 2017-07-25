@@ -37,6 +37,7 @@ class Cell {
     bool isEmpty() const;
     void notify();
     void transferCharacter(Cell &cell);
+    void deleteCell();
     Info getInfo() const;
 
     CellObject getCellObject() const;

@@ -66,6 +66,7 @@ int main() {
             else if (word1 == "u") {
                 if (isDirection(word2)) {
                     cout << "Picking up " << word2 << endl;
+                    f2.usePotion(word2);
                 }
             }
             else {
