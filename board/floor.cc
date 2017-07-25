@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include "../character/enemy/enemyfactory.h"
 #include "../item/potion/potionfactory.h"
 
 using namespace std;
@@ -28,7 +29,7 @@ Floor::Floor(int level, string boardFile)
       action{"Player character has spawned."},
       grid{HEIGHT, vector<Cell>{WIDTH}} {
     // Initialize grid Cells and spawn objects
-    // init();
+    // init(race);
 }
 
 Floor::~Floor() {
@@ -153,7 +154,7 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
 // cout << "Spawned: " << symbol << " in " << Chamber::getMatchingId(p)
 //     << " at " << p << endl;
 #endif
-    // EnemyFactory ef;
+    EnemyFactory ef;
     PotionFactory pf;
     // TreasureFactory tf;
     Cell &c = cellAt(p);
@@ -165,22 +166,23 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
         case '@':
             c.setCellObject(CellObject::Character);
 
-            if (race == "s") {
-                player = make_shared<Shade>(&c);
+            if (!player) {
+                if (race == "s") {
+                    player = make_shared<Shade>(&c);
+                }
+                else if (race == "d") {
+                    player = make_shared<Drow>(&c);
+                }
+                else if (race == "g") {
+                    player = make_shared<Goblin>(&c);
+                }
+                else if (race == "t") {
+                    player = make_shared<Troll>(&c);
+                }
+                else if (race == "v") {
+                    player = make_shared<Vampire>(&c);
+                }
             }
-            else if (race == "d") {
-                player = make_shared<Drow>(&c);
-            }
-            else if (race == "g") {
-                player = make_shared<Goblin>(&c);
-            }
-            else if (race == "t") {
-                player = make_shared<Troll>(&c);
-            }
-            else if (race == "v") {
-                // player = make_shared<Vampire>(&c);
-            }
-
             c.setCharacter(player);
             break;
         // Enemy types
@@ -191,10 +193,10 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
         case 'M':
         case 'D':
         case 'L':
-            c.setCellObject(CellObject::Other);
+            c.setCellObject(CellObject::Character);
             // Use factory to manually spawn the correct enemy type
-            // Character *cp = ef.create(symbol, p);
-            // c.setCharacter(cp);
+            // shared_ptr<Character> cp = ef.manualCreate(symbol, &c);
+            c.setCharacter(ef.manualCreate(symbol, &c));
             // c.getChamber()->addEnemy(cp);
             break;
         // Potion types
@@ -206,8 +208,8 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
         case '4':
         case '5':
             c.setCellObject(CellObject::Item);
-            ip = pf.manualCreate(symbol, &c);
-            c.setItem(ip);
+            // ip = pf.manualCreate(symbol, &c);
+            c.setItem(pf.manualCreate(symbol, &c));
             break;
         // Treasures
         case '6':
@@ -240,26 +242,28 @@ void Floor::spawnPlayer(string race) {
 
     // Keep track of spawn chamber so that stairs do not spawn in same chamber
     pcSpawnChamber = randLoc;
-
     Cell &c = chambers.at(randLoc).spawnPlayer();
-    player = make_shared<Shade>(&c); // Change to Character once implemented
+
+    if (!player) {
+        if (race == "s") {
+            player = make_shared<Shade>(&c);
+        }
+        else if (race == "d") {
+            player = make_shared<Drow>(&c);
+        }
+        else if (race == "g") {
+            player = make_shared<Goblin>(&c);
+        }
+        else if (race == "t") {
+            player = make_shared<Troll>(&c);
+        }
+        else if (race == "v") {
+            player = make_shared<Vampire>(&c);
+        }
+    }
+
     c.setCharacter(player);
     c.notify();
-
-    /*
-        if (race == "shade") {
-            player = new Shade{c};
-        }
-        else if (race == "drow") {
-            player = new Drow{c};
-        }
-        else if (race == "goblin") {
-            player = new Goblin{c};
-        }
-        else if (race == "troll") {
-            player = new Troll{c};
-        }
-    */
 }
 
 // Enemies
@@ -402,7 +406,7 @@ void Floor::moveEnemies() {
             const Position cellPos = oldCell.getPosition();
 
             // Check player in radius!
-            if (oldCell.getCellObject() == CellObject::Other &&
+            if (oldCell.getCellObject() == CellObject::Character &&
                 cellPos != player->getPosition() && moveAvailable(cellPos)) {
                 ChamberLoc cLoc = oldCell.getChamberLoc();
 
