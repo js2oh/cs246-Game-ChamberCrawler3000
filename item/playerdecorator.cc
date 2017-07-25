@@ -1,29 +1,21 @@
-
-#include "playerdecorator.h"
 #include <memory>
+#include <string>
+#include "playerdecorator.h"
 
 using namespace std;
 
-PlayerDecorator::PlayerDecorator(shared_ptr<Player> p) : player{p} {}
+PlayerDecorator::PlayerDecorator(shared_ptr<Player> p): player{p} {}
 
-PlayerDecorator::PlayerDecorator() {}
+int PlayerDecorator::getMHP() {return player->getMaxHP();}
 
-int PlayerDecorator::getMaxHP() {
-    return player->getMaxHP();
-}
+int PlayerDecorator::getCHP() {return player->getCurHP();}
 
-int PlayerDecorator::getCurHP() {
-    return player->getCurHP();
-}
+int PlayerDecorator::getAtk() {return player->getAtk();}
 
-int PlayerDecorator::getAtk() {
-    return player->getAtk();
-}
+int PlayerDecorator::getDef() {return player->getDef();}
 
-int PlayerDecorator::getDef() {
-    return player->getDef();
-}
+string PlayerDecorator::getString() {return player->getString();}
 
-shared_ptr<Player> PlayerDecorator::getPlayer() {
-    return player;
-}
+void PlayerDecorator::setCHP(int value) {player->setCHP(value);}
+
+shared_ptr<Player> PlayerDecorator::getPlayer() {return player;}
