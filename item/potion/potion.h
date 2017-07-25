@@ -1,24 +1,15 @@
-#ifndef POTION_H
-#define POTION_H
-
-#include <memory>
-#include <string>
+#ifndef GOBLIN_H
+#define GOBLIN_H
 #include "../item.h"
 
-class Player;
-
-class Potion : public Item {
-    const static char SYMBOL;
-
-    protected:
-    int amt;
-
+class Potion: public Item {
+    int permAmt;
+    int tempAmt;
     public:
-    std::string displayName;
-
-    virtual void applyEffects(std::shared_ptr<Player> p);
-
-    Potion(int amt);
+    void setPermAmt(int value);
+    void setTempAmt(int value);
+    int getPermAmt();
+    int getTempAmt();
 };
 
-#endif /* POTION_H */
+#endif

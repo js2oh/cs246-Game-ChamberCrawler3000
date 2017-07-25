@@ -1,9 +1,10 @@
 #include "potion.h"
-class Player;
 
-const char Potion::SYMBOL = 'P';
-
-// Potion::Potion(Cell *cell) : Item{cell, SYMBOL} {}
-void Potion::applyEffects(std::shared_ptr<Player> p) {}
-
-Potion::Potion(int amt) : amt{amt}, Item{SYMBOL} {}
+void Potion::setPermAmt(int value){
+    permAmt = value;
+}
+void Potion::setTempAmt(int value){
+    tempAmt = value;
+}
+int Potion::getPermAmt(){return permAmt;}
+int Potion::getTempAmt(){return tempAmt;}

@@ -1,13 +1,37 @@
 #ifndef HUMAN_H
 #define HUMAN_H
-
+#include "../chracter.h"
 #include "enemy.h"
 
-class Human : public Enemy {
-    const static char SYMBOL;
+class Player;
+class Shade;
+class Drow;
+class Vampire;
+class Troll;
+class Goblin;
+class BoostAtk;
+class BoostDef;
+class WoundAtk;
+class WoundDef;
 
+class Human: public Enemy {
     public:
+    int getMHP() override;
+    int getCHP() override;
+    int getAtk() override;
+    int getDef() override;
+    void setCHP(int value) override;
+    Human();
+    void defendFrom(Shade *sPlayer) override;
+    void defendFrom(Drow *dPlayer) override;
+    void defendFrom(Vampire *vPlayer) override;
+    void defendFrom(Troll *tPlayer) override;
+    void defendFrom(Goblin *gPlayer) override;
+    void defendFrom(BoostAtk *baPlayer) override;
+    void defendFrom(BoostDef *bdPlayer) override;
+    void defendFrom(WoundAtk *waPlayer) override;
+    void defendFrom(WoundDef *wdPlayer) override;
     void attackOn(Player &p) override;
 };
 
-#endif /* HUMAN_H */
+#endif

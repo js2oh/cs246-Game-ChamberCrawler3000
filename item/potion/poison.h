@@ -4,10 +4,14 @@
 #include "../item.h"
 #include "potion.h"
 
-class Poison : public Potion {
+using namespace std;
+
+class Player;
+
+class Poison: public Potion{
     public:
-    Poison(int amt);
-    void applyEffects(std::shared_ptr<Player> p) override;
+    Poison();
+    void applyEffect(shared_ptr<Player> p);
 };
 
-#endif /* POISON_H */
+#endif
