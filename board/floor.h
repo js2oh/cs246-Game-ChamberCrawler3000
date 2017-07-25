@@ -57,7 +57,7 @@ class Floor {
     void spawnStairs();
     void randomSpawn(std::string race = "shade");
     void customSpawn(std::string race = "shade");
-    void manualSpawn(char symbol, Position p);
+    void manualSpawn(char symbol, Position p, std::string race);
 
     public:
     Floor(int level, std::string boardFile = "empty.txt");

@@ -8,12 +8,14 @@ class Cell;
 struct Position;
 
 class Player : public Character {
+	protected:
     const static char SYMBOL;
-
+	std::string race;
     public:
     Player ();
     Player(Cell *cell);
     virtual ~Player(){};
+	std::string getRace();
 };
 
 #endif /* PLAYER_H */

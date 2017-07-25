@@ -141,14 +141,14 @@ void Floor::customSpawn(string race) {
             if (td->at(p) != '-' && td->at(p) != '|' && td->at(p) != ' ' &&
                 td->at(p) != '+' && td->at(p) != '#' && td->at(p) != '.') {
                 // const ChamberLoc id = getChamberLoc(p);
-                manualSpawn(td->at(p), p);
+                manualSpawn(td->at(p), p, race);
             }
         }
     }
 }
 
 // Manually spawn object with given symbol at position p.
-void Floor::manualSpawn(char symbol, Position p) {
+void Floor::manualSpawn(char symbol, Position p, string race) {
 #ifdef DEBUG
 // cout << "Spawned: " << symbol << " in " << Chamber::getMatchingId(p)
 //     << " at " << p << endl;
@@ -569,7 +569,7 @@ ostream &operator<<(ostream &out, const Floor &f) {
     string raceGold;
 
     raceGold += "Race: ";
-    raceGold += "MyRace"; // f.player->getRace()
+    raceGold +=  f.player->getRace();
     raceGold += " Gold: ";
     raceGold += "0"; // f.player->getGold()
 
@@ -577,13 +577,13 @@ ostream &operator<<(ostream &out, const Floor &f) {
         << endl;
 
     // TEMPORARY
-    out << "HP: " << 0 << endl;
-    out << "Atk: " << 0 << endl;
-    out << "Def: " << 0 << endl;
+    //out << "HP: " << 0 << endl;
+    //out << "Atk: " << 0 << endl;
+    //out << "Def: " << 0 << endl;
 
-    // out << "HP: " << f.player->getHp() << endl;
-    // out << "Atk: " << f.player->getAtk() << endl;
-    // out << "Def: " << f.player->getAtk() << endl;
+    out << "HP: " << f.player->getCurHP() << endl;
+    out << "Atk: " << f.player->getAtk() << endl;
+    out << "Def: " << f.player->getDef() << endl;
 
     out << "Action: " << f.action;
     return out;

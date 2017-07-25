@@ -123,7 +123,7 @@ string gameStart() {
         race = "s";
     }
     cout << endl;
-	f2.init(race);
+	//f2.init(race);
     return race;
 }
 
