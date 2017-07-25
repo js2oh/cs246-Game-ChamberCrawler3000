@@ -1,6 +1,6 @@
 #include <string>
 #include <math.h>
-#include "troll.h"
+#include "vampire.h"
 #include "../chracter.h"
 #include "player.h"
 #include "../enemy/enemy.h"
@@ -14,39 +14,39 @@
 
 using namespace std;
 
+    int Vampire::getMHP() {
+        return Player::getMHP();
+    }
+    int Vampire::getCHP() {
+        return Player::getCHP();
+    }
+    int Vampire::getDef() {
+        return Player::getDef();
+    }
+    void Vampire::setCHP(int value) {
+        Player::setCHP(value);
+    }
+    int Vampire::getAtk() {
+        return Player::getAtk();
+    }
+    string Vampire::getString(){
+        return Player::getString();
+    }
+    Vampire::Vampire(){
+        Player::setMHP(50);
+        Player::setCHP(50);
+        Player::setAtk(25);
+        Player::setDef(25);
+        Player::setString("Vampire");
+        Player::setGold(0);
+    }
 
-int Troll::getMHP() {
-    return Player::getMHP();
-}
-int Troll::getCHP() {
-    return Player::getCHP();
-}
-int Troll::getDef() {
-    return Player::getDef();
-}
-void Troll::setCHP(int value) {
-    Player::setCHP(value);
-}
-int Troll::getAtk() {
-    return Player::getAtk();
-}
-string Troll::getString(){
-    return Player::getString();
-}
-Troll::Troll(){
-    Player::setMHP(120);
-    Player::setCHP(120);
-    Player::setAtk(25);
-    Player::setDef(15);
-    Player::setString("Troll");
-    Player::setGold(0);
-}
-
-void Troll::attackOn(Enemy &e){
+void Vampire::attackOn(Enemy &e)
+{
     e.defendFrom(this);
 }
 
-void Troll::defendFrom(Human *hEnemy){
+void Vampire::defendFrom(Human *hEnemy){
     int damage = ceil((100 / (100 + (double)(this->getDef()))) * (hEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
@@ -55,7 +55,7 @@ void Troll::defendFrom(Human *hEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Dwarf *wEnemy){
+void Vampire::defendFrom(Dwarf *wEnemy){
     int damage = ceil((100 / (100 + (double)(this->getDef()))) * (wEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
@@ -64,7 +64,7 @@ void Troll::defendFrom(Dwarf *wEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Elf *eEnemy){
+void Vampire::defendFrom(Elf *eEnemy){
     int damage = ceil((100 / (100 + (double)(this->getDef()))) * (eEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
@@ -73,7 +73,7 @@ void Troll::defendFrom(Elf *eEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Orc *oEnemy){
+void Vampire::defendFrom(Orc *oEnemy){
     int damage = ceil((100 / (100 + (double)(this->getDef()))) * (oEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
@@ -82,7 +82,7 @@ void Troll::defendFrom(Orc *oEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Merchant *mEnemy){
+void Vampire::defendFrom(Merchant *mEnemy){
     int damage = ceil((100 / (100 + (double)(this->getDef()))) * (mEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
@@ -91,7 +91,7 @@ void Troll::defendFrom(Merchant *mEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Dragon *dEnemy){
+void Vampire::defendFrom(Dragon *dEnemy){
     int damage = ceil((100 / (100 + (double)(this->getDef()))) * (dEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {
@@ -100,7 +100,7 @@ void Troll::defendFrom(Dragon *dEnemy){
     this->setCHP(remainingHP);
 }
 
-void Troll::defendFrom(Halfling *lEnemy){
+void Vampire::defendFrom(Halfling *lEnemy){
     int damage = ceil((100 / (100 + (double)(this->getDef()))) * (lEnemy->getAtk()));
     int remainingHP = this->getCHP() - damage;
     if (remainingHP <= 0) {

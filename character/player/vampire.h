@@ -1,5 +1,5 @@
-#ifndef DROW_H
-#define DROW_H
+#ifndef VAMPIRE_H
+#define VAMPIRE_H
 #include <string>
 #include "../chracter.h"
 #include "player.h"
@@ -15,7 +15,7 @@ class Merchant;
 class Dragon;
 class Halfling;
 
-class Drow: public Player{
+class Vampire: public Player{
     public:
     int getMHP();
     int getCHP();
@@ -23,7 +23,7 @@ class Drow: public Player{
     void setCHP(int value);
     int getAtk();
     string getString();
-    Drow();
+    Vampire();
     void attackOn(Enemy &e);
     void defendFrom(Human *hEnemy);
     void defendFrom(Dwarf *wEnemy);
