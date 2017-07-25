@@ -15,6 +15,7 @@ class Dragon;
 class Halfling;
 
 class Player : public Character {
+	protected:
     const static char SYMBOL;
 
     int maxHP;
