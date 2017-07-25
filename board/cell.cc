@@ -24,9 +24,10 @@ void Cell::transferCharacter(Cell &cell) {
     notify();
 
     // 'Move' character to next Cell
-    // cell.setCellObject(CellObject::Character);
-    // cell.setCharacter(getCharacter());
-    // getCharacter()->setCell(&cell);
+    cell.setCellObject(CellObject::Character);
+    cell.setCharacter(getCharacter());
+    getCharacter()->setCell(&cell);
+    // cout << getCharacter()->getSymbol() << endl;
 
     setCharacter(nullptr);
     cell.notify();

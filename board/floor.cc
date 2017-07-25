@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include "../item/potion/potionfactory.h"
 
 using namespace std;
 
@@ -152,16 +153,16 @@ void Floor::manualSpawn(char symbol, Position p) {
 //     << " at " << p << endl;
 #endif
     // EnemyFactory ef;
-    // PotionFactory pf;
+    PotionFactory pf;
     // TreasureFactory tf;
     Cell &c = cellAt(p);
     c.setCellSymbol('.');
-
+    Item *ip;
     switch (symbol) {
         // Player
         case '@':
             c.setCellObject(CellObject::Character);
-            player = make_shared<Shade>(&c); // Later change to Character *
+            player = make_shared<Shade>(&c);
             c.setCharacter(player);
 
             /*
@@ -201,9 +202,8 @@ void Floor::manualSpawn(char symbol, Position p) {
         case '4':
         case '5':
             c.setCellObject(CellObject::Item);
-            // Item *ip = pf.create(symbol, p);
-            // c.setItem(ip);
-            // c.getChamber()->addPotion(ip);
+            ip = pf.create(symbol, player, &c);
+            c.setItem(ip);
             break;
         // Treasures
         case '6':
@@ -322,6 +322,9 @@ void Floor::movePlayer(string dir) {
                 // else if (gold) {
                 //      pick up
                 //}
+
+                // oldCell->transferCharacter(newCell);
+
                 break;
             case CellObject::Stairs:
                 if (level == MAX_LEVEL) {

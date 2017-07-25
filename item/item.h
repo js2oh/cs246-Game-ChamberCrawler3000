@@ -10,16 +10,25 @@ class Cell;
 class Item {
     public:
     Item();
-	Item(ItemType it);
+    Item(ItemType it);
+
+    Item(char symbol);
+    Item(Cell *cell, char symbol);
+
     virtual ~Item() = 0;
+
+    char getSymbol() const;
 
     char type;
     // Position pos;
     void use();
-    Cell *parentCell;
 
     private:
     virtual void applyEffects() = 0;
+
+    protected:
+    Cell *cell;
+    char symbol;
 };
 
 #endif /* ITEM_H */
