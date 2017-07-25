@@ -46,7 +46,7 @@ void Floor::clearGrid() {
 
 // Initialize TextDisplay, Chambers, Cells, and spawns objects randomly or
 // manually
-void Floor::init() {
+void Floor::init(string race) {
     if (alreadyInit) {
         clearGrid();
     }
@@ -108,11 +108,11 @@ void Floor::init() {
 
     // Spawn all objects randomly
     if (boardFile == "empty.txt") {
-        randomSpawn();
+        randomSpawn(race);
     }
     // Spawn all objects according to specified board file and level
     else {
-        customSpawn();
+        customSpawn(race);
     }
 }
 

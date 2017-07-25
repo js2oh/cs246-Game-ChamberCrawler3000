@@ -63,7 +63,7 @@ class Floor {
     Floor(int level, std::string boardFile = "empty.txt");
     Floor(std::string boardFile = "empty.txt");
     ~Floor();
-    void init();
+    void init(std::string = "s");
     void movePlayer(std::string dir);
     void moveEnemies();
     void attack(std::string dir);

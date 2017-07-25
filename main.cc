@@ -9,7 +9,7 @@ using namespace std;
 string gameStart();
 bool isDirection(string input);
 bool stopEnemies;
-
+Floor f2;
 int main() {
 	stopEnemies = false;
     PotionFactory potionfactory;
@@ -123,7 +123,7 @@ string gameStart() {
         race = "s";
     }
     cout << endl;
-
+	f2.init(race);
     return race;
 }
 
