@@ -33,7 +33,7 @@ Floor::Floor(int level, string boardFile)
 }
 
 Floor::~Floor() {
-    delete td;
+    clearGrid();
 }
 
 void Floor::clearGrid() {
@@ -43,6 +43,7 @@ void Floor::clearGrid() {
     for (int i = 0; i < grid.size(); ++i) {
         grid[i].clear();
     }
+    chambers.clear();
 }
 
 // Initialize TextDisplay, Chambers, Cells, and spawns objects randomly or
@@ -120,6 +121,8 @@ void Floor::init(string race) {
 void Floor::loadNextLevel() {
     ++level;
     alreadyInit = false;
+    player = original;
+    enemyMoves = 0;
     init();
 }
 
@@ -150,10 +153,6 @@ void Floor::customSpawn(string race) {
 
 // Manually spawn object with given symbol at position p.
 void Floor::manualSpawn(char symbol, Position p, string race) {
-#ifdef DEBUG
-// cout << "Spawned: " << symbol << " in " << Chamber::getMatchingId(p)
-//     << " at " << p << endl;
-#endif
     EnemyFactory ef;
     PotionFactory pf;
     // TreasureFactory tf;
@@ -182,7 +181,12 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
                 else if (race == "v") {
                     player = make_shared<Vampire>(&c);
                 }
+                original = player;
             }
+            else {
+                player->setCell(&c);
+            }
+
             c.setCharacter(player);
             break;
         // Enemy types
@@ -213,42 +217,35 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
             break;
         // Treasures
         case '6': {
-
             c.setCellObject(CellObject::Gold);
-			shared_ptr <Gold> gp = make_shared <Gold> (SH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(SH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
 
             break;
         }
         case '7': {
-
-			
             c.setCellObject(CellObject::Gold);
-			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
 
             break;
         }
 
         case '8': {
-
-			
             c.setCellObject(CellObject::Gold);
-			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
 
             break;
         }
         case '9': {
-
-			
             c.setCellObject(CellObject::Gold);
-			shared_ptr <Gold> gp = make_shared <Gold> (DH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(DH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
 
             break;
         }
@@ -361,10 +358,10 @@ void Floor::movePlayer(string dir) {
                 // else if (gold) {
                 //      pick up
                 //}
-							
-				newCell.getGold()->use(player);
+
+                newCell.getGold()->use(player);
                 oldCell->transferCharacter(newCell);
-				
+
                 cout << "GOld!" << endl;
                 break;
             case CellObject::Stairs:
