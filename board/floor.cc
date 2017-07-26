@@ -43,7 +43,6 @@ void Floor::clearGrid() {
     for (int i = 0; i < grid.size(); ++i) {
         grid[i].clear();
     }
-
     chambers.clear();
 }
 
@@ -218,32 +217,36 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
             break;
         // Treasures
         case '6': {
-            c.setCellObject(CellObject::Item);
+            c.setCellObject(CellObject::Gold);
             shared_ptr<Gold> gp = make_shared<Gold>(SH, &c);
             c.setGold(gp);
             // c.getChamber()->addGold(gp);
+
             break;
         }
         case '7': {
-            c.setCellObject(CellObject::Item);
+            c.setCellObject(CellObject::Gold);
             shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
             c.setGold(gp);
             // c.getChamber()->addGold(gp);
+
             break;
         }
 
         case '8': {
-            c.setCellObject(CellObject::Item);
+            c.setCellObject(CellObject::Gold);
             shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
             c.setGold(gp);
             // c.getChamber()->addGold(gp);
+
             break;
         }
         case '9': {
-            c.setCellObject(CellObject::Item);
+            c.setCellObject(CellObject::Gold);
             shared_ptr<Gold> gp = make_shared<Gold>(DH, &c);
             c.setGold(gp);
             // c.getChamber()->addGold(gp);
+
             break;
         }
         // Stairs
@@ -350,15 +353,17 @@ void Floor::movePlayer(string dir) {
                 cout << "Empty!" << endl;
                 oldCell->transferCharacter(newCell);
                 break;
-            case CellObject::Item:
+            case CellObject::Gold:
                 // if (isDragonHoard)
                 //      cannot be picked up
                 // else if (gold) {
                 //      pick up
                 //}
 
-                // oldCell->transferCharacter(newCell);
-                cout << "Item!" << endl;
+                newCell.getGold()->use(player);
+                oldCell->transferCharacter(newCell);
+
+                cout << "GOld!" << endl;
                 break;
             case CellObject::Stairs:
                 if (level == MAX_LEVEL) {
@@ -636,7 +641,7 @@ ostream &operator<<(ostream &out, const Floor &f) {
     raceGold += "Race: ";
     raceGold += f.player->getRace();
     raceGold += " Gold: ";
-    raceGold += "0"; // f.player->getGold()
+    raceGold += f.player->getGold();
 
     out << left << setw(f.WIDTH - 8) << raceGold << "Level: " << f.level
         << endl;

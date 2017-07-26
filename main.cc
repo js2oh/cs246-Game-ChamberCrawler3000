@@ -61,7 +61,6 @@ int main() {
             if (word1 == "a") {
                 if (isDirection(word2)) {
                     cout << "Attacking " << word2 << endl;
-                    f2.attack(word2);
                 }
             }
             else if (word1 == "u") {
@@ -128,9 +127,9 @@ string gameStart() {
 bool isDirection(string input) {
     if (input == "nw" || input == "n" || input == "no" || input == "ne" ||
         input == "e" || input == "ea" || input == "se" || input == "s" ||
-        input == "so" || input == "sw" || input == "w" || input == "we") {
+        input == "so" || input == "sw" || input == "w") {
         return true;
     }
-    cout << input << " is not a direction";
+    cout << input << " is not a valid command" << endl;;
     return false;
 }
