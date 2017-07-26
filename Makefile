@@ -3,7 +3,7 @@ CXXFLAGS = -std=c++14 -g -w -MMD
 EXEC = cc3k
 
 MAINOBJ = main.o
-BOARDOBJ = board/cell.o board/chamber.o board/floor.o board/input.o board/position.o board/textdisplay.o
+BOARDOBJ = board/cell.o board/chamber.o board/floor.o board/position.o board/textdisplay.o
 ENEMYOBJ = character/enemy/dragon.o character/enemy/dwarf.o character/enemy/elf.o character/enemy/enemy.o character/enemy/enemyfactory.o character/enemy/halfling.o character/enemy/human.o character/enemy/merchant.o character/enemy/orc.o
 PLAYEROBJ = character/player/drow.o character/player/goblin.o character/player/player.o character/player/shade.o character/player/troll.o character/player/vampire.o
 CHARACTEROBJ = character/character.o
