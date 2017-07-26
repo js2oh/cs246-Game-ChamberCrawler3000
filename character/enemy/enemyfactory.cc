@@ -12,8 +12,8 @@ using namespace std;
 
 const int EnemyFactory::PROB_DENOM = 18;
 
-std::shared_ptr<Character> EnemyFactory::manualCreate(char symbol, Cell *cell) {
-    shared_ptr<Character> cp;
+std::shared_ptr<Enemy> EnemyFactory::manualCreate(char symbol, Cell *cell) {
+    shared_ptr<Enemy> cp;
 
     switch (symbol) {
         // Human
@@ -72,7 +72,7 @@ char EnemyFactory::genRandType() {
     }
 }
 
-shared_ptr<Character> EnemyFactory::randomCreate(Cell *cell) {
+shared_ptr<Enemy> EnemyFactory::randomCreate(Cell *cell) {
     char symbol = genRandType();
     return manualCreate(symbol, cell);
 }

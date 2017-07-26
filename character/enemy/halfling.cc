@@ -40,9 +40,11 @@ Halfling::Halfling(Cell *c) : Enemy{c, SYMBOL} {
     Enemy::setAtk(15);
     Enemy::setDef(20);
 }
+
 void Halfling::defendFrom(Shade *sPlayer) {
-    srand(time(NULL));
+    cout << "Defend!" << endl;
     if (rand() % 2 == 0) {
+        cout << "Hit!" << endl;
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (sPlayer->getAtk()));
         int remainingHP = this->getCHP() - damage;
@@ -53,7 +55,6 @@ void Halfling::defendFrom(Shade *sPlayer) {
     }
 }
 void Halfling::defendFrom(Drow *dPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (dPlayer->getAtk()));
@@ -65,7 +66,6 @@ void Halfling::defendFrom(Drow *dPlayer) {
     }
 }
 void Halfling::defendFrom(Vampire *vPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (vPlayer->getAtk()));
@@ -88,7 +88,6 @@ void Halfling::defendFrom(Vampire *vPlayer) {
     }
 }
 void Halfling::defendFrom(Troll *tPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (tPlayer->getAtk()));
@@ -100,7 +99,6 @@ void Halfling::defendFrom(Troll *tPlayer) {
     }
 }
 void Halfling::defendFrom(Goblin *gPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
                           (gPlayer->getAtk()));
@@ -113,7 +111,6 @@ void Halfling::defendFrom(Goblin *gPlayer) {
     }
 }
 void Halfling::defendFrom(BoostAtk *baPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         string baseType = baPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
@@ -142,7 +139,6 @@ void Halfling::defendFrom(BoostAtk *baPlayer) {
     }
 }
 void Halfling::defendFrom(BoostDef *bdPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         string baseType = bdPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
@@ -171,7 +167,6 @@ void Halfling::defendFrom(BoostDef *bdPlayer) {
     }
 }
 void Halfling::defendFrom(WoundAtk *waPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         string baseType = waPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
@@ -200,7 +195,6 @@ void Halfling::defendFrom(WoundAtk *waPlayer) {
     }
 }
 void Halfling::defendFrom(WoundDef *wdPlayer) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         string baseType = wdPlayer->getRace();
         int damage = ceil((100 / (100 + (double)(this->getDef()))) *
@@ -229,7 +223,6 @@ void Halfling::defendFrom(WoundDef *wdPlayer) {
     }
 }
 void Halfling::attackOn(Player &p) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         p.defendFrom(this);
     }

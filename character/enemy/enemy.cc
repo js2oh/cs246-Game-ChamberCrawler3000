@@ -3,6 +3,14 @@
 
 Enemy::Enemy(Cell *c, char symbol) : Character{c, symbol} {}
 
+int Enemy::getMoves() const {
+    return moves;
+}
+
+void Enemy::increaseMoves() {
+    ++moves;
+}
+
 int Enemy::getMHP() {
     return maxHP;
 }

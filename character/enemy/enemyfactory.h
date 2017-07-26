@@ -13,8 +13,8 @@ class EnemyFactory {
     char genRandType();
 
     public:
-    std::shared_ptr<Character> manualCreate(char symbol, Cell *c);
-    std::shared_ptr<Character> randomCreate(Cell *c);
+    std::shared_ptr<Enemy> manualCreate(char symbol, Cell *c);
+    std::shared_ptr<Enemy> randomCreate(Cell *c);
 };
 
 #endif /* ENEMYFACTORY_H */

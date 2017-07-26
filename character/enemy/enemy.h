@@ -19,6 +19,7 @@ class Enemy : public Character {
     int curHP;
     int atk;
     int def;
+    int moves;
 
     public:
     Enemy(Cell *c, char symbol);
@@ -31,6 +32,11 @@ class Enemy : public Character {
     void setMHP(int value);
     void setAtk(int value);
     void setDef(int value);
+
+    int getMoves() const;
+
+    void increaseMoves();
+
     virtual void attackOn(Player &p) = 0;
     virtual void defendFrom(Shade *sPlayer) = 0;
     virtual void defendFrom(Drow *dPlayer) = 0;

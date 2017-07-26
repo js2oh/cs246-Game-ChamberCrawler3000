@@ -162,8 +162,8 @@ Cell &Chamber::spawnEnemy() {
     Cell &c = genRandPos();
     // Use EnemyFactory to randomly generate type of Enemy
     EnemyFactory ef;
-    shared_ptr<Character> cp = ef.randomCreate(&c);
-    c.setCharacter(cp);
+    shared_ptr<Enemy> cp = ef.randomCreate(&c);
+    c.setEnemy(cp);
 
     c.setCellObject(CellObject::Character);
     c.notify();
