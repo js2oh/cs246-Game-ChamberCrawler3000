@@ -115,6 +115,15 @@ void Cell::setPotion(shared_ptr<Potion> pp) {
     this->pp = pp;
 }
 
+shared_ptr<Gold> Cell::getGold() {
+    return gp;
+}
+
+void Cell::setGold(shared_ptr<Gold> gp) {
+    this->gp = gp;
+}
+
+
 shared_ptr<Item> Cell::getItem() {
     return ip;
 }

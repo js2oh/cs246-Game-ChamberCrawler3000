@@ -217,15 +217,39 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
             c.setPotion(pf.manualCreate(symbol, &c));
             break;
         // Treasures
-        case '6':
-        case '7':
-        case '8':
-        case '9':
+        case '6': {
+			
             c.setCellObject(CellObject::Item);
-            // Item *ip = tf.create(symbol, p);
-            // c.setItem(ip);
-            // c.getChamber()->addGold(ip);
+			shared_ptr <Gold> gp = make_shared <Gold> (SH, &c);
+			c.setGold(gp);
+			//c.getChamber()->addGold(gp);
             break;
+		}
+        case '7': {
+			
+            c.setCellObject(CellObject::Item);
+			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
+			c.setGold(gp);
+			//c.getChamber()->addGold(gp);
+            break;
+		}
+		
+        case '8': {
+			
+            c.setCellObject(CellObject::Item);
+			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
+			c.setGold(gp);
+			//c.getChamber()->addGold(gp);
+            break;
+		}
+        case '9': {
+			
+            c.setCellObject(CellObject::Item);
+			shared_ptr <Gold> gp = make_shared <Gold> (DH, &c);
+			c.setGold(gp);
+			//c.getChamber()->addGold(gp);
+            break;
+		}
         // Stairs
         case '\\':
             c.setCellObject(CellObject::Stairs);
