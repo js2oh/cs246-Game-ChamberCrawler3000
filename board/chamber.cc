@@ -195,7 +195,7 @@ Cell &Chamber::spawnGoldPile() {
     // Item *ip = tf.create(c);
     // c.setItem(ip);
     // treasures.emplace_back(tf.create(c));
-    c.setCellObject(CellObject::Item);
+    c.setCellObject(CellObject::Gold);
     c.notify();
 
     return c;
