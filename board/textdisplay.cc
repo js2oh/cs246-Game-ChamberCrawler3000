@@ -67,8 +67,9 @@ void TextDisplay::notify(Cell &c) {
             if (c.getPotion()) {
                 theDisplay[pos.row][pos.col] = c.getPotion()->getSymbol();
             }
+		case CellObject::Gold:
 
-            else if (c.getGold()) {
+            if (c.getGold()) {
                 theDisplay[pos.row][pos.col] = c.getGold()->getSymbol();
             }
 
