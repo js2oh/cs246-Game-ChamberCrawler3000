@@ -51,7 +51,7 @@ class Floor {
 
     bool adjacentToPlayer(Position pos);
     bool moveAvailable(Position pos) const;
-    void clearGrid();
+    
     void loadNextLevel();
     ChamberLoc getChamberLoc(Position p) const;
     static ChamberLoc intToChamberLoc(int i);
@@ -72,6 +72,7 @@ class Floor {
     Floor(int level, std::string boardFile = "empty.txt");
     Floor(std::string boardFile = "empty.txt");
     ~Floor();
+    void clearGrid();
     void init(std::string = "s");
     void movePlayer(std::string dir);
     void moveEnemies();

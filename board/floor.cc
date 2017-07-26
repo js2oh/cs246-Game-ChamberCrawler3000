@@ -33,7 +33,7 @@ Floor::Floor(int level, string boardFile)
 }
 
 Floor::~Floor() {
-    delete td;
+    clearGrid();
 }
 
 void Floor::clearGrid() {
