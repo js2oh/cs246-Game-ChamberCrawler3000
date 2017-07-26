@@ -72,16 +72,11 @@ void TextDisplay::notify(Cell &c) {
             if (c.getPotion()) {
                 theDisplay[pos.row][pos.col] = c.getPotion()->getSymbol();
             }
-<<<<<<< HEAD
+
 		case CellObject::Gold:
 
             if (c.getGold()) {
-=======
-            else if (c.getItem()) {
-                theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();
-            }
-            else if (c.getGold()) {
->>>>>>> 18ac356138947e4542931f99a9d1e38c01178337
+
                 theDisplay[pos.row][pos.col] = c.getGold()->getSymbol();
             }
 
@@ -91,28 +86,6 @@ void TextDisplay::notify(Cell &c) {
             break;
     }
 }
-
-/*
-void TextDisplay::notify(Item *i) {
-    // Get row, column, on/off state of subject
-    Info i = i.getInfo();
-    const Position pos = i.pos;
-    const char symbol = i.symbol;
-
-    // Update display grid
-    theDisplay[pos.row][pos.col] = symbol;
-}
-
-void TextDisplay::notify(Character *c) {
-    // Get row, column, on/off state of subject
-    Info i = c.getInfo();
-    const Position pos = i.pos;
-    const char symbol = i.symbol;
-
-    // Update display grid
-    theDisplay[pos.row][pos.col] = symbol;
-}
-*/
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
     for (int i = 0; i < td.height; ++i) {

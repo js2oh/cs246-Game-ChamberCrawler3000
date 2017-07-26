@@ -50,7 +50,7 @@ int main() {
         }
         else if (input == "q") {
             cout << "You quit." << endl;
-            return 0;
+            break;
         }
         else {
             istringstream iss(input);
@@ -61,6 +61,7 @@ int main() {
             if (word1 == "a") {
                 if (isDirection(word2)) {
                     cout << "Attacking " << word2 << endl;
+                    f2.attack(word2);
                 }
             }
             else if (word1 == "u") {
@@ -81,12 +82,11 @@ int main() {
         }
         // f2.moveEnemies();
         if (f2.isGameOver()) {
+            f2.printEndGame();
             break;
         }
         cout << f2 << endl;
     }
-
-    f2.printEndGame();
 }
 
 // restarts game and returns race chosen in string format
@@ -128,9 +128,10 @@ string gameStart() {
 bool isDirection(string input) {
     if (input == "nw" || input == "n" || input == "no" || input == "ne" ||
         input == "e" || input == "ea" || input == "se" || input == "s" ||
-        input == "so" || input == "sw" || input == "w") {
+        input == "so" || input == "sw" || input == "w" || input == "we") {
         return true;
     }
-    cout << input << " is not a valid command" << endl;;
+    cout << input << " is not a valid command" << endl;
+
     return false;
 }
