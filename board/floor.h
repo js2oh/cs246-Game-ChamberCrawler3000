@@ -43,6 +43,8 @@ class Floor {
     ChamberLoc pcSpawnChamber;
 
     std::shared_ptr<Player> player;
+    std::shared_ptr<Player> original;
+
     TextDisplay *td;                        // The text display
     std::map<ChamberLoc, Chamber> chambers; // Chambers
     std::vector<std::vector<Cell>> grid;    // The actual grid
