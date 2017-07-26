@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -g -w -MMD
+CXXFLAGS = -std=c++14 -g -Wall -MMD
 EXEC = cc3k
 
 MAINOBJ = main.o

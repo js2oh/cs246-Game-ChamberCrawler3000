@@ -19,6 +19,7 @@ class Merchant : public Enemy {
     const static char SYMBOL;
 
     public:
+    static bool hostile;
     int getMHP() override;
     int getCHP() override;
     int getAtk() override;

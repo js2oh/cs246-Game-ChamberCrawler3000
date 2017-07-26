@@ -2,35 +2,31 @@
 #include <sstream>
 #include "board/floor.h"
 #include "board/textdisplay.h"
-#include "item/potion/potionfactory.h"
 
 using namespace std;
 
 string gameStart();
 bool isDirection(string input);
 bool stopEnemies;
-Floor f2;
 
-int main() {
+int main(int argc, char *argv[]) {
     stopEnemies = false;
-    PotionFactory potionfactory;
     srand(time(NULL));
 
     string race;
     race = gameStart();
 
-    Floor f1{1};
-    Floor f2{1, "cc3kfloor.txt"}; // Default level 1
+    Floor f;
 
-    f1.init(race);
-    f2.init(race);
+    if (argc == 2) {
+        f = Floor{1, argv[1]};
+    }
+    else {
+        f = Floor{1};
+    }
 
-    // f1 only shows stairs until Character + Item symbols added
-
-    // debug stuff
-    // f2.cellAt(3, 4).setItem(potionfactory.createItem(RH));
-    cout << f1 << endl;
-    cout << f2 << endl;
+    f.init(race);
+    cout << f << endl;
 
     string input;
     while (getline(cin, input)) {
@@ -61,31 +57,31 @@ int main() {
             if (word1 == "a") {
                 if (isDirection(word2)) {
                     cout << "Attacking " << word2 << endl;
-                    f2.attack(word2);
+                    f.attack(word2);
                 }
             }
             else if (word1 == "u") {
                 if (isDirection(word2)) {
                     cout << "Picking up " << word2 << endl;
-                    f2.usePotion(word2);
+                    f.usePotion(word2);
                 }
             }
             else {
                 if (isDirection(word1)) {
                     cout << "Moving " << word2 << endl;
-                    f2.movePlayer(word1);
+                    f.movePlayer(word1);
                 }
             }
         }
         if (!stopEnemies) {
-            f2.moveEnemies();
+            f.moveEnemies();
         }
         // f2.moveEnemies();
-        if (f2.isGameOver()) {
-            f2.printEndGame();
+        if (f.isGameOver()) {
+            f.printEndGame();
             break;
         }
-        cout << f2 << endl;
+        cout << f << endl;
     }
 }
 

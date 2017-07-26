@@ -4,7 +4,6 @@
 #include <iostream>
 #include "../character/enemy/enemyfactory.h"
 #include "../item/potion/potionfactory.h"
-
 using namespace std;
 
 // Values that hold for all Floors
@@ -54,6 +53,7 @@ void Floor::init(string race) {
     }
 
     alreadyInit = true;
+    Merchant::hostile = false;
 
     // Initialize and load contents of board file into td
     td = new TextDisplay{WIDTH, HEIGHT, level, boardFile};
@@ -446,7 +446,15 @@ void Floor::moveEnemies() {
             if (oldCell.getCellObject() == CellObject::Character &&
                 cellPos != player->getPosition() && moveAvailable(cellPos) &&
                 oldCell.getEnemy()->getMoves() <= enemyMoves) {
-                if (adjacentToPlayer(cellPos)) {
+                if (oldCell.getEnemy()->getSymbol() == 'M') {
+                    if (Merchant::hostile && adjacentToPlayer(cellPos)) {
+                        oldCell.getEnemy()->attackOn(*player);
+                        continue;
+                    }
+                }
+
+                if (oldCell.getEnemy()->getSymbol() != 'M' &&
+                    adjacentToPlayer(cellPos)) {
                     oldCell.getEnemy()->attackOn(*player);
 
                     if (player->getCHP() <= 0) {
@@ -492,6 +500,10 @@ void Floor::attack(string dir) {
         Cell &newCell = cellAt(newPos);
         const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
         shared_ptr<Enemy> ep = newCell.getEnemy();
+
+        if (ep->getSymbol() == 'M') {
+            Merchant::hostile = true;
+        }
 
         if (newCell.getCellObject() == CellObject::Character) {
             cout << "Enemy HP Before: " << ep->getCHP() << endl;

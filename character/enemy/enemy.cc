@@ -1,7 +1,7 @@
 #include "enemy.h"
 #include "../character.h"
 
-Enemy::Enemy(Cell *c, char symbol) : Character{c, symbol} {}
+Enemy::Enemy(Cell *c, char symbol) : Character{c, symbol}, moves{0} {}
 
 int Enemy::getMoves() const {
     return moves;
