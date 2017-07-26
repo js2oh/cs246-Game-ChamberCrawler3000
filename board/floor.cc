@@ -218,38 +218,34 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
             break;
         // Treasures
         case '6': {
-			
             c.setCellObject(CellObject::Item);
-			shared_ptr <Gold> gp = make_shared <Gold> (SH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(SH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
             break;
-		}
+        }
         case '7': {
-			
             c.setCellObject(CellObject::Item);
-			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
             break;
-		}
-		
+        }
+
         case '8': {
-			
             c.setCellObject(CellObject::Item);
-			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
             break;
-		}
+        }
         case '9': {
-			
             c.setCellObject(CellObject::Item);
-			shared_ptr <Gold> gp = make_shared <Gold> (DH, &c);
-			c.setGold(gp);
-			//c.getChamber()->addGold(gp);
+            shared_ptr<Gold> gp = make_shared<Gold>(DH, &c);
+            c.setGold(gp);
+            // c.getChamber()->addGold(gp);
             break;
-		}
+        }
         // Stairs
         case '\\':
             c.setCellObject(CellObject::Stairs);
@@ -453,7 +449,8 @@ void Floor::moveEnemies() {
                         return;
                     }
                 }
-                else if (moveAvailable(cellPos)) {
+                else if (moveAvailable(cellPos) &&
+                         oldCell.getEnemy()->getSymbol() != 'D') {
                     oldCell.getEnemy()->increaseMoves();
                     ChamberLoc cLoc = oldCell.getChamberLoc();
 
