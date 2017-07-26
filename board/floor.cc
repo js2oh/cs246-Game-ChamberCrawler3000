@@ -213,64 +213,43 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
             break;
         // Treasures
         case '6': {
-<<<<<<< HEAD
-			
+
             c.setCellObject(CellObject::Gold);
 			shared_ptr <Gold> gp = make_shared <Gold> (SH, &c);
 			c.setGold(gp);
 			//c.getChamber()->addGold(gp);
-=======
-            c.setCellObject(CellObject::Item);
-            shared_ptr<Gold> gp = make_shared<Gold>(SH, &c);
-            c.setGold(gp);
-            // c.getChamber()->addGold(gp);
->>>>>>> 18ac356138947e4542931f99a9d1e38c01178337
+
             break;
         }
         case '7': {
-<<<<<<< HEAD
+
 			
             c.setCellObject(CellObject::Gold);
 			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
 			c.setGold(gp);
 			//c.getChamber()->addGold(gp);
-=======
-            c.setCellObject(CellObject::Item);
-            shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
-            c.setGold(gp);
-            // c.getChamber()->addGold(gp);
->>>>>>> 18ac356138947e4542931f99a9d1e38c01178337
+
             break;
         }
 
         case '8': {
-<<<<<<< HEAD
+
 			
             c.setCellObject(CellObject::Gold);
 			shared_ptr <Gold> gp = make_shared <Gold> (MH, &c);
 			c.setGold(gp);
 			//c.getChamber()->addGold(gp);
-=======
-            c.setCellObject(CellObject::Item);
-            shared_ptr<Gold> gp = make_shared<Gold>(MH, &c);
-            c.setGold(gp);
-            // c.getChamber()->addGold(gp);
->>>>>>> 18ac356138947e4542931f99a9d1e38c01178337
+
             break;
         }
         case '9': {
-<<<<<<< HEAD
+
 			
             c.setCellObject(CellObject::Gold);
 			shared_ptr <Gold> gp = make_shared <Gold> (DH, &c);
 			c.setGold(gp);
 			//c.getChamber()->addGold(gp);
-=======
-            c.setCellObject(CellObject::Item);
-            shared_ptr<Gold> gp = make_shared<Gold>(DH, &c);
-            c.setGold(gp);
-            // c.getChamber()->addGold(gp);
->>>>>>> 18ac356138947e4542931f99a9d1e38c01178337
+
             break;
         }
         // Stairs
