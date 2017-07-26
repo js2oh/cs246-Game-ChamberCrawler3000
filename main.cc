@@ -50,7 +50,7 @@ int main() {
         }
         else if (input == "q") {
             cout << "You quit." << endl;
-            return 0;
+            break;
         }
         else {
             istringstream iss(input);
@@ -81,12 +81,11 @@ int main() {
         }
         // f2.moveEnemies();
         if (f2.isGameOver()) {
+            f2.printEndGame();
             break;
         }
         cout << f2 << endl;
     }
-
-    f2.printEndGame();
 }
 
 // restarts game and returns race chosen in string format

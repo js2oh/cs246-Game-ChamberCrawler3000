@@ -22,6 +22,7 @@ Gold::Gold(ItemType it, Cell *cell) : Item (it)
 void Gold::applyEffects(std::shared_ptr <Player> p) {
 	p->setGold(p->getGold()+ value) ;
 	cout << "Picked up " << value << " gold. Total: " << p->getGold() << endl;
-	
-	
 }
+
+}
+
