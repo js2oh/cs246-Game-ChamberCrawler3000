@@ -68,8 +68,8 @@ void TextDisplay::notify(Cell &c) {
                 theDisplay[pos.row][pos.col] = c.getPotion()->getSymbol();
             }
 
-            else if (c.getItem()) {
-                theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();
+            else if (c.getGold()) {
+                theDisplay[pos.row][pos.col] = c.getGold()->getSymbol();
             }
 
             break;

@@ -1,7 +1,8 @@
 #include "gold.h"
-
+#include "../../character/player/player.h"
 Gold::Gold(ItemType it, Cell *cell) : Item (it)
 {
+	symbol = 'G';
 	this->cell = cell;
 	switch (it) {
 		case SH:
@@ -14,3 +15,6 @@ Gold::Gold(ItemType it, Cell *cell) : Item (it)
 			value = 6;
 	}
 } 
+void Gold::applyEffects(std::shared_ptr <Player> p) {
+	p->setGold(p->getGold()+ value) ;
+}
