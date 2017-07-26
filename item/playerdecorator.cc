@@ -1,12 +1,16 @@
 #include "playerdecorator.h"
+#include <iostream>
 #include <memory>
 #include <string>
-
 using namespace std;
 
 PlayerDecorator::PlayerDecorator() {}
 PlayerDecorator::PlayerDecorator(int amt, shared_ptr<Player> p)
-    : Player{p->getCell(), p->getRace()}, amt{amt}, player{p} {}
+    : Player{p->getCell(), p->getRace()}, amt{amt}, player{p} {
+    if (p->getRace() == "Drow") {
+        this->amt *= 1.5;
+    }
+}
 
 int PlayerDecorator::getMHP() {
     return player->getMaxHP();

@@ -129,7 +129,7 @@ string gameStart() {
 bool isDirection(string input) {
     if (input == "nw" || input == "n" || input == "no" || input == "ne" ||
         input == "e" || input == "ea" || input == "se" || input == "s" ||
-        input == "so" || input == "sw" || input == "w") {
+        input == "so" || input == "sw" || input == "w" || input == "we") {
         return true;
     }
     cout << input << " is not a direction";

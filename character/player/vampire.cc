@@ -31,7 +31,7 @@ int Vampire::getAtk() {
 }
 
 Vampire::Vampire(Cell *c) : Player{c, "Vampire"} {
-    Player::setMHP(50);
+    Player::setMHP(0);
     Player::setCHP(50);
     Player::setAtk(25);
     Player::setDef(25);
