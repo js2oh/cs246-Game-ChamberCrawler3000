@@ -641,7 +641,7 @@ ostream &operator<<(ostream &out, const Floor &f) {
     raceGold += "Race: ";
     raceGold += f.player->getRace();
     raceGold += " Gold: ";
-    raceGold += f.player->getGold();
+    raceGold += to_string(f.player->getGold());
 
     out << left << setw(f.WIDTH - 8) << raceGold << "Level: " << f.level
         << endl;
