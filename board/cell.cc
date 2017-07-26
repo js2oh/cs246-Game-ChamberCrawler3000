@@ -30,15 +30,24 @@ void Cell::transferCharacter(Cell &cell) {
     // 'Move' character to next Cell
     cell.setCellObject(CellObject::Character);
     cell.setCharacter(getCharacter());
-    getCharacter()->setCell(&cell);
+    cell.setEnemy(getEnemy());
+
+    if (getCharacter()) {
+        getCharacter()->setCell(&cell);
+    }
+    else if (getEnemy()) {
+        getEnemy()->setCell(&cell);
+    }
 
     setCharacter(nullptr);
+    setEnemy(nullptr);
     cell.notify();
 }
 
 void Cell::deleteCell() {
     co = CellObject::Empty;
     // setCharacter(nullptr);
+    setEnemy(nullptr);
     setItem(nullptr);
     setPotion(nullptr);
     notify();
@@ -88,6 +97,14 @@ shared_ptr<Character> Cell::getCharacter() {
 
 void Cell::setCharacter(shared_ptr<Character> cp) {
     this->cp = cp;
+}
+
+shared_ptr<Enemy> Cell::getEnemy() {
+    return ep;
+}
+
+void Cell::setEnemy(shared_ptr<Enemy> ep) {
+    this->ep = ep;
 }
 
 shared_ptr<Potion> Cell::getPotion() {

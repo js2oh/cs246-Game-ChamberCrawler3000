@@ -201,8 +201,8 @@ void Floor::manualSpawn(char symbol, Position p, string race) {
             c.setCellObject(CellObject::Character);
             // Use factory to manually spawn the correct enemy type
             // shared_ptr<Character> cp = ef.manualCreate(symbol, &c);
-            c.setCharacter(ef.manualCreate(symbol, &c));
-            // c.getChamber()->addEnemy(cp);
+            // c.setCharacter(ef.manualCreate(symbol, &c));
+            c.setEnemy(ef.manualCreate(symbol, &c));
             break;
         // Potion types
 
@@ -405,6 +405,11 @@ bool Floor::moveAvailable(const Position pos) const {
         (isInBounds(row - 1, col - 1) && grid[row - 1][col - 1].isEmpty());
 }
 
+bool Floor::adjacentToPlayer(const Position pos) {
+    // const Cell &curCell = grid[pos.row][pos.col];
+    return grid[pos.row][pos.col].getPosition().adjacent(player->getPosition());
+}
+
 void Floor::moveEnemies() {
     const int ADJACENT_CELLS = 8;
 
@@ -415,24 +420,33 @@ void Floor::moveEnemies() {
 
             if (oldCell.getCellObject() == CellObject::Character &&
                 cellPos != player->getPosition() && moveAvailable(cellPos) &&
-                oldCell.getCharacter()->getMoves() == enemyMoves) {
-                oldCell.getCharacter()->increaseMoves();
-                ChamberLoc cLoc = oldCell.getChamberLoc();
-                // oldCell.getCharacter().getMoves;
+                oldCell.getEnemy()->getMoves() <= enemyMoves) {
+                if (adjacentToPlayer(cellPos)) {
+                    oldCell.getEnemy()->attackOn(*player);
 
-                // Find new position to move to
-                while (true) {
-                    int i = rand() % ADJACENT_CELLS;
-                    const Position newPos = dirToPos(cellPos, intToDir(i));
+                    if (player->getCHP() <= 0) {
+                        gameOver = true;
+                        return;
+                    }
+                }
+                else if (moveAvailable(cellPos)) {
+                    oldCell.getEnemy()->increaseMoves();
+                    ChamberLoc cLoc = oldCell.getChamberLoc();
 
-                    if (isInBounds(newPos)) {
-                        Cell &newCell = cellAt(newPos);
+                    // Find new position to move to
+                    while (true) {
+                        int i = rand() % ADJACENT_CELLS;
+                        const Position newPos = dirToPos(cellPos, intToDir(i));
 
-                        if (newCell.getCellObject() == CellObject::Empty &&
-                            newCell.getChamberLoc() == cLoc &&
-                            newCell.isTile()) {
-                            oldCell.transferCharacter(newCell);
-                            break;
+                        if (isInBounds(newPos)) {
+                            Cell &newCell = cellAt(newPos);
+
+                            if (newCell.getCellObject() == CellObject::Empty &&
+                                newCell.getChamberLoc() == cLoc &&
+                                newCell.isTile()) {
+                                oldCell.transferCharacter(newCell);
+                                break;
+                            }
                         }
                     }
                 }
@@ -451,10 +465,22 @@ void Floor::attack(string dir) {
     if (isInBounds(newPos)) {
         Cell &newCell = cellAt(newPos);
         const ChamberLoc enemyChamberLoc = Chamber::getMatchingLoc(newPos);
-        shared_ptr<Character> cp = newCell.getCharacter();
+        shared_ptr<Enemy> ep = newCell.getEnemy();
 
         if (newCell.getCellObject() == CellObject::Character) {
-            // player->attackOn(*cp);
+            cout << "Enemy HP Before: " << ep->getCHP() << endl;
+            player->attackOn(*ep);
+            cout << "Enemy HP After: " << ep->getCHP() << endl;
+
+            if (ep->getCHP() > 0)
+                ep->attackOn(*player);
+            else {
+                newCell.deleteCell();
+            }
+
+            if (player->getCHP() <= 0) {
+                gameOver = true;
+            }
         }
     }
 }
@@ -574,7 +600,7 @@ void Floor::printEndGame() const {
     }
     cout << endl << "Game Over!" << endl << endl;
 
-    cout << "Your final score: " << endl;
+    cout << "Your final score: " << player->getGold() << endl;
 }
 
 // Determine vacancy of grid at given position

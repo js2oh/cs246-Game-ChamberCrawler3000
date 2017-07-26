@@ -49,6 +49,7 @@ class Floor {
     std::map<ChamberLoc, Chamber> chambers; // Chambers
     std::vector<std::vector<Cell>> grid;    // The actual grid
 
+    bool adjacentToPlayer(Position pos);
     bool moveAvailable(Position pos) const;
     void clearGrid();
     void loadNextLevel();

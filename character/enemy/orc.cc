@@ -203,8 +203,7 @@ void Orc::defendFrom(WoundDef *wdPlayer) {
     this->setCHP(remainingHP);
 }
 void Orc::attackOn(Player &p) {
-    srand(time(NULL));
-    if (rand() % 2 == 0) {
+        if (rand() % 2 == 0) {
         p.defendFrom(this);
     }
 }

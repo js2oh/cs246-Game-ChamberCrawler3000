@@ -202,12 +202,10 @@ void Elf::defendFrom(WoundDef *wdPlayer) {
     this->setCHP(remainingHP);
 }
 void Elf::attackOn(Player &p) {
-    srand(time(NULL));
     if (rand() % 2 == 0) {
         p.defendFrom(this);
     }
     if (p.getRace() != "Drow" && p.getCHP() != 0) {
-        srand(time(NULL));
         if (rand() % 2 == 0) {
             p.defendFrom(this);
         }
