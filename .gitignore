@@ -1,6 +1,7 @@
 *.d
 *.o
 *.out
+*.zip
 cc3k
 
 Test
