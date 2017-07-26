@@ -288,6 +288,7 @@ void Floor::spawnPlayer(string race) {
         else if (race == "v") {
             player = make_shared<Vampire>(&c);
         }
+        original = player;
     }
 
     c.setCharacter(player);
