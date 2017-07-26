@@ -28,14 +28,6 @@ class Character {
         return def;
     }
 
-    int getMoves() {
-        return moves;
-    }
-
-    void increaseMoves() {
-        ++moves;
-    }
-
     protected:
     const char symbol;
     Cell *cell;
@@ -44,7 +36,6 @@ class Character {
     int hp;
     int def;
     int atk;
-    int moves;
 };
 
 #endif /* CHARACTER_H */

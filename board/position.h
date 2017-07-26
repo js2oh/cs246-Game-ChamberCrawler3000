@@ -9,6 +9,8 @@ struct Position {
     int row;
     int col;
 
+    bool adjacent(const Position &other) const;
+    bool operator==(const Position &other) const;
     bool operator!=(const Position &other) const;
 };
 

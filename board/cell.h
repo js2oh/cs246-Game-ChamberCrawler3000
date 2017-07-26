@@ -26,6 +26,7 @@ class Cell {
     std::shared_ptr<Character> cp;
     std::shared_ptr<Potion> pp;
     std::shared_ptr<Item> ip;
+    std::shared_ptr<Enemy> ep;
 	std::shared_ptr<Gold> gp;
 
     Chamber *c;
@@ -51,6 +52,8 @@ class Cell {
     void setChamber(Chamber *c);
     std::shared_ptr<Character> getCharacter();
     void setCharacter(std::shared_ptr<Character> cp);
+    std::shared_ptr<Enemy> getEnemy();
+    void setEnemy(std::shared_ptr<Enemy> ep);
 
     std::shared_ptr<Potion> getPotion();
     void setPotion(std::shared_ptr<Potion> pp);
