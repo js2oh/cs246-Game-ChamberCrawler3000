@@ -16,13 +16,10 @@
 
 using namespace std;
 
-class BoostAtk : public PlayerDecorator, public Potion {
+class BoostAtk : public PlayerDecorator {
     public:
-    BoostAtk(shared_ptr<Player> p);
-    BoostAtk(int amt);
     BoostAtk(int amt, shared_ptr<Player> p);
 
-    void applyEffects(shared_ptr<Player> p) override;
     int getMHP() override;
     int getCHP() override;
     int getAtk() override;

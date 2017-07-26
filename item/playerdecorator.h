@@ -3,11 +3,13 @@
 #include <memory>
 #include <string>
 #include "../character/player/player.h"
+#include "itemtype.h"
 
 using namespace std;
 
 class PlayerDecorator : public Player {
-    
+    int amt;
+
     protected:
     shared_ptr<Player> player;
     virtual int getMHP();
@@ -17,10 +19,11 @@ class PlayerDecorator : public Player {
     virtual string getRace();
     virtual void setCHP(int value);
     virtual shared_ptr<Player> getPlayer();
+    virtual int getAmt();
 
     public:
     PlayerDecorator();
-    PlayerDecorator(shared_ptr<Player> p);
+    PlayerDecorator(int amt, shared_ptr<Player> p);
     virtual void attackOn(Enemy &e) = 0;
     virtual void defendFrom(Human *hEnemy) = 0;
     virtual void defendFrom(Dwarf *wEnemy) = 0;

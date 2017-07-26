@@ -37,9 +37,10 @@ void Cell::transferCharacter(Cell &cell) {
 }
 
 void Cell::deleteCell() {
-    setCellObject(CellObject::Empty);
-    setCharacter(nullptr);
+    co = CellObject::Empty;
+    // setCharacter(nullptr);
     setItem(nullptr);
+    setPotion(nullptr);
     notify();
 }
 
@@ -87,6 +88,14 @@ shared_ptr<Character> Cell::getCharacter() {
 
 void Cell::setCharacter(shared_ptr<Character> cp) {
     this->cp = cp;
+}
+
+shared_ptr<Potion> Cell::getPotion() {
+    return pp;
+}
+
+void Cell::setPotion(shared_ptr<Potion> pp) {
+    this->pp = pp;
 }
 
 shared_ptr<Item> Cell::getItem() {

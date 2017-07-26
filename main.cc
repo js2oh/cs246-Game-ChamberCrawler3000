@@ -61,6 +61,7 @@ int main() {
             if (word1 == "a") {
                 if (isDirection(word2)) {
                     cout << "Attacking " << word2 << endl;
+                    f2.attack(word2);
                 }
             }
             else if (word1 == "u") {

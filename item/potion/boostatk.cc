@@ -5,18 +5,10 @@
 
 using namespace std;
 
-BoostAtk::BoostAtk(int amt, shared_ptr<Player> p)
-    : Potion{amt}, PlayerDecorator(p) {}
-
-BoostAtk::BoostAtk(int amt) : Potion{amt} {}
-
-void BoostAtk::applyEffects(shared_ptr<Player> p) {
-    setPlayer(p);
-    // p = *this;
-}
+BoostAtk::BoostAtk(int amt, shared_ptr<Player> p) : PlayerDecorator(amt, p) {}
 
 int BoostAtk::getAtk() {
-    int new_atk = PlayerDecorator::getAtk() + Potion::getAmt();
+    int new_atk = PlayerDecorator::getAtk() + PlayerDecorator::getAmt();
     return new_atk;
 }
 

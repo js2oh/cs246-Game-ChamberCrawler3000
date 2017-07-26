@@ -16,11 +16,9 @@
 
 using namespace std;
 
-class WoundAtk : public PlayerDecorator, public Potion {
+class WoundAtk : public PlayerDecorator {
     public:
     WoundAtk(int amt, shared_ptr<Player> p);
-    WoundAtk(int amt);
-    void applyEffects(shared_ptr<Player> p) override;
 
     int getMHP() override;
     int getCHP() override;

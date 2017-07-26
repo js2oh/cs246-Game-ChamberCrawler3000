@@ -64,7 +64,11 @@ void TextDisplay::notify(Cell &c) {
             break;
         case CellObject::Item:
             // Gold/Treasure not implemented yet, hence this check
-            if (c.getItem()) {
+            if (c.getPotion()) {
+                theDisplay[pos.row][pos.col] = c.getPotion()->getSymbol();
+            }
+
+            else if (c.getItem()) {
                 theDisplay[pos.row][pos.col] = c.getItem()->getSymbol();
             }
 

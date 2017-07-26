@@ -13,3 +13,7 @@ void Potion::setAmt(int value) {
 int Potion::getAmt() {
     return amt;
 }
+
+shared_ptr<Player> Potion::makePlayer(shared_ptr<Player> p) {
+    return p;
+}

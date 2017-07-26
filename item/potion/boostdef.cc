@@ -5,12 +5,7 @@
 
 using namespace std;
 
-BoostDef::BoostDef(int amt, shared_ptr<Player> p)
-    : Potion{amt}, PlayerDecorator(p) {}
-
-BoostDef::BoostDef(int amt) : Potion{amt} {}
-
-void BoostDef::applyEffects(shared_ptr<Player> p) {}
+BoostDef::BoostDef(int amt, shared_ptr<Player> p) : PlayerDecorator(amt, p) {}
 
 int BoostDef::getAtk() {
     int new_atk = PlayerDecorator::getAtk();
@@ -18,7 +13,7 @@ int BoostDef::getAtk() {
 }
 
 int BoostDef::getDef() {
-    int new_def = PlayerDecorator::getDef() + Potion::getAmt();
+    int new_def = PlayerDecorator::getDef() + PlayerDecorator::getAmt();
     return new_def;
 }
 

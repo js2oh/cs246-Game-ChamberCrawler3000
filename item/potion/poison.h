@@ -13,6 +13,7 @@ class Poison : public Potion {
     public:
     Poison(int amt);
     void applyEffects(shared_ptr<Player> p) override;
+    // shared_ptr<Player> makePlayer(shared_ptr<Player> p) override;
 };
 
 #endif
